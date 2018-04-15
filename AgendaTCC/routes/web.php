@@ -31,3 +31,17 @@ Route::post('/salvar_pre_cadastro_aluno', [
 	'as'=>'salvar_pre_cadastro_aluno',
 	'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
 ]);
+
+//Tela aluno tela2 cadastro aluno
+Route::get('/cadastrar_aluno',[
+   'as' => 'cadastrar_aluno',
+    'uses'=> 'AlunoController@cadastro_aluno'
+]);
+Route::post('/salvar_cadastro_aluno', [
+    'as' => 'salvar_cadastro_aluno',
+    'uses' => 'AlunoController@salvar_cadastro_aluno'
+]);
+Route::get('/perfil_aluno',[
+    'as' => 'perfil_aluno',
+    'uses' => 'AlunoController@perfil_aluno'
+]);
