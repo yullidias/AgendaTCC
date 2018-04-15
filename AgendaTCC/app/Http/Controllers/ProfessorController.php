@@ -32,8 +32,9 @@ class ProfessorController extends Controller
             ['ano','=',$aluno_semestre['semestre_ano']],
             ['numero','=', $aluno_semestre['semestre_numero']]])->count() == 0){
 
-            Semestre::create(['ano' => $aluno_semestre['semestre_ano'], 'numero' => $aluno_semestre['semestre_numero'] ]);
-            //DB::table('semestre_numero')->insert(['ano' => $aluno_semestre['semestre_ano'], 'numero' => $aluno_semestre['semestre_numero']);
+             DB::table('semestres')->insert(
+                ['ano' => $aluno_semestre['semestre_ano'], 
+                 'numero' => $aluno_semestre['semestre_numero'] ]);
         }
         DB::table('alunos')->insert($aluno); //Aluno::create($aluno);
         DB::table('aluno_semestres')->insert($aluno_semestre); //AlunoSemestre::create($aluno_semestre);
