@@ -14,13 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+//------------------------------------------------------------------------------------
 //Tela gestor tela21 listadealunos
 Route::get('/listar_alunos',[
 	'as'=>'listar_alunos',
 	'uses'=>'ProfessorController@listar_alunos'
 ]);
-
+//------------------------------------------------------------------------------------
 //Tela gestor tela22 precadastro aluno
 Route::get('/listar_alunos/pre_cadastro_aluno', [
 	'as'=>'listar_alunos.pre_cadastro_alunos',
@@ -31,7 +31,7 @@ Route::post('/salvar_pre_cadastro_aluno', [
 	'as'=>'salvar_pre_cadastro_aluno',
 	'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
 ]);
-
+//------------------------------------------------------------------------------------
 //Tela aluno tela2 cadastro aluno
 Route::get('/cadastrar_aluno',[
    'as' => 'cadastrar_aluno',
@@ -45,3 +45,21 @@ Route::get('/perfil_aluno',[
     'as' => 'perfil_aluno',
     'uses' => 'AlunoController@perfil_aluno'
 ]);
+//------------------------------------------------------------------------------------
+//Tela gestor tela19 listaprofessorescadastrados
+Route::get('/listar_professores',[
+    'as'=>'listar_professores',
+    'uses'=>'ProfessorController@listar_professores'
+]);
+//------------------------------------------------------------------------------------
+//Tela gestor tela29 precadastroprofessor
+Route::get('/listar_professores/pre_cadastro_professor', [
+    'as'=>'listar_professores.pre_cadastro_professor',
+    'uses'=>'ProfessorController@pre_cadastro_professor'
+]);
+
+Route::post('/salvar_pre_cadastro_professor', [
+    'as'=>'salvar_pre_cadastro_professor',
+    'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
+]);
+//------------------------------------------------------------------------------------
