@@ -11,9 +11,10 @@
 	<br><br>
 	<form action="{{ route('salvar_pre_cadastro_professor') }}" method="post">
 		{{ csrf_field() }}
-		<div class='form-group'>
+		<div class="form-group {{ $errors->has('SIAPE') ? 'has-error' : '' }}">
 			<label>SIAPE</label>
 			<input type='text' class='form-control' name='SIAPE' required>
+			<span class="text-danger">{{ $errors->has('SIAPE') ? 'SIAPE já cadastrado! Tente novamente' : ''}}</span>
 		</div>
 
 		<br><label>Permissão</label>

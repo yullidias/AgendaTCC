@@ -23,6 +23,10 @@ class ProfessorController extends Controller
 
     public function salvar_pre_cadastro_aluno(Request $req)
     {
+        $this->validate($req, [
+            'matricula' => 'required|unique:alunos',
+        ]);
+
         $dados = $req->all();
 
         $aluno = new Aluno([
@@ -63,6 +67,10 @@ class ProfessorController extends Controller
 
     public function salvar_pre_cadastro_professor(Request $req)
     {
+        $this->validate($req, [
+            'SIAPE' => 'required|unique:professors',
+        ]);
+
         $dados = $req->all();
 
         if(isset($_POST['permissao_orientador'])){

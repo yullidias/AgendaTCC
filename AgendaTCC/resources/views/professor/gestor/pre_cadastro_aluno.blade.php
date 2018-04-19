@@ -11,9 +11,11 @@
 	<br><br>
 	<form action="{{ route('salvar_pre_cadastro_aluno') }}" method="post">
 		{{ csrf_field() }}
-		<div class='form-group'>
+		
+		<div class="form-group {{ $errors->has('matricula') ? 'has-error' : '' }}">
 			<label>Matricula</label>
 			<input type='text' class='form-control' name='matricula' required>
+			<span class="text-danger">{{ $errors->has('matricula') ? 'Matricula já cadastrada! Tente novamente' : ''}}</span>
 		</div>
 
 		<br><label>Matéria</label>
