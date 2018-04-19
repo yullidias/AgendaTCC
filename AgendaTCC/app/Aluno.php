@@ -45,7 +45,7 @@ class Aluno extends Model
 		}
 
 	public function existir(){
-		$retorno = table('alunos')->where('matricula','=',$this->matricula)->count();
+		$retorno = DB::table('alunos')->where('matricula','=',$this->matricula)->count();
 		return (($retorno > 0)? true: false);
 	}
 

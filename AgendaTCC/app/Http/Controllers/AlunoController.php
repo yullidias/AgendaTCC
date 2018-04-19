@@ -19,25 +19,26 @@ class AlunoController extends Controller
     public function salvar_cadastro_aluno(Request $request){
         $dados = $request->all();
 
-        $aluno['matricula'] = $dados['matricula'];
-        $aluno['nome'] = $dados['nome'];
-        $aluno['senha'] = $dados['senha'];
-        $aluno['email'] = $dados['email'];
+        $aluno = new Aluno([
+            'matricula' => $dados['matricula'],
+            'nome' => $dados['nome'],
+            'senha' => $dados['senha'],
+            'email' => $dados['email']
+        ]);
 
-        $tccDados['tema'] = $dados['tema'];
-        $tccDados['orientador'] = $dados['orientador'];
-        $tccDados['aluno_matricula'] = $dados['matricula'];
-        $tccDados['coorientador'] = $dados['coorientador'];
+        $tccDados = new TccDados([
+            'idDados' => NULL,
+            'tema' => $dados['tema'],
+            'orientador' => $dados['orientador'],
+            'aluno_matricula' => $dados['matricula'],
+            'coorientador' => $dados['coorientador']
+        ]);
 
+        if($aluno->existir()){
+            $aluno->alterar();
+            $tccDados->inserir();
+        }
 
-        DB::table('alunos')
-            ->where('matricula', '=', $aluno['matricula'])
-            ->update([
-                'nome' => $aluno['nome'],
-                'senha' => $aluno['senha'],
-                'email' => $aluno['email']
-            ]);
-        DB::table('tcc_dados')->insert($tccDados);
         return redirect()->route('perfil_aluno');
 
     }
