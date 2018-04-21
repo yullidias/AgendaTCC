@@ -35,4 +35,4 @@ Agore inicie o servidor.
 ```{r, engine='sh', count_lines}
 php artisan serve
 ```
-Acesse o 127.0.0.1:8000 para visualizar a página.
+Acesse o http://127.0.0.1:8000 para visualizar a página.
