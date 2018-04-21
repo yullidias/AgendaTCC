@@ -63,3 +63,15 @@ Route::post('/salvar_pre_cadastro_professor', [
     'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
 ]);
 //------------------------------------------------------------------------------------
+//Tela gestor tela25 definicaodocronograma
+Route::get('/cadastrar_cronograma/', [
+    'as' => 'cadastrar_cronograma.cadastro',
+    'uses' => 'CronogramaController@cadastro',
+]);
+
+//Route::get('/cadastrar_cronograma/', [
+//   'as' => 'cadastrar_cronograma.listar_atividades_cronograma',
+//   'uses' => 'CronogramaController@listar_atividades_cronograma'
+//]);
+
+//------------------------------------------------------------------------------------
