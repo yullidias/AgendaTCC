@@ -19,6 +19,7 @@ class CreateAlunosTable extends Migration
             $table->string('senha',45)->nullable();
             $table->string('email',45)->nullable();
         });
+
     }
 
     /**
