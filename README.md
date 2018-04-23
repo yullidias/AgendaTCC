@@ -42,7 +42,7 @@ Acesse o http://127.0.0.1:8000 para visualizar a página.
 ```{r, engine='sh', count_lines}
 php artisan migrate:rollback
 ```
-2. Manualmente delete o arquivo de migração
+2. Manualmente delete o arquivo de migração <br>
 app/database/migrations/meu_arquivo_de_migracao.php
 
 3. Resete os arquivos carregados automaticamente do composer
