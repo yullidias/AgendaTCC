@@ -36,3 +36,18 @@ Agore inicie o servidor.
 php artisan serve
 ```
 Acesse o http://127.0.0.1:8000 para visualizar a página.
+
+# Desfazer ultima migração
+<ol>
+	<li>Execute migrate:rollback</li>
+	```{r, engine='sh', count_lines}
+	php artisan migrate:rollback
+	```
+	<li>Manualmente delete o arquivo de migração</li>
+	app/database/migrations/meu_arquivo_de_migracao.php
+	<li>Resete os arquivos carregados automaticamente do composer</li>
+	```{r, engine='sh', count_lines}
+	composer dump-autoload
+	```	
+	<li>Remova o último registro da tabela migrations no MySQL</li>
+</ol>
