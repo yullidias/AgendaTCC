@@ -38,18 +38,15 @@ php artisan serve
 Acesse o http://127.0.0.1:8000 para visualizar a página.
 
 # Desfazer última migração
-<ol>
-	<li>Execute migrate:rollback</li>
-	
-	```{r, engine='sh', count_lines}
-	php artisan migrate:rollback
-	```
-	<li>Manualmente delete o arquivo de migração</li>
-	app/database/migrations/meu_arquivo_de_migracao.php
-	<li>Resete os arquivos carregados automaticamente do composer</li>
-	
-	```{r, engine='sh', count_lines}
-	composer dump-autoload
-	```	
-	<li>Remova o último registro da tabela migrations no MySQL</li>
-</ol>
+1. Execute migrate:rollback
+```{r, engine='sh', count_lines}
+php artisan migrate:rollback
+```
+2. Manualmente delete o arquivo de migração
+app/database/migrations/meu_arquivo_de_migracao.php
+
+3. Resete os arquivos carregados automaticamente do composer
+```{r, engine='sh', count_lines}
+composer dump-autoload
+```	
+4. Remova o último registro da tabela migrations no MySQL
