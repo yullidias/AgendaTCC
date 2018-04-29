@@ -32,7 +32,6 @@
 	<main class='container'>
 		<h1><strong>@yield('titulo')</strong></h1>
 		@yield('conteudo')
-        @yield('tabela') {{-- tabela que lista itens cadastrados--}}
 	</main>
 
 	<!-- 
