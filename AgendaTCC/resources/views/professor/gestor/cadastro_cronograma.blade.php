@@ -7,6 +7,17 @@
 {{--@endsection--}}
 
 @section('conteudo')
+
+    <div class="flash-message">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
+    </div> <!-- end .flash-message -->
+
+
     <form action="{{ route('salvar_atividade_cronograma') }}" method="post">
     {{ csrf_field() }}
         <div class='form-group' >
@@ -33,14 +44,27 @@
         <input type='submit' class='btn btn-default' value='Cadastrar'>
     </form>
     {{-------------------Inicio Tabela-----------------------}}
+    <style>
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #404040;
+            color: white;
+        }
+    </style>
+
     <br><br>
     <form action="{{ route('cadastrar_cronograma.deletar_atividade_cronograma')}}" method="post" }}">
     {{ csrf_field() }}
-        <table style="width:100%">
+        <table style="width:100%" class="table table-hover">
             <tr>
                 <th>Descrição</th>
                 <th>Data Início</th>
                 <th>Data Fim</th>
+                <th>Semestre</th>
+                <th>Turma</th>
                 <th>Excluir Atividade</th>
             </tr>
 
@@ -49,6 +73,8 @@
                     <td>{{$atividade->nome}}</td>
                     <td>{{$atividade->data_inicio}}</td>
                     <td>{{$atividade->data_fim}}</td>
+                    <td>{{$atividade->semestre_ano}}-{{$atividade->semestre_numero}}</td>
+                    <td>TCC {{$atividade->turma}}</td>
                     {{--acrescentar campos semestre_ano, semestre_numero e turma de cronograma--}}
                     <td><button type='submit' class='btn btn-default' name="Excluir" value = '{{$atividade->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $atividade->id)}}">Excluir</td>
                 </tr>

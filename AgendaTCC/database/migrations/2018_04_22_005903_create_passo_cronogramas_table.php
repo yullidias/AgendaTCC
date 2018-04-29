@@ -15,15 +15,17 @@ class CreatePassoCronogramasTable extends Migration
     {
         Schema::create('passo_cronogramas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('cronograma_id');
             $table->string('nome');
             $table->date('data_inicio');
             $table->date('data_fim');
+            $table->integer('semestre_ano');
+            $table->integer('semestre_numero');
+            $table->tinyInteger('turma');
             $table->timestamps();
         });
 
         Schema::table('passo_cronogramas', function (Blueprint $table){
-            $table->foreign('cronograma_id')->references('id')->on('cronogramas');
+            $table->foreign(['semestre_ano','semestre_numero', 'turma'])->references(['semestre_ano','semestre_numero', 'turma'])->on('cronogramas');
         });
 
     }
