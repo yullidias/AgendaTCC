@@ -41,6 +41,7 @@ class CronogramaController extends Controller
                 "turma" => $campos['turma'],
             ];
             PassoCronograma::create($registro);
+            $request->session()->flash('alert-success', 'Cadastrado com sucesso!');
             return redirect()->route('listar_atividades_cronograma');
         }
     //no banco, semestre_ano, semestre_numero e turma deveriam ser chaves
