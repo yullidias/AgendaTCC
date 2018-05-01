@@ -83,7 +83,6 @@ Route::get('/cadastrar_cronograma/', [
     'uses' => 'CronogramaController@listar_atividades_cronograma'
 ]);
 
-
 Route::get('/cadastrar_cronograma/', [
    'as' => 'listar_atividades_cronograma',
    'uses' => 'CronogramaController@listar_atividades_cronograma'
@@ -96,8 +95,8 @@ Route::post('excluir_atividade_cronograma', [
 //------------------------------------------------------------------------------------
 //Tela aluno tela6 cronograma
 Route::get( '/perfil_aluno/visualizar_cronograma', [
-    'as' => 'aluno_visualizar_cronograma',
-    'uses' => 'CronogramaController@aluno_visualizar_cronograma'
+   'as' => 'aluno_visualizar_cronograma',
+   'uses' => 'CronogramaController@aluno_visualizar_cronograma'
 ]);
 
 //Tela professor tela10 cronograma
