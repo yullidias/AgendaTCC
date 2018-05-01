@@ -84,3 +84,14 @@ Route::post('excluir_atividade_cronograma', [
     'uses' => 'CronogramaController@deletar_atividade_cronograma'
 ]);
 //------------------------------------------------------------------------------------
+//Tela aluno tela6 cronograma
+Route::get( '/perfil_aluno/visualizar_cronograma', [
+'as' => 'aluno_visualizar_cronograma',
+   'uses' => 'CronogramaController@aluno_visualizar_cronograma'
+]);
+
+//Tela professor tela10 cronograma
+Route::get('/perfil_professor/visualizar_cronograma', [
+    'as' => 'professor_visualizar_cronograma',
+    'uses' => 'CronogramaController@professor_visualizar_cronograma'
+]);

@@ -16,7 +16,7 @@ class Semestre extends Model
 	private $ano;
 	private $numero;
 
-	function __construct($campos){
+    function _construct($campos){
 		$this->ano = $campos['ano'];
 	    $this->numero = $campos['numero'];
 	}

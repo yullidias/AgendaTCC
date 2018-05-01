@@ -24,17 +24,22 @@
             <label>Nome</label>
             <input type='text' class='form-control' name='nome' required>
             <label>Data de Início</label>
-            <input type='date' class='form-control' name='data_inicio' required>
+            @php
+               $semestre_ano = date ("Y"); //retorna o ano atual, no formato yyyy//
+               $semestre_numero = (date ("m") <= 6)? 1 : 2;//retorna o numero do mes atual, descobre o semestre atual//
+               $mes = ($semestre_numero==1)? 01 : 07;
+
+               $min = $semestre_ano.$mes."-01-";
+               $max = $semestre_ano.($mes+05)."-31-";
+            @endphp
+            <input type='date' class='form-control' name='data_inicio' required min="$min" max="$max">
             <label>Data de Fim</label>
-            <input type='date' class='form-control' name='data_fim' required>
+            <input type='date' class='form-control' name='data_fim' required min="$min" max="$max">
         </div>
 
-        <label>Semestre</label>
-        <select id="listbox_semestre", name="semestre">
-            @foreach($cronogramas as $cronograma)
-                <option>{{$cronograma->semestre_ano}}-{{ $cronograma->semestre_numero}}</option>
-            @endforeach
-        </select>
+        <label>Semestre: </label>
+            <h10>{{$semestre_ano.'-'.$semestre_numero}}</h10>
+
         <label>Turma</label>
         <select id="listbox_turma", name="turma">
             <option value="1">TCC 1</option>
@@ -68,15 +73,25 @@
                 <th>Excluir Atividade</th>
             </tr>
 
-            @foreach($atividades_cronograma as $atividade)
+            @foreach($cronogramas as $c)
                 <tr>
-                    <td>{{$atividade->nome}}</td>
-                    <td>{{$atividade->data_inicio}}</td>
-                    <td>{{$atividade->data_fim}}</td>
-                    <td>{{$atividade->semestre_ano}}-{{$atividade->semestre_numero}}</td>
-                    <td>TCC {{$atividade->turma}}</td>
+                    <td>{{$c->nome}}</td>
+                    @php
+                        $data = $c->data_inicio;
+                        $data = explode('-', $data);
+                        $ano = $data[0]; $mes = $data[1]; $dia = $data[2];
+                    @endphp
+                    <td>{{$dia}}/{{$mes}}/{{$ano}}</td>
+                    @php
+                        $data = $c->data_inicio;
+                        $data = explode('-', $data);
+                        $ano = $data[0]; $mes = $data[1]; $dia = $data[2];
+                    @endphp
+                    <td>{{$dia}}/{{$mes}}/{{$ano}}</td>
+                    <td>{{$c->semestre_ano}}-{{$c->semestre_numero}}</td>
+                    <td>TCC {{$c->turma}}</td>
                     {{--acrescentar campos semestre_ano, semestre_numero e turma de cronograma--}}
-                    <td><button type='submit' class='btn btn-default' name="Excluir" value = '{{$atividade->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $atividade->id)}}">Excluir</td>
+                    <td><button type='submit' class='btn btn-default' name="Excluir" value = '{{$c->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $c->id)}}">Excluir</td>
                 </tr>
             @endforeach
         </table>
