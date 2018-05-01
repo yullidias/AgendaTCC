@@ -21,3 +21,25 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Aluno::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'matricula' => $faker->numberBetween(200000000000,300000000000),
+        'name' => $faker->name,
+        'email' => $faker->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+    ];
+});
+
+$factory->define(App\Professor::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'SIAPE' => $faker->numberBetween(200000000000,300000000000),
+        'name' => $faker->name,
+        'email' => $faker->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+    ];
+});

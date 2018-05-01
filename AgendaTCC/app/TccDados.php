@@ -13,7 +13,7 @@ class TccDados extends Model
         'idDados','tema','orientador','aluno_matricula','coorientador'
     ];
 
-    private $idDados;
+   /* private $idDados;
     private $tema;
     private $orientador;
     private $aluno_matricula;
@@ -51,6 +51,6 @@ class TccDados extends Model
     public function existir(){
         $retorno = DB::table('tcc_dados')->where('idDados','=',$this->idDados)->count();
         return (($retorno > 0)? true: false);
-    }
+    }*/
 
 }

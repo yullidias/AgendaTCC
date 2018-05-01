@@ -45,6 +45,10 @@ Route::get('/perfil_aluno',[
     'as' => 'perfil_aluno',
     'uses' => 'AlunoController@perfil_aluno'
 ]);
+Route::post('/solicitar_alteracao_aluno',[
+    'as' => 'solicitar_alteracao_aluno',
+    'uses' => 'AlunoController@solicitar_alteracao'
+]);
 //------------------------------------------------------------------------------------
 //Tela gestor tela19 listaprofessorescadastrados
 Route::get('/listar_professores',[
@@ -65,22 +69,29 @@ Route::post('/salvar_pre_cadastro_professor', [
 //------------------------------------------------------------------------------------
 //Tela gestor tela25 definicaodocronograma
 Route::get('/cadastrar_cronograma/', [
-    'as' => 'cadastrar_cronograma.cadastro', //apelido da rota
+    'as' => 'cadastrar_cronograma.cadastro_cronograma', //apelido da rota
     'uses' => 'CronogramaController@cadastro',
 ]);
-
+Route::post('salvar_atividade_cronograma',[
+    'as' => 'salvar_atividade_cronograma',
+    'uses' => 'CronogramaController@salvar_atividade_cronograma'
+]);
 Route::get('/cadastrar_cronograma/', [
-   'as' => 'listar_cronograma.listar_atividades_cronograma',
-   'uses' => 'CronogramaController@listar_atividades_cronograma'
+    'as' => 'listar_atividades_cronograma',
+    'uses' => 'CronogramaController@listar_atividades_cronograma'
 ]);
-
-Route::post('/cadastrar_cronograma/salvar_atividade_cronograma',[
-    'as' => 'salvar_atividade_cronograma.salvar',
-    'uses' => 'CronogramaController@salvar'
-]);
-
-Route::get('/cadastrar_cronograma/deletar_atividade_cronograma/{id}', [
+Route::post('excluir_atividade_cronograma', [
     'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
     'uses' => 'CronogramaController@deletar_atividade_cronograma'
 ]);
 //------------------------------------------------------------------------------------
+//Tela aluno tela6 cronograma
+Route::get( '/perfil_aluno/visualizar_cronograma', [
+    'as' => 'aluno_visualizar_cronograma',
+    'uses' => 'CronogramaController@aluno_visualizar_cronograma'
+]);
+//Tela professor tela10 cronograma
+Route::get('/perfil_professor/visualizar_cronograma', [
+    'as' => 'professor_visualizar_cronograma',
+    'uses' => 'CronogramaController@professor_visualizar_cronograma'
+]);

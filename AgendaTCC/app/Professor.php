@@ -13,7 +13,7 @@ class Professor extends Model
         'SIAPE','nome','senha','permissao', 'email', 'excluido'
     ];
 
-    private $SIAPE;
+    /*private $SIAPE;
     private $nome;
     private $senha;
     private $permissao;
@@ -55,5 +55,5 @@ class Professor extends Model
 	public function existir(){
 		$retorno = table('professors')->where('SIAPE','=',$this->SIAPE)->count();
 		return (($retorno > 0)? true: false);
-	}
+	}*/
 }

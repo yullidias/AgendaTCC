@@ -4,42 +4,56 @@ namespace App\Http\Controllers;
 
 use App\Aluno;
 use App\TccDados;
+use App\Repositories\AlunoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AlunoController extends Controller
 {
+
     public function cadastro_aluno(){
         return view('aluno.cadastro_aluno');
     }
     public function perfil_aluno(){
-        echo "Perfil";
+        $aluno = Aluno::get();
+        $tccDados = TccDados::get();
+
+        return view('aluno.perfil_aluno', compact('tccDados','aluno'));
+    }
+    public function solicitar_alteracao(){
+        echo "altera dados";
     }
 
     public function salvar_cadastro_aluno(Request $request){
         $dados = $request->all();
 
-        $aluno = new Aluno([
+        $aluno = [
             'matricula' => $dados['matricula'],
             'nome' => $dados['nome'],
             'senha' => $dados['senha'],
             'email' => $dados['email']
-        ]);
+        ];
 
-        $tccDados = new TccDados([
+        $tccDados = [
             'idDados' => NULL,
             'tema' => $dados['tema'],
             'orientador' => $dados['orientador'],
             'aluno_matricula' => $dados['matricula'],
             'coorientador' => $dados['coorientador']
-        ]);
+        ];
 
-        if($aluno->existir()){
-            $aluno->alterar();
-            $tccDados->inserir();
-        }
+           if( Aluno::where( [['matricula','=',$aluno['matricula']]])->update([
+                'nome' => $aluno['nome'],
+                'senha' => $aluno['senha'],
+                'email' => $aluno['email']
+            ])) {
+               TccDados::create($tccDados);
+           }
+
 
         return redirect()->route('perfil_aluno');
+
+
 
     }
 }

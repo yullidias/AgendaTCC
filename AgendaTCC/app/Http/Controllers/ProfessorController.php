@@ -29,32 +29,37 @@ class ProfessorController extends Controller
 
         $dados = $req->all();
 
-        $aluno = new Aluno([
+        $aluno = [
             'matricula' => $dados['matricula'],
             'nome' => NULL,
             'senha' => NULL,
             'email' => NULL
-        ]);
+        ];
 
-        $semestre = new Semestre([
+        $semestre = [
             'ano' => intval(date("Y")),
             'numero'  => (date("m") < 06 )? 01: 02
-        ]);
+        ];
 
-         $alunoSemestre = new AlunoSemestre([
+        $alunoSemestre = [
             'aluno_matricula' => $dados['matricula'],
             'semestre_ano' => intval(date("Y")),
             'semestre_numero' => (date("m") < 06 )? 01: 02,
             'materia' => intval($dados['materia'])
+        ];
 
-        ]);
+        if(Semestre::where([
+                ['ano','=', $semestre['ano'] ],
+                ['numero','=', $semestre['numero'] ]
+            ])->count() == 0){
 
-        if(!($semestre->existir())){
-             $semestre->inserir();
+            Semestre::create($semestre);
         }
-        $aluno->inserir();
-        $alunoSemestre->inserir();
-       return redirect()->route('listar_alunos');
+
+        Aluno::create($aluno);
+        AlunoSemestre::create($alunoSemestre);
+
+        return redirect()->route('listar_alunos');
     }
 
     public function listar_professores()
@@ -91,16 +96,17 @@ class ProfessorController extends Controller
             $permissao = $permissao."0";
         }
 
-         $professor = new Professor([
+        $professor = [
             'SIAPE' => $dados['SIAPE'],
             'nome' => NULL,
             'senha' => NULL,
             'permissao' => intval($permissao),
             'email' => NULL,
             'excluido' => false
-        ]);
+        ];
 
-        $professor->inserir();
+        Professor::create($professor);
+
         return redirect()->route('listar_professores');
 
     }

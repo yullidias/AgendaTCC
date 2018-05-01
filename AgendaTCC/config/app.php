@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
         //
 
@@ -177,6 +178,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 

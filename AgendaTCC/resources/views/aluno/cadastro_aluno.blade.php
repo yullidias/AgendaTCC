@@ -10,6 +10,7 @@
 <br><br>
 <form action="{{ route('salvar_cadastro_aluno') }}" method="post">
 	{{ csrf_field() }}
+	<div class="col-xs-8">
 	<div class='form-group'>
 		<label>Matrícula</label>
 		<input type='text' class='form-control' name='matricula' required>
@@ -40,6 +41,7 @@
 			<option>Coorientador 4</option>
 		</select>
 	</div>
+
 	<br><label>Matéria</label>
 
 	<div class="radio">
@@ -53,6 +55,7 @@
 		</label>
 	</div>
 		
-	<br><input type='submit' class='btn btn-default' value='Cadastrar'>
+	<br><input style="float: right" type='submit' class='btn btn-default' value='Cadastrar'>
+	</div>
 </form>
 @endsection

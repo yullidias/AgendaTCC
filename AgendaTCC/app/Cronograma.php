@@ -1,16 +1,10 @@
 <?php
-
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
-
 class Cronograma extends Model
 {
-    public function lista(){
-        return (object)[
-            'descricao' => 'Pre-Projeto',
-            'data_inicio' => '12/12/17',
-            'data_fim' => '02/03/18'
-        ];
-    }
+    public $timestamps = false;
+    protected $fillable = ['nome', 'data_inicio', 'data_fim', 'semestre_ano','semestre_numero','turma']; //campos que podem ser inseridos pelo usuário
+    protected $guarded = ['id']; //protege os campos de inserção
+    protected $table = 'cronogramas'; //nome da tabela
 }

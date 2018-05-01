@@ -13,7 +13,7 @@ class AlunoSemestre extends Model
 	    'aluno_matricula','semestre_ano','semestre_numero','materia'
 	];
 
-	private $aluno_matricula;
+	/*private $aluno_matricula;
 	private $semestre_ano;
 	private $semestre_numero;
 	private $materia;
@@ -32,5 +32,5 @@ class AlunoSemestre extends Model
 			'semestre_numero' => $this->semestre_numero,
 			'materia' => $this->materia
 		]);
-	}
+	}*/
 }

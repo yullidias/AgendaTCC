@@ -13,19 +13,9 @@ class Aluno extends Model
 	    'matricula','nome','senha','email'
 	];
 
-	private $matricula;
-    private $nome;
-    private $senha;
-    private $email;
 
-	function __construct($campos){
-		$this->matricula = $campos['matricula'];
-	    $this->nome = $campos['nome'];
-	    $this->senha = $campos['senha'];
-	    $this->email = $campos['email'];
-	}
 
-	public function inserir(){
+	/*public function inserir(){
 		DB::table('alunos')->insert([
 			'matricula' => $this->matricula,
 			'nome' => $this->nome,
@@ -47,6 +37,6 @@ class Aluno extends Model
 	public function existir(){
 		$retorno = DB::table('alunos')->where('matricula','=',$this->matricula)->count();
 		return (($retorno > 0)? true: false);
-	}
+	}*/
 
 }
