@@ -1,6 +1,9 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+
 class Cronograma extends Model
 {
     public $timestamps = false;
@@ -9,6 +12,3 @@ class Cronograma extends Model
     protected $table = 'cronogramas'; //nome da tabela
 
 }
-
-
-
