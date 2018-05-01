@@ -83,11 +83,6 @@ Route::get('/cadastrar_cronograma/', [
     'uses' => 'CronogramaController@listar_atividades_cronograma'
 ]);
 
-Route::get('/cadastrar_cronograma/', [
-   'as' => 'listar_atividades_cronograma',
-   'uses' => 'CronogramaController@listar_atividades_cronograma'
-]);
-
 Route::post('excluir_atividade_cronograma', [
     'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
     'uses' => 'CronogramaController@deletar_atividade_cronograma'
