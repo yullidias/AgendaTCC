@@ -72,14 +72,27 @@ Route::get('/cadastrar_cronograma/', [
     'as' => 'cadastrar_cronograma.cadastro_cronograma', //apelido da rota
     'uses' => 'CronogramaController@cadastro',
 ]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad31a14e2a3edb1e7e9c8c732d0467b15ef1beff
 Route::post('salvar_atividade_cronograma',[
     'as' => 'salvar_atividade_cronograma',
     'uses' => 'CronogramaController@salvar_atividade_cronograma'
 ]);
+<<<<<<< HEAD
 Route::get('/cadastrar_cronograma/', [
     'as' => 'listar_atividades_cronograma',
     'uses' => 'CronogramaController@listar_atividades_cronograma'
 ]);
+=======
+
+Route::get('/cadastrar_cronograma/', [
+   'as' => 'listar_atividades_cronograma',
+   'uses' => 'CronogramaController@listar_atividades_cronograma'
+]);
+
+>>>>>>> ad31a14e2a3edb1e7e9c8c732d0467b15ef1beff
 Route::post('excluir_atividade_cronograma', [
     'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
     'uses' => 'CronogramaController@deletar_atividade_cronograma'
@@ -87,9 +100,16 @@ Route::post('excluir_atividade_cronograma', [
 //------------------------------------------------------------------------------------
 //Tela aluno tela6 cronograma
 Route::get( '/perfil_aluno/visualizar_cronograma', [
+<<<<<<< HEAD
     'as' => 'aluno_visualizar_cronograma',
     'uses' => 'CronogramaController@aluno_visualizar_cronograma'
 ]);
+=======
+'as' => 'aluno_visualizar_cronograma',
+   'uses' => 'CronogramaController@aluno_visualizar_cronograma'
+]);
+
+>>>>>>> ad31a14e2a3edb1e7e9c8c732d0467b15ef1beff
 //Tela professor tela10 cronograma
 Route::get('/perfil_professor/visualizar_cronograma', [
     'as' => 'professor_visualizar_cronograma',
