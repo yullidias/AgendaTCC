@@ -7,11 +7,9 @@
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
-<<<<<<< HEAD
-        "prettus/l5-repository": "2.6.18"
-=======
+
+        "prettus/l5-repository": "2.6.18",
         "laravelcollective/html": "^5.3"
->>>>>>> ad31a14e2a3edb1e7e9c8c732d0467b15ef1beff
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
