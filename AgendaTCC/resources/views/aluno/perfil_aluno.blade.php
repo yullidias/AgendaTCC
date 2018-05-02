@@ -11,7 +11,7 @@
 <form action="{{ route('solicitar_alteracao_aluno') }}" method="post">
 	{{ csrf_field() }}
 
-	<table>
+<!--	<table>
 
 		<tbody>
 		@foreach ($aluno as $alun)
@@ -33,7 +33,35 @@
 		@endforeach
 
 		</tbody>
-	</table>
+	</table>-->
+
+	<div class="col-xs-8">
+	<div class='form-group'>
+		@foreach ($aluno as $alun)
+		<label>Matrícula</label>
+		<input type='text' class='form-control' name='matricula' value="{{$alun->matricula}}" readonly>
+		<label>Nome</label>
+		<input type='text' class='form-control' name='nome' value="{{$alun->nome}}" readonly>
+		<label>Email</label>
+		<input type='text' class='form-control' name='email' value="{{$alun->email}}" readonly>
+		<label>Senha</label>
+		<input type='password' class='form-control' name='senha' value="{{$alun->senha}}" readonly>
+		@endforeach
+	</div>
+	</div>
+	
+	<div class="col-xs-8">
+	<div class='form-group'>
+		@foreach ($tccDados as $tcc)
+		<label>Tema</label>
+		<input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly>
+		<label>Orientador</label>
+		<input type='text' class='form-control' name='orientador' value="{{$tcc->orientador}}" readonly>
+		<label>Coorientador</label>
+		<input type='text' class='form-control' name='coorientador' value="{{$tcc->coorientador}}" readonly>
+		@endforeach
+	</div>
+	</div>
 
 
 

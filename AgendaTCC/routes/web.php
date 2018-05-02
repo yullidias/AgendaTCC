@@ -50,6 +50,24 @@ Route::post('/solicitar_alteracao_aluno',[
     'uses' => 'AlunoController@solicitar_alteracao'
 ]);
 //------------------------------------------------------------------------------------
+//Tela professor cadastro professor
+Route::get('/cadastrar_professor',[
+   'as' => 'cadastrar_professor',
+    'uses'=> 'ProfessorController@cadastro_professor'
+]);
+Route::post('/salvar_cadastro_professor', [
+    'as' => 'salvar_cadastro_professor',
+    'uses' => 'ProfessorController@salvar_cadastro_professor'
+]);
+Route::get('/perfil_professor',[
+    'as' => 'perfil_professor',
+    'uses' => 'ProfessorController@perfil_professor'
+]);
+Route::post('/solicitar_alteracao_professor',[
+    'as' => 'solicitar_alteracao_professor',
+    'uses' => 'ProfessorController@solicitar_alteracao'
+]);
+//------------------------------------------------------------------------------------
 //Tela gestor tela19 listaprofessorescadastrados
 Route::get('/listar_professores',[
     'as'=>'listar_professores',

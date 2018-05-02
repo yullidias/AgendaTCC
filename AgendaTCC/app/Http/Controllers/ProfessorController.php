@@ -112,4 +112,42 @@ class ProfessorController extends Controller
     }
     //-----------------Orientador---------------------------
     //-----------------Professor---------------------------
+
+	public function cadastro_professor(){
+        return view('professor.cadastro_professor');
+    }
+    public function perfil_professor(){
+        $professor = Professor::get();
+
+        return view('professor.perfil_professor', compact('professor'));
+    }
+    public function solicitar_alteracao(){
+        echo "altera dados";
+    }
+
+    public function salvar_cadastro_professor(Request $request){
+        $dados = $request->all();
+
+        $professor = [
+            'SIAPE' => $dados['SIAPE'],
+            'nome' => $dados['nome'],
+            'senha' => $dados['senha'],
+            'email' => $dados['email']
+        ];
+
+	if(Professor::where( [['SIAPE','=',$professor['SIAPE']]])){
+           Professor::where( [['SIAPE','=',$professor['SIAPE']]])->update([
+                'nome' => $professor['nome'],
+                'senha' => $professor['senha'],
+                'email' => $professor['email']
+            ]);
+               
+           }
+
+
+        return redirect()->route('perfil_professor');
+
+
+
+    }
 }
