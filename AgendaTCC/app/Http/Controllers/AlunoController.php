@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aluno;
+use App\Professor;
 use App\TccDados;
 use App\Repositories\AlunoRepository;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class AlunoController extends Controller
 {
 
     public function cadastro_aluno(){
-        return view('aluno.cadastro_aluno');
+        $professor = Professor::get();
+        return view('aluno.cadastro_aluno',compact('professor'));
     }
     public function perfil_aluno(){
         $aluno = Aluno::get();
@@ -48,10 +50,12 @@ class AlunoController extends Controller
                 'email' => $aluno['email']
             ])) {
                TccDados::create($tccDados);
+               $request->session()->flash('alert-success', 'Aluno cadastrado com sucesso!');
+               return redirect()->route('perfil_aluno');
+           }else{
+               $request->session()->flash('alert-danger', 'Não foi possível cadastrar o aluno!');
+               return redirect()->back();
            }
-
-
-        return redirect()->route('perfil_aluno');
 
 
 

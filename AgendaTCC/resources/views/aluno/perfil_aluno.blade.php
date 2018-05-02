@@ -7,60 +7,73 @@
 @endsection
 
 @section('conteudo')
-<br><br>
+	<div class="flash-message">
+		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+			@if(Session::has('alert-' . $msg))
+
+				<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+			@endif
+		@endforeach
+	</div> <!-- end .flash-message -->
+<br>
 <form action="{{ route('solicitar_alteracao_aluno') }}" method="post">
 	{{ csrf_field() }}
 
-<!--	<table>
-
-		<tbody>
-		@foreach ($aluno as $alun)
-			<dl class="dl-horizontal">
-			<dt>Nome:</dt>	 <dd>{{$alun->nome}}</dd>
-			<dt>Matrícula:</dt>	 <dd>{{$alun->matricula}}</dd>
-			<dt>E-mail:</dt>	 <dd>{{$alun->email}}</dd>
-			<dt>Senha:</dt>	 <dd>{{$alun->senha}}</dd>
-			</dl>
-
-		@endforeach
-		@foreach ($tccDados as $tcc)
-			<dl class="dl-horizontal">
-				<dt>Tema:</dt>	<dd>{{$tcc->tema}}</dd>
-				<dt>Orientador:</dt>	<dd>{{$tcc->orientador}}</dd>
-				<dt>Coorientador:</dt>	<dd>{{$tcc->coorientador}}</dd>
-			</dl>
-
-		@endforeach
-
-		</tbody>
-	</table>-->
-
-	<div class="col-xs-8">
 	<div class='form-group'>
 		@foreach ($aluno as $alun)
-		<label>Matrícula</label>
-		<input type='text' class='form-control' name='matricula' value="{{$alun->matricula}}" readonly>
-		<label>Nome</label>
-		<input type='text' class='form-control' name='nome' value="{{$alun->nome}}" readonly>
-		<label>Email</label>
-		<input type='text' class='form-control' name='email' value="{{$alun->email}}" readonly>
-		<label>Senha</label>
-		<input type='password' class='form-control' name='senha' value="{{$alun->senha}}" readonly>
+
+		<label class="col-xs-8">Matrícula</label>
+			<table class="col-xs-6">
+				<tr>
+					<td><input type='text' class='form-control' name='matricula' value="{{$alun->matricula}}" readonly></td>
+				</tr>
+			</table>
+		<label class="col-xs-8">Nome</label>
+			<table class="col-xs-6">
+				<tr>
+					<td><input type='text' class='form-control' name='nome' value="{{$alun->nome}}" readonly></td>
+				</tr>
+			</table>
+		<label class="col-xs-8">Email</label>
+			<table class="col-xs-6">
+				<tr>
+					<td><input type='text' class='form-control' name='email' value="{{$alun->email}}" readonly></td>
+				</tr>
+			</table>
+		<label class="col-xs-8">Senha</label>
+			<table class="col-xs-6">
+				<tr>
+					<td><input type='password' class='form-control' name='senha' value="{{$alun->senha}}" readonly></td>
+				</tr>
+			</table>
 		@endforeach
 	</div>
-	</div>
-	
-	<div class="col-xs-8">
+
 	<div class='form-group'>
 		@foreach ($tccDados as $tcc)
-		<label>Tema</label>
-		<input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly>
-		<label>Orientador</label>
-		<input type='text' class='form-control' name='orientador' value="{{$tcc->orientador}}" readonly>
-		<label>Coorientador</label>
-		<input type='text' class='form-control' name='coorientador' value="{{$tcc->coorientador}}" readonly>
+
+		<label class="col-xs-11">Tema</label>
+		<table class="col-xs-10">
+			<tr>
+				<td><input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->aluno_matricula}}' href="{{ route('solicitar_alteracao_aluno', $tcc->tema)}}">Solicitar Alteração</button></td>
+			</tr>
+		</table>
+		<label class="col-xs-11">Orientador</label>
+		<table class="col-xs-10">
+			<tr>
+				<td><input type='text' class='form-control' name='orientador' value="{{$tcc->orientador}}" readonly></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->aluno_matricula}}' href="{{ route('solicitar_alteracao_aluno', $tcc->orientador)}}">Solicitar Alteração</button></td>
+			</tr>
+		</table>
+		<label class="col-xs-11">Coorientador</label>
+		<table class="col-xs-10">
+			<tr>
+				<td><input type='text' class='form-control' name='coorientador' value="{{$tcc->coorientador}}" readonly></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->aluno_matricula}}' href="{{ route('solicitar_alteracao_aluno', $tcc->coorientador)}}">Solicitar Alteração</button></td>
+			</tr>
+		</table>
 		@endforeach
-	</div>
 	</div>
 
 

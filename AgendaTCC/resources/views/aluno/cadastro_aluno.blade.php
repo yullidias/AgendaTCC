@@ -7,7 +7,15 @@
 @endsection
 
 @section('conteudo')
-<br><br>
+	<div class="flash-message">
+		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+			@if(Session::has('alert-' . $msg))
+
+				<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+			@endif
+		@endforeach
+	</div> <!-- end .flash-message -->
+<br>
 <form action="{{ route('salvar_cadastro_aluno') }}" method="post">
 	{{ csrf_field() }}
 	<div class="col-xs-8">
@@ -26,19 +34,17 @@
 	<div class="form-group">
 		<label for="orientador">Orientador</label>
 		<select class="form-control" name="orientador">
-			<option>11111</option>
-			<option>22222</option>
-			<option>33333</option>
-			<option>44444</option>
+			@foreach ($professor as $prof)
+			<option>{{$prof->nome}}</option>
+			@endforeach
 		</select>
 	</div>
 	<div class="form-group">
 		<label for="coorientador">Coorientador</label>
 		<select class="form-control" name="coorientador">
-			<option>Coorientador 1</option>
-			<option>Coorientador 2</option>
-			<option>Coorientador 3</option>
-			<option>Coorientador 4</option>
+			@foreach ($professor as $prof)
+				<option>{{$prof->nome}}</option>
+			@endforeach
 		</select>
 	</div>
 

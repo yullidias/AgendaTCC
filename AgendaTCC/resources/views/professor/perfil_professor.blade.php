@@ -7,27 +7,17 @@
 @endsection
 
 @section('conteudo')
+	<div class="flash-message">
+		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+			@if(Session::has('alert-' . $msg))
+
+				<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+			@endif
+		@endforeach
+	</div> <!-- end .flash-message -->
 <br><br>
 <form action="{{ route('solicitar_alteracao_professor') }}" method="post">
 	{{ csrf_field() }}
-
-<!--	<table>
-
-		<tbody>
-		@foreach ($professor as $prof)
-			<dl class="dl-horizontal">
-			<dt>Nome:</dt>	 <dd>{{$prof->nome}}</dd>
-			<dt>SIAPE:</dt>	 <dd>{{$prof->SIAPE}}</dd>
-			<dt>E-mail:</dt>	 <dd>{{$prof->email}}</dd>
-			<dt>Senha:</dt>	 <dd>{{$prof->senha}}</dd>
-			</dl>
-
-		@endforeach
-
-		
-
-		</tbody>
-	</table>-->
 
 	<div class="col-xs-8">
 	<div class='form-group'>

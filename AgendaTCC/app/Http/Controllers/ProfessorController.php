@@ -135,19 +135,18 @@ class ProfessorController extends Controller
             'email' => $dados['email']
         ];
 
-	if(Professor::where( [['SIAPE','=',$professor['SIAPE']]])){
-           Professor::where( [['SIAPE','=',$professor['SIAPE']]])->update([
+
+          if(Professor::where( [['SIAPE','=',$professor['SIAPE']]])->update([
                 'nome' => $professor['nome'],
                 'senha' => $professor['senha'],
                 'email' => $professor['email']
-            ]);
-               
-           }
-
-
-        return redirect()->route('perfil_professor');
-
-
+            ])){
+                $request->session()->flash('alert-success', 'Professor cadastrado com sucesso!');
+                return redirect()->route('perfil_professor');
+           }else{
+                $request->session()->flash('alert-danger', 'Não foi possível cadastrar o professor!');
+                return redirect()->back();
+	    }
 
     }
 }
