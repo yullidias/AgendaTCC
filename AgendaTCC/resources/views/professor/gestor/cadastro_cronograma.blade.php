@@ -86,7 +86,7 @@
 				@endphp
 				<td>{{$dia}}/{{$mes}}/{{$ano}}</td>
 				@php
-					$data = $c->data_inicio;
+					$data = $c->data_fim;
                     $data = explode('-', $data);
                     $ano = $data[0]; $mes = $data[1]; $dia = $data[2];
 				@endphp

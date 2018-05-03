@@ -86,34 +86,49 @@ Route::post('/salvar_pre_cadastro_professor', [
 ]);
 //------------------------------------------------------------------------------------
 //Tela gestor tela25 definicaodocronograma
-Route::get('/cadastrar_cronograma/', [
+Route::get('/cadastrarCronograma/', [
     'as' => 'cadastrar_cronograma.cadastro_cronograma', //apelido da rota
     'uses' => 'CronogramaController@cadastro',
 ]);
 
-Route::post('salvar_atividade_cronograma',[
+Route::post('/salvarCronograma/',[
     'as' => 'salvar_atividade_cronograma',
     'uses' => 'CronogramaController@salvar_atividade_cronograma'
 ]);
 
-Route::get('/cadastrar_cronograma/', [
+Route::get('/gerirCronograma/', [
     'as' => 'listar_atividades_cronograma',
     'uses' => 'CronogramaController@listar_atividades_cronograma'
 ]);
 
-Route::post('excluir_atividade_cronograma', [
+Route::post('/excluirCronograma/', [
     'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
     'uses' => 'CronogramaController@deletar_atividade_cronograma'
 ]);
 //------------------------------------------------------------------------------------
 //Tela aluno tela6 cronograma
-Route::get( '/perfil_aluno/visualizar_cronograma', [
+Route::get( '/perfilAluno/visualizarCronograma', [
    'as' => 'aluno_visualizar_cronograma',
    'uses' => 'CronogramaController@aluno_visualizar_cronograma'
 ]);
 
 //Tela professor tela10 cronograma
-Route::get('/perfil_professor/visualizar_cronograma', [
+Route::get('/perfilProfessor/visualizarCronograma', [
     'as' => 'professor_visualizar_cronograma',
     'uses' => 'CronogramaController@professor_visualizar_cronograma'
+]);
+//Tela Gerir Semestres
+Route::post('/salvarSemestre/',[
+    'as' => 'salvar_semestre',
+    'uses' => 'SemestreController@salvar_semestre'
+]);
+
+Route::get('/gerirSemestres/', [
+    'as' => 'gerir_semestres',
+    'uses' => 'SemestreController@listar_semestres'
+]);
+
+Route::post('/excluirSemestre/', [
+    'as' => 'excluir_semestre',
+    'uses' => 'SemestreController@excluir_semestre'
 ]);

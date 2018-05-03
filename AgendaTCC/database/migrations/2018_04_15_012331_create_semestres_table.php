@@ -16,6 +16,8 @@ class CreateSemestresTable extends Migration
         Schema::create('semestres', function (Blueprint $table) {
             $table->integer('ano');
             $table->integer('numero');
+            $table->date('data_inicio');
+            $table->date('data_fim');
             $table->primary(['ano','numero']);
         });
     }
