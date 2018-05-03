@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\TccDados;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Aluno;
 use App\Semestre;
 use App\AlunoSemestre;
 use App\Professor;
+use Illuminate\Support\Facades\Input;
 
 class ProfessorController extends Controller
 {
@@ -149,4 +151,24 @@ class ProfessorController extends Controller
 	    }
 
     }
+
+    public function visualizar_lista_alunos(Request $request){
+        $dados = $request->all();
+      $tccDados = TccDados::where([
+          //alterar depois para pegar cada professor que estiver logado
+          ['orientador' ,'=', '11111']
+      ])->get();
+        return view('professor.visualizar_lista_aluno', compact('tccDados'));
+    }
+    public function visualiza_ou_avalia_aluno(){
+      if(Input::get('perfil')) {
+          $aluno = Aluno::get();
+          $tccDados = TccDados::get();
+          return view('professor.visualizar_aluno', compact('aluno','tccDados'));
+      }
+      else{
+          return view('professor.avaliar_aluno');
+      }
+    }
+
 }

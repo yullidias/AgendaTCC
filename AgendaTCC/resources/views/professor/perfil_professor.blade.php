@@ -16,24 +16,27 @@
 		@endforeach
 	</div> <!-- end .flash-message -->
 <br><br>
-<form action="{{ route('solicitar_alteracao_professor') }}" method="post">
+<form action="{{ route('salvar_cadastro_professor') }}" method="post">
 	{{ csrf_field() }}
 
 	<div class="col-xs-8">
 	<div class='form-group'>
 		@foreach ($professor as $prof)
 		<label>SIAPE</label>
-		<input type='text' class='form-control' name='SIAPE' value="{{$prof->SIAPE}}" readonly>
+		<input type='text' class='form-control' name='SIAPE' value="{{$prof->SIAPE}}" >
 		<label>Nome</label>
-		<input type='text' class='form-control' name='nome' value="{{$prof->nome}}" readonly>
+		<input type='text' class='form-control' name='nome' value="{{$prof->nome}}" >
 		<label>Email</label>
-		<input type='text' class='form-control' name='email' value="{{$prof->email}}" readonly>
+		<input type='text' class='form-control' name='email' value="{{$prof->email}}" >
 		<label>Senha</label>
-		<input type='password' class='form-control' name='senha' value="{{$prof->senha}}" readonly>
+		<input type='password' class='form-control' name='senha' value="{{$prof->senha}}" >
 		@endforeach
 	</div>
 	</div>
 
-
+    <br><br>
+    <div class="col-xs-8">
+    <input style="float: right" type='submit' class='btn btn-default' value='Alterar'>
+    </div>
 
 @endsection

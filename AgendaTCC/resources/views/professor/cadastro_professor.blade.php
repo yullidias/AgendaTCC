@@ -29,9 +29,9 @@
 		<label>Senha</label>
 		<input type='password' class='form-control' name='senha' required>
 	</div>
-	
 
-		
+
+
 	<br><input style="float: right" type='submit' class='btn btn-default' value='Cadastrar'>
 	</div>
 </form>

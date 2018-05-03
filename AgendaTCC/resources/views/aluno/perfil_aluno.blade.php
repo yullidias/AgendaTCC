@@ -74,6 +74,16 @@
 			</tr>
 		</table>
 		@endforeach
+	<!--	@foreach($alunoSemestre as $semestre)
+			<label class="col-xs-11">Matéria</label>
+			<table class="col-xs-10">
+				<tr>
+					<td><input type='text' class='form-control' name='coorientador' value="{{$semestre->matricula}}" readonly></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->aluno_matricula}}' href="{{ route('solicitar_alteracao_aluno', $tcc->coorientador)}}">Solicitar Alteração</button></td>
+				</tr>
+			</table>
+
+		@endforeach-->
 	</div>
 
 

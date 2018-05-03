@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aluno;
+use App\AlunoSemestre;
 use App\Professor;
 use App\TccDados;
 use App\Repositories\AlunoRepository;
@@ -19,8 +20,9 @@ class AlunoController extends Controller
     public function perfil_aluno(){
         $aluno = Aluno::get();
         $tccDados = TccDados::get();
+        $alunoSemestre = AlunoSemestre::get();
 
-        return view('aluno.perfil_aluno', compact('tccDados','aluno'));
+        return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre'));
     }
     public function solicitar_alteracao(){
         echo "altera dados";

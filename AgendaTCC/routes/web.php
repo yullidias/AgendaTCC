@@ -117,6 +117,18 @@ Route::get('/perfilProfessor/visualizarCronograma', [
     'as' => 'professor_visualizar_cronograma',
     'uses' => 'CronogramaController@professor_visualizar_cronograma'
 ]);
+//------------------------------------------------------------------------------------
+//Tela professor tela 11 lista de alunos
+Route::get('/perfilProfessor/listaAlunos',[
+   'as' => 'visualizar_lista_alunos',
+   'uses' => 'ProfessorController@visualizar_lista_alunos'
+]);
+Route::post('/perfilProfessor/listaAlunos/visualiza_avalia_aluno', [
+    'as' => 'visualiza_ou_avalia_aluno',
+    'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
+]);
+
+//------------------------------------------------------------------------------------
 //Tela Gerir Semestres
 Route::post('/salvarSemestre/',[
     'as' => 'salvar_semestre',
