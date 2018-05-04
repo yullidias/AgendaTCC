@@ -13,13 +13,14 @@ class CreateCronogramasTable extends Migration
     {
         Schema::create('cronogramas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
+            $table->string('nome',45);
             $table->date('data_inicio');
             $table->date('data_fim');
+            $table->tinyInteger('turma');
             $table->integer('semestre_ano');
             $table->integer('semestre_numero');
-            $table->tinyInteger('turma');
         });
+
         Schema::table('cronogramas', function (Blueprint $table) {
             $table->foreign(['semestre_ano','semestre_numero'])->references(['ano','numero'])->on('semestres');
         });

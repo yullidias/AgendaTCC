@@ -15,14 +15,14 @@ class CreateAlunoSemestresTable extends Migration
     {
         Schema::create('aluno_semestres', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('aluno_matricula');
+            $table->string('usuario_aluno',12);
             $table->integer('semestre_ano');
             $table->integer('semestre_numero');
             $table->tinyInteger('materia');
         });
 
         Schema::table('aluno_semestres', function (Blueprint $table) {
-            $table->foreign('aluno_matricula')->references('matricula')->on('alunos');
+            $table->foreign('usuario_aluno')->references('login')->on('users');
             $table->foreign(['semestre_ano','semestre_numero'])->references(['ano','numero'])->on('semestres');
         });
     }

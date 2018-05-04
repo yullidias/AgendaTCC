@@ -17,15 +17,15 @@ class CreateAgendamentosTable extends Migration
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->dateTime('data');
             $table->integer('id_sala');
-            $table->bigInteger('aluno_matricula');
-            $table->string('membro1');
-            $table->string('membro2');
-            $table->primary(['data', 'id_sala', 'aluno_matricula']);
+            $table->string('usuario_aluno',12);
+            $table->string('membro1banca');
+            $table->string('membro2banca');
+            $table->primary(['data', 'id_sala', 'usuario_aluno']);
         });
 
         Schema::table('agendamentos', function (Blueprint $table) {
             $table->foreign('id_sala')->references('id')->on('sala_auditorios');
-            $table->foreign('aluno_matricula')->references('matricula')->on('alunos');
+            $table->foreign('usuario_aluno')->references('login')->on('users');
         });
         //
     }

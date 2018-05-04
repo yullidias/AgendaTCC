@@ -16,15 +16,15 @@ class CreateTccDadosTable extends Migration
         Schema::create('tcc_dados', function (Blueprint $table) {
             $table->increments('idDados');
             $table->string('tema', 45);
-            $table->bigInteger('orientador');
-            $table->bigInteger('aluno_matricula');
+            $table->string('orientador',12);
+            $table->string('usuario_aluno',12);
             $table->string('coorientador', 45);
         });
 
 
         Schema::table('tcc_dados', function (Blueprint $table) {
-            $table->foreign('aluno_matricula')->references('matricula')->on('alunos');
-            $table->foreign(['orientador'])->references('SIAPE')->on('professors');
+            $table->foreign('usuario_aluno')->references('login')->on('users');
+            $table->foreign(['orientador'])->references('login')->on('users');
         });
     }
 
