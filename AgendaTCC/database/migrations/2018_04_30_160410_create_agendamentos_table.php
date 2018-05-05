@@ -25,7 +25,7 @@ class CreateAgendamentosTable extends Migration
 
         Schema::table('agendamentos', function (Blueprint $table) {
             $table->foreign('id_sala')->references('id')->on('sala_auditorios');
-            $table->foreign('usuario_aluno')->references('login')->on('users');
+            $table->foreign('usuario_aluno')->references('id')->on('users');
         });
         //
     }

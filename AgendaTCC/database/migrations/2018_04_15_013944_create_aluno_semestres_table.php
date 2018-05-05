@@ -22,7 +22,7 @@ class CreateAlunoSemestresTable extends Migration
         });
 
         Schema::table('aluno_semestres', function (Blueprint $table) {
-            $table->foreign('usuario_aluno')->references('login')->on('users');
+            $table->foreign('usuario_aluno')->references('id')->on('users');
             $table->foreign(['semestre_ano','semestre_numero'])->references(['ano','numero'])->on('semestres');
         });
     }

@@ -6,6 +6,7 @@ use App\Aluno;
 use App\AlunoSemestre;
 use App\Professor;
 use App\TccDados;
+use App\User;
 use App\Repositories\AlunoRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class AlunoController extends Controller
         return view('aluno.cadastro_aluno',compact('professor'));
     }
     public function perfil_aluno(){
-        $aluno = Aluno::get();
+        $aluno = User::get();
         $tccDados = TccDados::get();
         $alunoSemestre = AlunoSemestre::get();
 
@@ -32,9 +33,9 @@ class AlunoController extends Controller
         $dados = $request->all();
 
         $aluno = [
-            'matricula' => $dados['matricula'],
+            'id' => $dados['matricula'],
             'nome' => $dados['nome'],
-            'senha' => $dados['senha'],
+            'senha' => bcrypt($dados['senha']),
             'email' => $dados['email']
         ];
 
@@ -46,7 +47,7 @@ class AlunoController extends Controller
             'coorientador' => $dados['coorientador']
         ];
 
-           if( Aluno::where( [['matricula','=',$aluno['matricula']]])->update([
+           if( User::where( [['id','=',$aluno['matricula']]])->update([
                 'nome' => $aluno['nome'],
                 'senha' => $aluno['senha'],
                 'email' => $aluno['email']

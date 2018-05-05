@@ -14,8 +14,17 @@ class User extends Authenticatable
      *
      * @var array
      */
+    //  public function getAuthIdentifier()
+    //  {
+    //    return 'login';
+    //  }
+    //  public function id()
+    //      {
+    //          return 'login'; //o padrao é usar o campo de email para autenticação, aqui alteramos para usar o campo login como autenticação
+    //      }
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'login', 'password', 'nome', 'email', 'excluido', 'ehProfessor', 'orientador', 'professorDisciplina', 'gestor'
     ];
 
     /**
@@ -26,4 +35,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 }

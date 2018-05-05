@@ -8,6 +8,7 @@
 </head>
 
 <body>
+
 	<!-- -->
 	<nav class='navbar navbar-inverse'>
 		<div class='container'>
@@ -22,7 +23,10 @@
 
 			<div class='collapse navbar-collapse' id='barra-navegacao'>
 				<ul class='nav navbar-nav navbar-right'>
-					@yield('camposnavbar')
+					@if(auth()->check()){{-- se ele estiver logado --}}
+						<li><a href="#">{{auth()->user()->nome}}</a></li> {{-- mostro o nome de quem está logado --}}
+						<li><a href="{{route('site.login.sair')}}">Sair</a></li> {{-- sai do login --}}
+						@endif
 				</ul>
 			</div>
 		</div>
@@ -34,7 +38,7 @@
 		@yield('conteudo')
 	</main>
 
-	<!-- 
+	<!--
 	<footer class='footer' align='right'>
 	    <div>
 	          <img src='logo.png' height='40px'>

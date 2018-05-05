@@ -23,8 +23,8 @@ class CreateTccDadosTable extends Migration
 
 
         Schema::table('tcc_dados', function (Blueprint $table) {
-            $table->foreign('usuario_aluno')->references('login')->on('users');
-            $table->foreign(['orientador'])->references('login')->on('users');
+            $table->foreign('usuario_aluno')->references('id')->on('users');
+            $table->foreign(['orientador'])->references('id')->on('users');
         });
     }
 
