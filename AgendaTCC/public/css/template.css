@@ -18,3 +18,17 @@ body {
 .navbar-inverse .navbar-brand {
   color: white;
 }
+.voltar{
+	font-size: 30px; 
+	color:black; 
+	padding-left: 1.8em;
+	float: left;
+}
+
+.tabela {
+    text-align:center;
+}
+
+.tabela th {
+    text-align:center;
+}

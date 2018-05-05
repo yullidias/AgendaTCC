@@ -5,112 +5,225 @@ namespace App\Http\Controllers;
 use App\TccDados;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Aluno;
+use App\User;
 use App\Semestre;
 use App\AlunoSemestre;
-use App\Professor;
 use Illuminate\Support\Facades\Input;
 
 class ProfessorController extends Controller
 {
-       //-----------------Gestor---------------------------
-  public function listar_alunos()
-  {
-    echo "Listar Aluno";
-  }
-
-  public function pre_cadastro_aluno(){
+  //-----------------Gestor-------------------------------------------------------------
+  //------------------------------------------------------------------------------------
+  //Tela gestor tela22 precadastro aluno
+    public function pre_cadastro_aluno(){
         return view('professor.gestor.pre_cadastro_aluno');
     }
 
     public function salvar_pre_cadastro_aluno(Request $req)
     {
         $this->validate($req, [
-            'matricula' => 'required|unique:alunos',
+            'id' => 'required|unique:users|max:12',
+        ],[
+                'id.required' => 'Este campo é obrigatorio!',
+                'id.unique' => 'Matricula já cadastrada!',
+                'id.max' => 'Matricula deve ter no maximo 12 digitos!',
         ]);
 
         $dados = $req->all();
 
         $aluno = [
-            'matricula' => $dados['matricula'],
+            'id' => $dados['id'],
             'nome' => NULL,
-            'senha' => NULL,
-            'email' => NULL
+            'password' => bcrypt($dados['id']),
+            'email' => NULL,
+            'excluido' => false,
+            'professor' => false,
+            'orientador' =>  false,
+            'professorDisciplina' => false,
+            'gestor' => false,
         ];
 
-        $semestre = [
-            'ano' => intval(date("Y")),
-            'numero'  => (date("m") < 06 )? 01: 02
-        ];
+        $semestre = Semestre::orderBy('ano', 'desc')
+                    ->orderBy('numero', 'desc')
+                    ->get()->first();
 
         $alunoSemestre = [
-            'aluno_matricula' => $dados['matricula'],
-            'semestre_ano' => intval(date("Y")),
-            'semestre_numero' => (date("m") < 06 )? 01: 02,
+            'usuario_aluno' => $dados['id'],
+            'semestre_ano' => $semestre['ano'],
+            'semestre_numero' => $semestre['numero'],
             'materia' => intval($dados['materia'])
         ];
 
-        if(Semestre::where([
-                ['ano','=', $semestre['ano'] ],
-                ['numero','=', $semestre['numero'] ]
-            ])->count() == 0){
 
-            Semestre::create($semestre);
-        }
-
-        Aluno::create($aluno);
+        User::create($aluno);
         AlunoSemestre::create($alunoSemestre);
 
         return redirect()->route('listar_alunos');
     }
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela21 listadealunos
+    public function listar_alunos(Request $req)
+    {
+        $dados = $req->all();
 
+        $semestres = Semestre::all();
+
+         if(isset($_POST['materia'])){
+
+            $semestre=explode('-', $dados['semestre']);
+
+            $materia_selecionada=$dados['materia'];
+            $semestre_selecionado=$dados['semestre'];
+            $semestre_ano=$semestre[1];
+            $semestre_numero=$semestre[0];
+
+        }else{ //primeira vez
+
+            $semestre = Semestre::orderBy('ano', 'desc')
+                    ->orderBy('numero', 'desc')
+                    ->get()->first();
+
+            $materia_selecionada=1;
+            $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
+            $semestre_ano=$semestre['ano'];
+            $semestre_numero=$semestre['numero'];
+        }
+
+        $alunos = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')->where([
+                ['aluno_semestres.materia', '=', $materia_selecionada],
+                ['aluno_semestres.semestre_ano', '=', $semestre_ano],
+                ['aluno_semestres.semestre_numero', '=', $semestre_numero],
+                ['users.professor', '=',  false],
+                ['users.excluido', '=',  false],
+            ])->get();
+
+        return view('professor.gestor.listar_alunos',compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
+    }
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela23 alteracaocadastroaluno
+    public function alterar_aluno($id)
+    {
+
+        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+            ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->where('users.id', '=',  $id)->get()->first();
+        }else { //esta so pre cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+            ->where('users.id', '=',  $id)->get()->first();
+        }
+
+        return view('professor.gestor.alterar_aluno',compact('aluno'));
+    }
+
+    public function salvar_alterar_aluno(Request $req)
+    {
+        $dados = $req->all();
+
+        User::where('id','=',$dados['id'])
+        ->update([
+            'nome' => $dados['nome'],
+            'email' => $dados['email'],
+        ]);
+
+        AlunoSemestre::where('usuario_aluno','=',$dados['id'])
+        ->update([
+            'materia' => $dados['materia']
+        ]);
+
+        /*TccDados::where('usuario_aluno','=',$dados['id'])
+        ->update([
+            'tema' => $dados['tema'],
+            'orientador' => $dados['orientador'],
+            'coorientador' => $dados['coorientador']
+        ]);*/
+
+        return redirect()->route('listar_alunos');
+    }
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela24 dadoscadastraisaluno
+     public function visualizar_aluno($id)
+    {
+
+        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+            ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->where('users.id', '=',  $id)->get()->first();
+        }else { //esta so pre cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+           ->where('users.id', '=',  $id)->get()->first();
+        }
+
+        return view('professor.gestor.visualizar_aluno',compact('aluno'));
+    }
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor excluiraluno
+     public function excluir_aluno($id)
+    {
+
+         User::where('id','=',$id)
+        ->update([
+            'excluido' => true,
+        ]);
+
+         return redirect()->route('listar_alunos');
+    }
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela19 listaprofessorescadastrados
     public function listar_professores()
     {
       echo "Listar Professor";
     }
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela29 precadastroprofessor
     public function pre_cadastro_professor(){
         return view('professor.gestor.pre_cadastro_professor');
     }
-
     public function salvar_pre_cadastro_professor(Request $req)
     {
-        $this->validate($req, [
-            'SIAPE' => 'required|unique:professors',
-        ]);
-
+      
         $dados = $req->all();
 
+         $this->validate($req, [
+            'id' => 'required|unique:users',
+        ]);
+
         if(isset($_POST['permissao_orientador'])){
-            $permissao = $dados['permissao_orientador'];
+            $dados['permissao_orientador'] = true;
         }else{
-            $permissao = "0";
+            $dados['permissao_orientador']  = false;
         }
 
         if(isset($_POST['permissao_professorDisciplina'])){
-            $permissao = $permissao.$dados['permissao_professorDisciplina'];
+            $dados['permissao_professorDisciplina'] = true;
         }else{
-            $permissao = $permissao."0";
+            $dados['permissao_professorDisciplina'] = false;
         }
 
         if(isset($_POST['permissao_gestor'])){
-            $permissao = $permissao.$dados['permissao_gestor'];
+            $dados['permissao_gestor'] = true;
         }else{
-            $permissao = $permissao."0";
+            $dados['permissao_gestor'] = false;
         }
 
         $professor = [
-            'SIAPE' => $dados['SIAPE'],
+            'id' => $dados['id'],
             'nome' => NULL,
-            'senha' => NULL,
-            'permissao' => intval($permissao),
+            'password' => bcrypt($dados['id']),
             'email' => NULL,
-            'excluido' => false
+            'excluido' => false,
+            'professor' => true,
+            'orientador' =>  $dados['permissao_orientador'],
+            'professorDisciplina' =>  $dados['permissao_professorDisciplina'],
+            'gestor' => $dados['permissao_gestor'],
         ];
-
-        Professor::create($professor);
+        User::create($professor);
 
         return redirect()->route('listar_professores');
-
     }
     //-----------------Orientador---------------------------
     //-----------------Professor---------------------------

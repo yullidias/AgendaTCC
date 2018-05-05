@@ -32,22 +32,17 @@
 		</div>
 	</nav>
 	<!-- -->
-
+	@yield('voltar')
 	<main class='container'>
+
 		<h1><strong>@yield('titulo')</strong></h1>
+		<br><br>
 		@yield('conteudo')
 	</main>
-
-	<!--
-	<footer class='footer' align='right'>
-	    <div>
-	          <img src='logo.png' height='40px'>
-	    </div>
-    </footer>-->
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
+
 </body>
 </html>

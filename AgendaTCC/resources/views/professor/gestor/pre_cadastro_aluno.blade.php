@@ -2,20 +2,26 @@
 
 @section('titulo','Pré Cadastro Aluno')
 
+@section('voltar')
+<a href="{{ route('listar_alunos') }}"><spa class="glyphicon glyphicon-arrow-left voltar"></span></a>
+@endsection
+
 @section('camposnavbar')
 <li><a href="{{ route('listar_alunos') }}">Aluno</a></li>
 @endsection
 
 @section('conteudo')
 <div class='col-md-4 col-md-offset-1'>
-	<br><br>
-	<form action="{{ route('salvar_pre_cadastro_aluno') }}" method="post">
+	<form action="{{ route('listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno') }}" method="post">
 		{{ csrf_field() }}
 		
-		<div class="form-group {{ $errors->has('matricula') ? 'has-error' : '' }}">
+		<div class="form-group {{ $errors->has('id') ? 'has-error' : '' }}">
 			<label>Matricula</label>
-			<input type='text' class='form-control' name='matricula' required>
-			<span class="text-danger">{{ $errors->has('matricula') ? 'Matricula já cadastrada! Tente novamente' : ''}}</span>
+			<input type='text' class='form-control' name='id' required>
+
+			@foreach($errors->all() as $error)
+				<span class="text-danger">{{ $error }}</span>
+			@endforeach
 		</div>
 
 		<br><label>Matéria</label>

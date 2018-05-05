@@ -24,7 +24,7 @@ class User extends Authenticatable
     //      }
 
     protected $fillable = [
-        'login', 'password', 'nome', 'email', 'excluido', 'ehProfessor', 'orientador', 'professorDisciplina', 'gestor'
+        'id', 'password', 'nome', 'email', 'excluido', 'professor', 'orientador', 'professorDisciplina', 'gestor'
     ];
 
     /**

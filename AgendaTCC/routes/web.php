@@ -20,24 +20,9 @@ Route::get('/login/sair',['as'=>'site.login.sair','uses'=>'Site\LoginController@
 Route::post('/login/entrar',['as'=>'site.login.entrar','uses'=>'Site\LoginController@entrar']);
 
 //------------------------------------------------------------------------------------
-//Tela gestor tela21 listadealunos
-Route::get('/listar_alunos',[
-    'as'=>'listar_alunos',
-    'uses'=>'ProfessorController@listar_alunos'
-]);
-//------------------------------------------------------------------------------------
-//Tela gestor tela22 precadastro aluno
-Route::get('/listar_alunos/pre_cadastro_aluno', [
-    'as'=>'listar_alunos.pre_cadastro_alunos',
-    'uses'=>'ProfessorController@pre_cadastro_aluno'
-]);
 
-Route::post('/salvar_pre_cadastro_aluno', [
-    'as'=>'salvar_pre_cadastro_aluno',
-    'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
-]);
 //------------------------------------------------------------------------------------
-Route::group(['middleware'=>['auth','check.professor']], function (){
+Route::group(['middleware'=>['auth','check.gestor']], function (){
         //Tela aluno tela2 cadastro aluno
         Route::get('/cadastrar_aluno',[
             'as' => 'cadastrar_aluno',
@@ -129,6 +114,51 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
 
 //Verifica acesso gestor
 Route::group(['middleware'=>'check.gestor'],function(){
+    //Tela gestor tela21 listadealunos
+        Route::get('/listar_alunos',[
+            'as'=>'listar_alunos',
+            'uses'=>'ProfessorController@listar_alunos'
+        ]);
+
+        Route::post('/listar_alunos',[
+            'as'=>'listar_alunos',
+            'uses'=>'ProfessorController@listar_alunos'
+        ]);
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela23 alteracaocadastroaluno
+        Route::get('/listar_alunos/alterar_aluno/{id}',[
+            'as'=>'listar_alunos.alterar_aluno',
+            'uses'=>'ProfessorController@alterar_aluno'
+        ]);
+
+        Route::post('/listar_alunos/alterar_aluno/salvar_alterar_aluno',[
+            'as'=>'listar_alunos.alterar_aluno.salvar_alterar_aluno',
+            'uses'=>'ProfessorController@salvar_alterar_aluno'
+        ]);
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela24 dadoscadastraisaluno
+        Route::get('/listar_alunos/visualizar_aluno/{id}',[
+            'as'=>'listar_alunos.visualizar_aluno',
+            'uses'=>'ProfessorController@visualizar_aluno'
+        ]);
+    //------------------------------------------------------------------------------------
+    //Tela gestor  excluir aluno
+        Route::get('/listar_alunos/excluir_aluno/{id}',[
+            'as'=>'listar_alunos.excluir_aluno',
+            'uses'=>'ProfessorController@excluir_aluno'
+        ]);
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor tela22 precadastro aluno
+        Route::get('/listar_alunos/pre_cadastro_aluno', [
+            'as'=>'listar_alunos.pre_cadastro_alunos',
+            'uses'=>'ProfessorController@pre_cadastro_aluno'
+        ]);
+
+        Route::post('/listar_alunos/pre_cadastro_aluno/salvar_pre_cadastro_aluno', [
+            'as'=>'listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno',
+            'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
+        ]);
     //------------------------------------------------------------------------------------
     //Tela gestor tela19 listaprofessorescadastrados
         Route::get('/listar_professores',[
@@ -142,8 +172,8 @@ Route::group(['middleware'=>'check.gestor'],function(){
             'uses'=>'ProfessorController@pre_cadastro_professor'
         ]);
 
-        Route::post('/salvar_pre_cadastro_professor', [
-            'as'=>'salvar_pre_cadastro_professor',
+        Route::post('/listar_professores/pre_cadastro_professor/salvar_pre_cadastro_professor', [
+            'as'=>'listar_professores.pre_cadastro_professor.salvar_pre_cadastro_professor',
             'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
         ]);
     //------------------------------------------------------------------------------------

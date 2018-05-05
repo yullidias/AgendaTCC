@@ -19,7 +19,7 @@ class UsuarioSeeder extends Seeder
             'password'=>bcrypt('123'),
             'email'=>'allinealuna@email.com',
             'excluido'=>false,
-            'Professor'=>true,
+            'professor'=>true,
             'orientador'=>'0',
             'professorDisciplina'=>'1',
             'gestor'=>'1',
@@ -28,13 +28,13 @@ class UsuarioSeeder extends Seeder
         User::create([
             'id'=>'201522300030',
             'password'=>bcrypt('654321'),
-            'Professor'=>false,
+            'professor'=>false,
         ]);
         //cria professor com permissão de orientador
         User::create([
             'id'=>'7654321',
             'password'=>bcrypt('123'),
-            'Professor'=>true,
+            'professor'=>true,
             'orientador'=>'1',
             'professorDisciplina'=>'0',
             'gestor'=>'0',
