@@ -3,7 +3,7 @@
 @section('titulo','Pré Cadastro Professor')
 
 @section('voltar')
-<a href="{{ route('listar_alunos') }}"><spa class="glyphicon glyphicon-arrow-left voltar"></span></a>
+<a href="{{ route('listar_professores') }}"><spa class="glyphicon glyphicon-arrow-left voltar"></span></a>
 @endsection
 
 @section('camposnavbar')

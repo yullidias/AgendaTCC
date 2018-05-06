@@ -173,9 +173,29 @@ class ProfessorController extends Controller
 
     //------------------------------------------------------------------------------------
     //Tela gestor tela19 listaprofessorescadastrados
-    public function listar_professores()
+    public function listar_professores(Request $req)
     {
-      echo "Listar Professor";
+        $usuarioID=Auth()->user()->id;
+        $professores = User::where('excluido',false)->where('professor',true)->where('id','!=',$usuarioID)->get();  
+        return view('professor.gestor.listar_professores',compact('professores'));
+    }
+//------------------------------------------------------------------------------------
+ // Tela gestor tela20 dadoscadastraisprofessor
+     public function visualizar_professor($id)
+    {
+        $professor =User::where('id','=',$id)->get()->first();
+        return view('professor.gestor.visualizar_professor',compact('professor'));
+    }
+
+    //------------------------------------------------------------------------------------
+    //Tela gestor  excluir professor
+      public function excluir_professor($id)
+    {
+         User::where('id','=',$id) ->update([
+            'excluido' => true,
+        ]);
+          //verificar se nao esta se excluindo
+         return redirect()->route('listar_professores');
     }
 
     //------------------------------------------------------------------------------------

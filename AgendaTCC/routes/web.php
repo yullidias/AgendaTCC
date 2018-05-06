@@ -165,6 +165,23 @@ Route::group(['middleware'=>'check.gestor'],function(){
             'as'=>'listar_professores',
             'uses'=>'ProfessorController@listar_professores'
         ]);
+        Route::post('/listar_professores',[
+            'as'=>'listar_professores',
+            'uses'=>'ProfessorController@listar_professores'
+        ]);
+     //------------------------------------------------------------------------------------
+    //Tela gestor tela20 dadoscadastraisprofessor
+        Route::get('/listar_professores/visualizar_professor/{id}',[
+            'as'=>'listar_professores.visualizar_professor',
+            'uses'=>'ProfessorController@visualizar_professor'
+        ]);
+       //------------------------------------------------------------------------------------
+    //Tela gestor  excluir professor
+        Route::get('/listar_professores/excluir_professor/{id}',[
+            'as'=>'listar_professores.excluir_professor',
+            'uses'=>'ProfessorController@excluir_professor'
+        ]);
+
     //------------------------------------------------------------------------------------
     //Tela gestor tela29 precadastroprofessor
         Route::get('/listar_professores/pre_cadastro_professor', [
