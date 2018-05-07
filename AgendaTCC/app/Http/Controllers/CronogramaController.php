@@ -11,40 +11,16 @@ use App\PassoCronograma;
 
 class CronogramaController extends Controller
 {
-
-    public function cadastro(){
-        $cronogramas = Cronograma::all();
-        return view('professor.gestor.cadastro_cronograma', compact('cronogramas'));
-    }
-
     public function salvar_atividade_cronograma(Request $request){
         $campos = $request->all();
-        $semestre_ano = date ("Y"); //retorna o ano atual, no formato yyyy//
-        $semestre_numero = (date ("m") <= 6)? 1 : 2;//retorna o numero do mes atual, descobre o semestre atual//
-
-        $cronograma = Semestre::where([
-            ['ano', $semestre_ano],
-            ['numero', $semestre_numero],
-        ]);
-        if($cronograma-> count() == 0){//cria o semestre no banco de dados caso ele ainda não exista//
-            $registro = ["ano" => $semestre_ano, "numero" => $semestre_numero];
-            Semestre::create($registro);
-        }
-        if($semestre_numero==1){
-            $min = $semestre_ano."-01-01";
-            $max = $semestre_ano."-06-30";
-        }
-        else{
-            $min = $semestre_ano."-07-01";
-            $max = $semestre_ano."-12-31";
-        }
-
+        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
 
         if($campos['data_inicio'] > $campos['data_fim']){
             $request->session()->flash('alert-danger', 'Data de Início é superior a Data de Fim');
             return redirect()->back();
         }
-        else if($campos['data_inicio'] > $max || $campos['data_inicio'] < $min || $campos['data_fim'] > $max || $campos['data_fim'] < $min){
+        else if($campos['data_inicio'] > $semestre->data_fim || $campos['data_inicio'] < $semestre->data_inicio ||
+            $campos['data_fim'] > $semestre->data_fim || $campos['data_fim'] < $semestre->data_inicio){
             $request->session()->flash('alert-danger', 'A Data de Início e a Data de Fim devem pertencer semestre atual.');
             return redirect()->back();
         }
@@ -52,20 +28,20 @@ class CronogramaController extends Controller
             $registro = [ "nome" => $campos['nome'],
                 "data_inicio" => $campos['data_inicio'],
                 "data_fim" => $campos['data_fim'],
-                "semestre_ano" => $semestre_ano,
-                "semestre_numero" => $semestre_numero,
+                "semestre_ano" => $semestre->ano,
+                "semestre_numero" => $semestre->numero,
                 "turma" => $campos['turma'],
             ];
             Cronograma::create($registro);
             $request->session()->flash('alert-success', 'Cadastrado com sucesso!');
             return redirect()->route('listar_atividades_cronograma');
         }
-    //no banco, semestre_ano, semestre_numero e turma deveriam ser chaves
     }
 
     public function listar_atividades_cronograma(){
-        $cronogramas = (Cronograma::select('id','nome','data_inicio','data_fim','semestre_ano','semestre_numero','turma'))->distinct()->get();
-        return view('professor.gestor.cadastro_cronograma', compact('cronogramas'));
+        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
+        $cronogramas = Cronograma::all();
+        return view('professor.gestor.gerir_cronograma', compact('cronogramas'), compact('semestre'));
     }
 
     public function deletar_atividade_cronograma(Request $request){
@@ -75,30 +51,40 @@ class CronogramaController extends Controller
     }
 
     public function aluno_visualizar_cronograma(){
-        $semestre_ano = date ("Y"); //retorna o ano atual, no formato yyyy//
-        $semestre_numero = (date ("m") <= 6)? 1 : 2;//retorna o numero do mes atual, descobre o semestre atual//
+        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//pega o semestre atual//
+        $aluno = auth()->user(); //pega o usuario atual//
+
+        $matriculaTCC2 = User::join('aluno_semestres','usuario_aluno','=','id')->where('usuario_aluno','=',"$aluno->id")->
+            where('semestre_ano','=',"$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('materia','=','2')->get();
+
+        if($matriculaTCC2.count()!=0) {//se tiver cursando o tcc2, o agendamento será mostrado//
+            $show = true;
+            $agendamento = Agendamento::join('aluno_semestres','id_matricula','=','id')->where('id_matricula', '=', "$matriculaTCC2->id");
+        }
+        else{
+            $show = false;
+        }
 
         $cronograma1 = (Cronograma::select('nome','data_inicio','data_fim'))
-            ->where('semestre_ano', '=', "$semestre_ano")->where('semestre_numero','=',"$semestre_numero")->where('turma', '=', '1')
+            ->where('semestre_ano', '=', "$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('turma', '=', '1')
             ->orderby('turma','asc','data_inicio','asc')->get();
 
         $cronograma2 = (Cronograma::select('nome','data_inicio','data_fim'))
-            ->where('semestre_ano', '=', "$semestre_ano")->where('semestre_numero','=',"$semestre_numero")->where('turma', '=', '2')
+            ->where('semestre_ano', '=', "$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('turma', '=', '2')
             ->orderby('turma','asc','data_inicio','asc')->get();
 
-        return view("aluno.visualizar_cronograma", compact('cronograma1'), compact('cronograma2'));
+        return view("aluno.visualizar_cronograma", compact('cronograma1'), compact('cronograma2'), compact('show'), compact('agendamento'));
     }
 
     public function professor_visualizar_cronograma(){
-        $semestre_ano = date ("Y"); //retorna o ano atual, no formato yyyy//
-        $semestre_numero = (date ("m") <= 6)? 1 : 2;//retorna o numero do mes atual, descobre o semestre atual//
+        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
 
         $cronograma1 = (Cronograma::select('nome','data_inicio','data_fim'))
-            ->where('semestre_ano', '=', "$semestre_ano")->where('semestre_numero','=',"$semestre_numero")->where('turma', '=', '1')
+            ->where('semestre_ano', '=', "$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('turma', '=', '1')
             ->orderby('turma','asc','data_inicio','asc')->get();
 
         $cronograma2 = (Cronograma::select('nome','data_inicio','data_fim'))
-            ->where('semestre_ano', '=', "$semestre_ano")->where('semestre_numero','=',"$semestre_numero")->where('turma', '=', '2')
+            ->where('semestre_ano', '=', "$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('turma', '=', '2')
             ->orderby('turma','asc','data_inicio','asc')->get();
 
         return view("professor.visualizar_cronograma", compact('cronograma1'), compact('cronograma2'));

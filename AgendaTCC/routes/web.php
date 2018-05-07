@@ -19,43 +19,40 @@ Route::get('/login',['as'=>'site.login','uses'=>'Site\LoginController@index']);
 Route::get('/login/sair',['as'=>'site.login.sair','uses'=>'Site\LoginController@sair']);
 Route::post('/login/entrar',['as'=>'site.login.entrar','uses'=>'Site\LoginController@entrar']);
 
-//------------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------------
-Route::group(['middleware'=>['auth','check.gestor']], function (){
-        //Tela aluno tela2 cadastro aluno
-        Route::get('/cadastrar_aluno',[
-            'as' => 'cadastrar_aluno',
-            'uses'=> 'AlunoController@cadastro_aluno'
-        ]);
-        Route::post('/salvar_cadastro_aluno', [
-            'as' => 'salvar_cadastro_aluno',
-            'uses' => 'AlunoController@salvar_cadastro_aluno'
-        ]);
-        Route::get('/perfil_aluno',[
-            'as' => 'perfil_aluno',
-            'uses' => 'AlunoController@perfil_aluno'
-        ]);
-        Route::post('/solicitar_alteracao_aluno',[
-            'as' => 'solicitar_alteracao_aluno',
-            'uses' => 'AlunoController@solicitar_alteracao'
-        ]);
+//Grupo de acesso para o aluno
+Route::group(['middleware'=>['auth','check.aluno']], function(){
+    //Tela aluno tela2 cadastro aluno
+    Route::get('/cadastrar_aluno',[
+        'as' => 'cadastrar_aluno',
+        'uses'=> 'AlunoController@cadastro_aluno'
+    ]);
+    Route::post('/salvar_cadastro_aluno', [
+        'as' => 'salvar_cadastro_aluno',
+        'uses' => 'AlunoController@salvar_cadastro_aluno'
+    ]);
+    Route::get('/perfil_aluno',[
+        'as' => 'perfil_aluno',
+        'uses' => 'AlunoController@perfil_aluno'
+    ]);
+    Route::post('/solicitar_alteracao_aluno',[
+        'as' => 'solicitar_alteracao_aluno',
+        'uses' => 'AlunoController@solicitar_alteracao'
+    ]);
 
 });
 
-
-//------------------------------------------------------------------------------------
-//Tela aluno tela6 cronograma
+//Tela aluno tela 6 cronograma
 Route::get( '/perfilAluno/visualizarCronograma', [
     'as' => 'aluno_visualizar_cronograma',
     'uses' => 'CronogramaController@aluno_visualizar_cronograma'
 ]);
 
-//Grupo de acesso para o aluno
-Route::group(['middleware'=>['auth','check.aluno']], function(){
-
-
-});
+//Tela professor tela 10 cronograma
+Route::get('/perfilProfessor/visualizarCronograma', [
+    'as' => 'professor_visualizar_cronograma',
+    'uses' => 'CronogramaController@professor_visualizar_cronograma'
+]);
 
 //Grupo de acesso do professor
 Route::group(['middleware'=>['auth','check.professor']], function (){
@@ -77,12 +74,6 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'as' => 'solicitar_alteracao_professor',
             'uses' => 'ProfessorController@solicitar_alteracao'
         ]);
-
-    //Tela professor tela10 cronograma
-        Route::get('/perfilProfessor/visualizarCronograma', [
-            'as' => 'professor_visualizar_cronograma',
-            'uses' => 'CronogramaController@professor_visualizar_cronograma'
-        ]);
     //------------------------------------------------------------------------------------
     //Tela professor tela 11 lista de alunos
         Route::get('/perfilProfessor/listaAlunos',[
@@ -94,26 +85,11 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
         ]);
 
-    //------------------------------------------------------------------------------------
-    //Tela Gerir Semestres
-        Route::post('/salvarSemestre/',[
-            'as' => 'salvar_semestre',
-            'uses' => 'SemestreController@salvar_semestre'
-        ]);
 
-        Route::get('/gerirSemestres/', [
-            'as' => 'gerir_semestres',
-            'uses' => 'SemestreController@listar_semestres'
-        ]);
-
-        Route::post('/excluirSemestre/', [
-            'as' => 'excluir_semestre',
-            'uses' => 'SemestreController@excluir_semestre'
-        ]);
 });
 
-//Verifica acesso gestor
-Route::group(['middleware'=>'check.gestor'],function(){
+//------------------------------------------------------------------------------------
+Route::group(['middleware'=>['auth','check.gestor']], function (){
     //Tela gestor tela21 listadealunos
         Route::get('/listar_alunos',[
             'as'=>'listar_alunos',
@@ -195,11 +171,6 @@ Route::group(['middleware'=>'check.gestor'],function(){
         ]);
     //------------------------------------------------------------------------------------
     //Tela gestor tela25 definicaodocronograma
-        Route::get('/cadastrarCronograma/', [
-            'as' => 'cadastrar_cronograma.cadastro_cronograma', //apelido da rota
-            'uses' => 'CronogramaController@cadastro',
-        ]);
-
         Route::post('/salvarCronograma/',[
             'as' => 'salvar_atividade_cronograma',
             'uses' => 'CronogramaController@salvar_atividade_cronograma'
@@ -214,42 +185,8 @@ Route::group(['middleware'=>'check.gestor'],function(){
             'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
             'uses' => 'CronogramaController@deletar_atividade_cronograma'
         ]);
-        //Tela professor cadastro professor
-        Route::get('/cadastrar_professor',[
-            'as' => 'cadastrar_professor',
-            'uses'=> 'ProfessorController@cadastro_professor'
-        ]);
-        Route::post('/salvar_cadastro_professor', [
-            'as' => 'salvar_cadastro_professor',
-            'uses' => 'ProfessorController@salvar_cadastro_professor'
-        ]);
-        Route::get('/perfil_professor',[
-            'as' => 'perfil_professor',
-            'uses' => 'ProfessorController@perfil_professor'
-        ]);
-        Route::post('/solicitar_alteracao_professor',[
-            'as' => 'solicitar_alteracao_professor',
-            'uses' => 'ProfessorController@solicitar_alteracao'
-        ]);
-
-    //Tela professor tela10 cronograma
-        Route::get('/perfilProfessor/visualizarCronograma', [
-            'as' => 'professor_visualizar_cronograma',
-            'uses' => 'CronogramaController@professor_visualizar_cronograma'
-        ]);
-    //------------------------------------------------------------------------------------
-    //Tela professor tela 11 lista de alunos
-        Route::get('/perfilProfessor/listaAlunos',[
-            'as' => 'visualizar_lista_alunos',
-            'uses' => 'ProfessorController@visualizar_lista_alunos'
-        ]);
-        Route::post('/perfilProfessor/listaAlunos/visualiza_avalia_aluno', [
-            'as' => 'visualiza_ou_avalia_aluno',
-            'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
-        ]);
-
-    //------------------------------------------------------------------------------------
-    //Tela Gerir Semestres
+        //------------------------------------------------------------------------
+        //Tela gestor Gerir Semestres
         Route::post('/salvarSemestre/',[
             'as' => 'salvar_semestre',
             'uses' => 'SemestreController@salvar_semestre'

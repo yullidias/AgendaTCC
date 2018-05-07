@@ -39,6 +39,8 @@ class LoginController extends Controller
             $req->session()->flash('alert-danger', 'Usuário ou senha incorretos!');
             return redirect()->back();
         }
+
+
     }
 
     public function sair()

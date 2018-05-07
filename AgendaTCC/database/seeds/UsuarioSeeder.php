@@ -40,6 +40,28 @@ class UsuarioSeeder extends Seeder
             'gestor'=>'0',
         ]);
 
+        User::create([
+            'id'=>'adm',
+            'password'=>bcrypt('123'),
+            'excluido'=>false,
+            'professor'=>true,
+            'orientador'=>true,
+            'professorDisciplina'=>true,
+            'gestor'=>true,
+        ]);
+
+        User::create([
+            'id'=>'321',
+            'password'=>bcrypt('123'),
+            'professor'=>false,
+            'orientador'=>false,
+            'professorDisciplina'=>false,
+            'gestor'=>false,
+        ]);
+
+
+
+
         echo "Se der erro, apague os dados do banco\n";
 
     }

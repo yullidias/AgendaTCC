@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAgendamentosTable extends Migration
-{
+class CreateAgendamentosTable extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,11 +12,10 @@ class CreateAgendamentosTable extends Migration
      */
     public function up()
     {
-
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->dateTime('data');
             $table->integer('id_sala');
-            $table->string('usuario_aluno',12);
+            $table->integer('id_matricula');
             $table->string('membro1banca');
             $table->string('membro2banca');
             $table->primary(['data', 'id_sala', 'usuario_aluno']);
@@ -25,11 +23,9 @@ class CreateAgendamentosTable extends Migration
 
         Schema::table('agendamentos', function (Blueprint $table) {
             $table->foreign('id_sala')->references('id')->on('sala_auditorios');
-            $table->foreign('usuario_aluno')->references('id')->on('users');
+            $table->foreign('id_matricula')->references('id')->on('aluno_semestres');
         });
-        //
     }
-
     /**
      * Reverse the migrations.
      *

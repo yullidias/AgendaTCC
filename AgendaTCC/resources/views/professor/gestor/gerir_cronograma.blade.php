@@ -24,25 +24,13 @@
 			<label>Nome</label>
 			<input type='text' class='form-control' name='nome' required>
 			<label>Data de Início</label>
-			@php
-				$semestre_ano = date ("Y"); //retorna o ano atual, no formato yyyy//
-                $semestre_numero = (date ("m") <= 6)? 1 : 2;//retorna o numero do mes atual, descobre o semestre atual//
-                if($semestre_numero==1){
-                	$min = $semestre_ano."-01-01";
-                	$max = $semestre_ano."-06-30";
-                }
-                else{
-                	$min = $semestre_ano."-07-01";
-                	$max = $semestre_ano."-12-31";
-                }
-			@endphp
-			<input type='date' class='form-control' name='data_inicio' required min="$min" max="$max">
+			<input type='date' class='form-control' name='data_inicio' required>
 			<label>Data de Fim</label>
-			<input type='date' class='form-control' name='data_fim' required min="$min" max="$max">
+			<input type='date' class='form-control' name='data_fim' required>
 		</div>
 
 		<label>Semestre: </label>
-		<h10>{{$semestre_ano.'-'.$semestre_numero}}</h10>
+		<h10>{{$semestre->ano.'-'.$semestre->numero}}</h10>
 
 		<label>Turma</label>
 		<select id="listbox_turma", name="turma">
