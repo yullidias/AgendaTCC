@@ -15,11 +15,11 @@ class AlunoController extends Controller
 {
 
     public function cadastro_aluno(){
-        $professor = Professor::get();
+        $professor = User::where([['professor','=',true]])->get();
         return view('aluno.cadastro_aluno',compact('professor'));
     }
     public function perfil_aluno(){
-        $aluno = User::get();
+        $aluno = User::where([['professor','=',false]])->get();
         $tccDados = TccDados::get();
         $alunoSemestre = AlunoSemestre::get();
 
@@ -31,25 +31,24 @@ class AlunoController extends Controller
 
     public function salvar_cadastro_aluno(Request $request){
         $dados = $request->all();
-
         $aluno = [
-            'id' => $dados['matricula'],
+            'id' => $dados['id'],
             'nome' => $dados['nome'],
-            'senha' => bcrypt($dados['senha']),
+            'password' => bcrypt($dados['password']),
             'email' => $dados['email']
         ];
-
+        $orientador = User::where( [['nome','=',$dados['orientador']]])->get()->first();
         $tccDados = [
             'idDados' => NULL,
             'tema' => $dados['tema'],
-            'orientador' => $dados['orientador'],
-            'aluno_matricula' => $dados['matricula'],
+            'orientador' => $orientador['id'],
+            'usuario_aluno' => $dados['id'],
             'coorientador' => $dados['coorientador']
         ];
 
-           if( User::where( [['id','=',$aluno['matricula']]])->update([
+           if( User::where( [['id','=',$aluno['id']]])->update([
                 'nome' => $aluno['nome'],
-                'senha' => $aluno['senha'],
+                'password' => $aluno['password'],
                 'email' => $aluno['email']
             ])) {
                TccDados::create($tccDados);

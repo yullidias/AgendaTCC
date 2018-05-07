@@ -38,9 +38,9 @@
 		</tr>
 		@foreach ($tccDados as $tcc)
 			<tr>
-				<td><input type='text' class='form-control' name='matricula' value="{{$tcc->aluno_matricula}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="perfil" value = '{{$tcc->aluno_matricula}}' href="{{ route('visualiza_ou_avalia_aluno', $tcc->aluno_matricula)}}">Visualizar</button></td>
-				<td><button type='submit' class='btn btn-default' name="avalia" value = '{{$tcc->aluno_matricula}}' href="{{ route('visualiza_ou_avalia_aluno', $tcc->aluno_matricula)}}">Avaliar</button></td>
+				<td><input type='text' class='form-control' name='id' value="{{$tcc->usuario_aluno}}" readonly></td>
+				<td><button type='submit' class='btn btn-default' name="perfil" value = '{{$tcc->usuario_aluno}}' href="{{ route('visualiza_ou_avalia_aluno', $tcc->usuario_aluno)}}">Visualizar</button></td>
+				<td><button type='submit' class='btn btn-default' name="avalia" value = '{{$tcc->usuario_aluno}}' href="{{ route('visualiza_ou_avalia_aluno', $tcc->usuario_aluno)}}">Avaliar</button></td>
 			</tr>
 		@endforeach
 

@@ -10,7 +10,7 @@ class TccDados extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'idDados','tema','orientador','aluno_matricula','coorientador'
+        'idDados','tema','orientador','usuario_aluno','coorientador'
     ];
 
    /* private $idDados;

@@ -16,7 +16,7 @@ class CreateTccDadosTable extends Migration
         Schema::create('tcc_dados', function (Blueprint $table) {
             $table->increments('idDados');
             $table->string('tema', 45);
-            $table->string('orientador',12);
+            $table->string('orientador',45);
             $table->string('usuario_aluno',12);
             $table->string('coorientador', 45);
         });

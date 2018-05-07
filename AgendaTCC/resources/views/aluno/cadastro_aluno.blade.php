@@ -21,13 +21,13 @@
 	<div class="col-xs-8">
 	<div class='form-group'>
 		<label>Matrícula</label>
-		<input type='text' class='form-control' name='matricula' required>
+		<input type='text' class='form-control' name='id' required>
 		<label>Nome</label>
 		<input type='text' class='form-control' name='nome' required>
 		<label>Email</label>
 		<input type='text' class='form-control' name='email' required>
 		<label>Senha</label>
-		<input type='password' class='form-control' name='senha' required>
+		<input type='password' class='form-control' name='password' required>
 		<label>Tema</label>
 		<input type='text' class='form-control' name='tema' required>
 	</div>

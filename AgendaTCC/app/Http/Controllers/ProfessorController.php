@@ -252,7 +252,7 @@ class ProfessorController extends Controller
         return view('professor.cadastro_professor');
     }
     public function perfil_professor(){
-        $professor = Professor::get();
+        $professor = User::where([['professor','=',true]])->get();
 
         return view('professor.perfil_professor', compact('professor'));
     }
@@ -264,16 +264,16 @@ class ProfessorController extends Controller
         $dados = $request->all();
 
         $professor = [
-            'SIAPE' => $dados['SIAPE'],
+            'id' => $dados['id'],
             'nome' => $dados['nome'],
-            'senha' => $dados['senha'],
+            'password' => $dados['password'],
             'email' => $dados['email']
         ];
 
 
-          if(Professor::where( [['SIAPE','=',$professor['SIAPE']]])->update([
+          if(User::where( [['id','=',$professor['id']]])->update([
                 'nome' => $professor['nome'],
-                'senha' => $professor['senha'],
+                'password' => $professor['password'],
                 'email' => $professor['email']
             ])){
                 $request->session()->flash('alert-success', 'Professor cadastrado com sucesso!');
@@ -293,15 +293,22 @@ class ProfessorController extends Controller
       ])->get();
         return view('professor.visualizar_lista_aluno', compact('tccDados'));
     }
+
     public function visualiza_ou_avalia_aluno(){
       if(Input::get('perfil')) {
-          $aluno = Aluno::get();
+          $aluno = User::where([['professor','=',false]])->get();
           $tccDados = TccDados::get();
           return view('professor.visualizar_aluno', compact('aluno','tccDados'));
       }
       else{
           return view('professor.avaliar_aluno');
       }
+    }
+
+    public function salvar_avaliacao(Request $request){
+        $dados = $request->all();
+
+        return redirect()->route('visualizar_aluno');
     }
 
 }

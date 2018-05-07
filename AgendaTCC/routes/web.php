@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -54,6 +56,8 @@ Route::get('/perfilProfessor/visualizarCronograma', [
     'uses' => 'CronogramaController@professor_visualizar_cronograma'
 ]);
 
+
+//--------------------------------------------------------------------------------------------
 //Grupo de acesso do professor
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
@@ -83,6 +87,10 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
         Route::post('/perfilProfessor/listaAlunos/visualiza_avalia_aluno', [
             'as' => 'visualiza_ou_avalia_aluno',
             'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
+        ]);
+        Route::post('/salvar_avaliacao', [
+            'as' => 'salvar_avaliacao',
+            'uses' => 'ProfessorController@salvar_avaliacao'
         ]);
 
 
