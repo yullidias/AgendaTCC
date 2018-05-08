@@ -103,42 +103,62 @@ class ProfessorController extends Controller
     //Tela gestor tela23 alteracaocadastroaluno
     public function alterar_aluno($id)
     {
-
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
             ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
             ->where('users.id', '=',  $id)->get()->first();
         }else { //esta so pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
             ->where('users.id', '=',  $id)->get()->first();
         }
 
-        return view('professor.gestor.alterar_aluno',compact('aluno'));
+        $professores = User::where('professor','=',true)
+        ->whereNotNull('nome')->get();
+
+        return view('professor.gestor.alterar_aluno',compact('aluno','professores'));
     }
 
     public function salvar_alterar_aluno(Request $req)
     {
         $dados = $req->all();
 
-        User::where('id','=',$dados['id'])
-        ->update([
-            'nome' => $dados['nome'],
-            'email' => $dados['email'],
-        ]);
+        if(isset($dados['nome']) && isset($dados['email'])){
+            User::where('id','=',$dados['id'])
+            ->update([
+                    'nome' => $dados['nome'],
+                    'email' => $dados['email']
+            ]);
+        }
+        if(isset($dados['materia'])){
+            AlunoSemestre::where('usuario_aluno','=',$dados['id'])
+            ->update([
+                'materia' => $dados['materia']
+            ]);
+        }
+         if(isset($dados['tema'])){
+            TccDados::where('usuario_aluno','=',$dados['id'])
+            ->update([
+                'tema' => $dados['tema']
+            ]);
+        }
 
-        AlunoSemestre::where('usuario_aluno','=',$dados['id'])
-        ->update([
-            'materia' => $dados['materia']
-        ]);
+        if(isset($dados['orientador'])){
+            TccDados::where('usuario_aluno','=',$dados['id'])
+            ->update([
+                'orientador' => $dados['orientador']
+            ]);
+        }
 
-        /*TccDados::where('usuario_aluno','=',$dados['id'])
-        ->update([
-            'tema' => $dados['tema'],
-            'orientador' => $dados['orientador'],
-            'coorientador' => $dados['coorientador']
-        ]);*/
+        if(isset($dados['coorientador'])){
+            TccDados::where('usuario_aluno','=',$dados['id'])
+            ->update([
+                'coorientador' => $dados['coorientador']
+            ]);
+        }
 
-        return redirect()->route('listar_alunos');
+      return redirect()->route('listar_alunos');
     }
 
     //------------------------------------------------------------------------------------
@@ -149,10 +169,12 @@ class ProfessorController extends Controller
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
             ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
             ->where('users.id', '=',  $id)->get()->first();
         }else { //esta so pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-           ->where('users.id', '=',  $id)->get()->first();
+            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
+            ->where('users.id', '=',  $id)->get()->first();
         }
 
         return view('professor.gestor.visualizar_aluno',compact('aluno'));

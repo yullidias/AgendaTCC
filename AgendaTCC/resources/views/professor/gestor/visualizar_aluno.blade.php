@@ -14,40 +14,54 @@
     <form>
         {{ csrf_field() }}
         <div class="form-group">
-            <label>Nome</label>
-            <input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
+            @if(isset($aluno->nome))
+                <label>Nome</label>
+                <input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
+            @endif
 
             <label>Matricula</label>
             <input type='text' class='form-control' name='id' value="{{$aluno->usuario_aluno}}" readonly><br>
 
-            <label>E-mail</label>
-            <input type='text' class='form-control' name='email' value="{{$aluno->email}}" readonly><br>
-
+            @if(isset($aluno->email)) 
+                <label>E-mail</label>
+                <input type='text' class='form-control' name='email' value="{{$aluno->email}}" readonly><br>
+            @endif
+                    
             <label>Matéria</label>
              <div class="radio">
                 <label>
-                    <input type="radio" name="materia" value="1" {{ ($aluno->materia==1) ? "checked": "disabled" }} > TCC1
+                    <input type="radio" name="materia" value="1" {{ ($aluno->materia==1) ? "checked": "disabled" }}  > TCC1
                 </label>
                 &ensp;
                 <label>
-                    <input type="radio" name="materia" value="2" {{ ($aluno->materia==2) ? "checked": "disabled" }} > TCC2
+                    <input type="radio" name="materia" value="2" {{ ($aluno->materia==2) ? "checked": "disabled" }}  > TCC2
                 </label>
             </div><br>
+            
+            @if(isset($aluno->orientador))
+                <label>Orientador</label>
+                <input type='text' class='form-control' name='orientador' value="{{$aluno->orientador}} " readonly><br>
+            @endif
 
-            <label>Orientador</label>
-            <input type='text' class='form-control' name='orientador' value="" readonly><br>
+            @if(isset($aluno->coorientador))
+                <label>Coorientador</label>
+                <input type='text' class='form-control' name='coorientador' value="{{$aluno->coorientador}}" readonly><br>
+            @endif
 
-            <label>Coorientador</label>
-            <input type='text' class='form-control' name='coorientador' value="" readonly><br>
+            @if(isset($aluno->tema))
+                <label>Tema</label>
+                <input type='text' class='form-control' name='tema' value="{{$aluno->tema}}" readonly><br>
+            @endif
 
-            <label>Tema</label>
-            <input type='text' class='form-control' name='tema' value="" readonly><br>
+            @if(isset($aluno->membro_banca_1))
+                <label>Membro da Banca 1</label>
+                <input type='text' class='form-control' name='membro_banca_1' value="{{$aluno->membro_banca_1}} " readonly><br>
+            @endif
 
-            <label>Membro Banca 1</label>
-            <input type='text' class='form-control' name='membro_banca_1' value="" readonly><br>
-
-            <label>Membro Banca 2</label>
-            <input type='text' class='form-control' name='membro_banca_2' value="" readonly><br>
+            @if(isset($aluno->membro_banca_2))
+                <label>Membro da Banca 2</label>
+                <input type='text' class='form-control' name='membro_banca_2' value="{{$aluno->membro_banca_2}}" readonly><br>
+            @endif
         </div>
     </form>
 </div>
