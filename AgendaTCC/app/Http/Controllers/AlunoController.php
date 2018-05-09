@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Aluno;
 use App\AlunoSemestre;
 use App\Professor;
+use App\Semestre;
 use App\TccDados;
 use App\User;
 use App\Repositories\AlunoRepository;
@@ -45,6 +46,17 @@ class AlunoController extends Controller
             'usuario_aluno' => $dados['id'],
             'coorientador' => $dados['coorientador']
         ];
+        $semestre = Semestre::orderBy('ano', 'desc')
+            ->orderBy('numero', 'desc')
+            ->get()->first();
+
+        $alunoSemestre = [
+            'usuario_aluno' => $dados['id'],
+            'semestre_ano' => $semestre['ano'],
+            'semestre_numero' => $semestre['numero'],
+            'materia' => intval($dados['materia'])
+        ];
+
 
            if( User::where( [['id','=',$aluno['id']]])->update([
                 'nome' => $aluno['nome'],
@@ -52,6 +64,10 @@ class AlunoController extends Controller
                 'email' => $aluno['email']
             ])) {
                TccDados::create($tccDados);
+               AlunoSemestre::where( [['usuario_aluno','=',$aluno['id']]])->update([
+                   'materia' => intval($dados['materia'])
+
+               ]);
                $request->session()->flash('alert-success', 'Aluno cadastrado com sucesso!');
                return redirect()->route('perfil_aluno');
            }else{

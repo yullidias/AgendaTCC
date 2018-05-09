@@ -15,20 +15,49 @@
 			@endif
 		@endforeach
 	</div> <!-- end .flash-message -->
-<br><br>
-	<h3>1. Atitude e Desenvolvimento (30 pontos)</h3>
-	<h3>2. Avaliação do trabalho escrito quanto à forma (30 pontos)</h3>
-	<h3>3. Avaliação do trabalho escrito quanto ao conteúdo (40 pontos)</h3>
 	<form action="{{ route('salvar_avaliacao') }}" method="post">
 		{{ csrf_field() }}
+	<div class="col-xs-8">
+		<label>Aluno</label>
+		<input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
+		<input type='text' class='form-control' name='usuario_aluno' value="{{$aluno->usuario_aluno}}" readonly><br>
+
+
+	<h5>1. Atitude e Desenvolvimento (30 pontos)</h5>
+	<h5>2. Avaliação do trabalho escrito quanto à forma (30 pontos)</h5>
+	<h5>3. Avaliação do trabalho escrito quanto ao conteúdo (40 pontos)</h5>
+	</div>
+	<br/><br/>
 		<div class="col-xs-8">
 			<div class='form-group'>
-				<label>Atitude e Competência</label>
-				<input type='text' class='form-control' name='atitudeCompetencia' required>
-				<label>Forma</label>
-				<input type='text' class='form-control' name='forma' required>
-				<label>Conteúdo</label>
-				<input type='text' class='form-control' name='conteudo' required>
+				<table style="width:100%" class="table table-hover">
+					<thead>
+					<tr>
+						<td></td>
+						<th>Nota Professor (NP)</th>
+						<th>Nota Orientador (NO)</th>
+					</tr>
+					</thead>
+					<tr>
+						<td><label>Atitude e Competência</label></td>
+						<td><input type='text' class='form-control' name='atitudeCompetencia' required></td>
+						<td>nota orientador</td>
+					</tr>
+					<tr>
+						<td><label>Forma</label></td>
+						<td><input type='text' class='form-control' name='forma' required></td>
+						<td>nota orientador</td>
+					</tr>
+					<tr>
+						<td><label>Conteúdo</label></td>
+						<td><input type='text' class='form-control' name='conteudo' required></td>
+						<td>nota orientador</td>
+					</tr>
+					<tr>
+						<td><label>Comentários</label></td>
+						<td><input type='text' class='form-control' name='comentario' required></td>
+					</tr>
+				</table>
 			</div>
 
 

@@ -23,7 +23,7 @@
 	<div class='form-group'>
 		@foreach ($professor as $prof)
 		<label>SIAPE</label>
-		<input type='text' class='form-control' name='id' value="{{$prof->id}}" >
+		<input type='text' class='form-control' name='id' value="{{$prof->id}}" readonly>
 		<label>Nome</label>
 		<input type='text' class='form-control' name='nome' value="{{$prof->nome}}" >
 		<label>Email</label>

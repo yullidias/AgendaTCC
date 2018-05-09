@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Avaliacao;
 use App\TccDados;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -309,26 +310,82 @@ class ProfessorController extends Controller
 
     public function visualizar_lista_alunos(Request $request){
         $dados = $request->all();
-      $tccDados = TccDados::where([
-          //alterar depois para pegar cada professor que estiver logado
-          ['orientador' ,'=', '11111']
-      ])->get();
-        return view('professor.visualizar_lista_aluno', compact('tccDados'));
+
+        $semestres = Semestre::all();
+
+        if(isset($_POST['materia'])){
+
+            $semestre=explode('-', $dados['semestre']);
+
+            $materia_selecionada=$dados['materia'];
+            $semestre_selecionado=$dados['semestre'];
+            $semestre_ano=$semestre[1];
+            $semestre_numero=$semestre[0];
+
+        }else{ //primeira vez
+
+            $semestre = Semestre::orderBy('ano', 'desc')
+                ->orderBy('numero', 'desc')
+                ->get()->first();
+
+            $materia_selecionada=1;
+            $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
+            $semestre_ano=$semestre['ano'];
+            $semestre_numero=$semestre['numero'];
+        }
+
+        $alunos = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')->where([
+            ['aluno_semestres.materia', '=', $materia_selecionada],
+            ['aluno_semestres.semestre_ano', '=', $semestre_ano],
+            ['aluno_semestres.semestre_numero', '=', $semestre_numero],
+            ['users.professor', '=',  false],
+            ['users.excluido', '=',  false],
+        ])->get();
+        return view('professor.visualizar_lista_aluno', compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
     }
 
-    public function visualiza_ou_avalia_aluno(){
-      if(Input::get('perfil')) {
-          $aluno = User::where([['professor','=',false]])->get();
-          $tccDados = TccDados::get();
-          return view('professor.visualizar_aluno', compact('aluno','tccDados'));
-      }
-      else{
-          return view('professor.avaliar_aluno');
-      }
+    public function professor_visualiza_aluno($id){
+
+        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
+                ->where('users.id', '=',  $id)->get()->first();
+
+        }else { //esta so pre cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
+                ->where('users.id', '=',  $id)->get()->first();
+        }
+          return view('professor.visualizar_aluno', compact('aluno'));
+
+    }
+    public function avaliar_aluno($id){
+
+        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
+                ->where('users.id', '=',  $id)->get()->first();
+        }else { //esta so pre cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
+                ->where('users.id', '=',  $id)->get()->first();
+        }
+        return view('professor.avaliar_aluno', compact('aluno'));
     }
 
     public function salvar_avaliacao(Request $request){
         $dados = $request->all();
+
+        $avaliacao = [
+            'atitudeCompetencia' => $dados['atitudeCompetencia'],
+            'forma' => $dados['forma'],
+            'conteudo' => $dados['conteudo'],
+            'comentario' => $dados['comentario'],
+            'tccDados' => $dados['usuario_aluno']
+        ];
+        Avaliacao::create($avaliacao);
 
         return redirect()->route('visualizar_aluno');
     }

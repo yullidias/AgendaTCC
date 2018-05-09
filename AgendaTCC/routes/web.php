@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/',['as'=>'site.login','uses'=>'Site\LoginController@index']);
 Route::get('/login/sair',['as'=>'site.login.sair','uses'=>'Site\LoginController@sair']);
 Route::post('/login/entrar',['as'=>'site.login.entrar','uses'=>'Site\LoginController@entrar']);
@@ -70,11 +72,21 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'as' => 'visualizar_lista_alunos',
             'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
-        Route::post('/perfilProfessor/listaAlunos/visualiza_avalia_aluno', [
-            'as' => 'visualiza_ou_avalia_aluno',
-            'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
+        Route::post('/perfilProfessor/listaAlunos',[
+            'as' => 'visualizar_lista_alunos',
+            'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
-        Route::post('/salvar_avaliacao', [
+        Route::get('/perfilProfessor/listaAlunos/visualizar_aluno/{id}',[
+            'as'=>'visualizar_aluno',
+            'uses'=>'ProfessorController@professor_visualiza_aluno'
+        ]);
+
+        Route::get('/perfilProfessor/listaAlunos/avaliar_aluno/{id}',[
+            'as'=>'avaliar_aluno',
+            'uses'=>'ProfessorController@avaliar_aluno'
+        ]);
+
+        Route::post('/perfilProfessor/listaAlunos/avaliar_aluno/salvar_avaliacao', [
             'as' => 'salvar_avaliacao',
             'uses' => 'ProfessorController@salvar_avaliacao'
         ]);
