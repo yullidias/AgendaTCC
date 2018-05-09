@@ -11,16 +11,9 @@
 |
 */
 
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/login',['as'=>'site.login','uses'=>'Site\LoginController@index']);
+Route::get('/',['as'=>'site.login','uses'=>'Site\LoginController@index']);
 Route::get('/login/sair',['as'=>'site.login.sair','uses'=>'Site\LoginController@sair']);
 Route::post('/login/entrar',['as'=>'site.login.entrar','uses'=>'Site\LoginController@entrar']);
-
 
 //Grupo de acesso para o aluno
 Route::group(['middleware'=>['auth','check.aluno']], function(){
@@ -42,20 +35,13 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'uses' => 'AlunoController@solicitar_alteracao'
     ]);
 
+    //Tela aluno tela 6 cronograma
+    Route::get( '/perfilAluno/visualizarCronograma', [
+        'as' => 'aluno_visualizar_cronograma',
+        'uses' => 'CronogramaController@aluno_visualizar_cronograma'
+    ]);
+
 });
-
-//Tela aluno tela 6 cronograma
-Route::get( '/perfilAluno/visualizarCronograma', [
-    'as' => 'aluno_visualizar_cronograma',
-    'uses' => 'CronogramaController@aluno_visualizar_cronograma'
-]);
-
-//Tela professor tela 10 cronograma
-Route::get('/perfilProfessor/visualizarCronograma', [
-    'as' => 'professor_visualizar_cronograma',
-    'uses' => 'CronogramaController@professor_visualizar_cronograma'
-]);
-
 
 //--------------------------------------------------------------------------------------------
 //Grupo de acesso do professor
@@ -93,7 +79,16 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'uses' => 'ProfessorController@salvar_avaliacao'
         ]);
 
+    //Tela professor tela 10 cronograma
+        Route::get('/perfilProfessor/visualizarCronograma', [
+            'as' => 'professor_visualizar_cronograma',
+            'uses' => 'CronogramaController@professor_visualizar_cronograma'
+        ]);
+});
 
+//Grupo de acesso do orientador
+Route::group(['middleware'=>['auth','check.orientador']], function(){
+    //INCLUIR AS ROTAS PARA OS ORIENTADORES E COORIENTADORES
 });
 
 //------------------------------------------------------------------------------------

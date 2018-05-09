@@ -15,8 +15,10 @@ class CheckProfessorLogado
      */
     public function handle($request, Closure $next)
     {
-        // Permite que continue (Caso não entre em nenhum dos if acima)...
-        return redirect('/login');
+        if(auth()->check()){
+            return $next($request);
+        }
+        return redirect('/');
 
     }
 }

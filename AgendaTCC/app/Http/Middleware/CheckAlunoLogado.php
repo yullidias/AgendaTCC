@@ -15,11 +15,9 @@ class CheckAlunoLogado
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->check()){
-            dd("sucess");
+        if(auth()->check()){
             return $next($request);
-
         }
-        return redirect('/login');
+        return redirect('/');
     }
 }

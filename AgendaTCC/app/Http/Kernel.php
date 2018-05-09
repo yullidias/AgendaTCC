@@ -56,5 +56,6 @@ class Kernel extends HttpKernel
         'check.gestor' => \App\Http\Middleware\CheckGestorLogado::class,
         'check.professor' => \App\Http\Middleware\CheckProfessorLogado::class,
         'check.aluno' => \App\Http\Middleware\CheckAlunoLogado::class,
+        'check.orientador' => \App\Http\Middleware\CheckOrientadorLogado::class,
     ];
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckCoorientadorLogado
+class CheckOrientadorLogado
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,10 @@ class CheckCoorientadorLogado
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->check()){
+        if(auth()->check()){
 
             return $next($request);
         }
-        return redirect('/login');
+        return redirect('/');
     }
 }

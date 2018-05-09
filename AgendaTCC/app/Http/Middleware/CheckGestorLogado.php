@@ -18,10 +18,9 @@ class CheckGestorLogado
     public function handle($request, Closure $next)
     {
         if(auth()->check()){
-
           return $next($request);
 
         }
-        return redirect('/login');
+        return redirect('/');
     }
 }

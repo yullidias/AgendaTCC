@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Professor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -29,17 +30,23 @@ class LoginController extends Controller
         if(Auth::attempt(['id'=>$dados['login'],'password'=>$dados['password']])){
             $usuarioLogado = auth()->user();
 //            dd($usuarioLogado);
-            if($usuarioLogado['professor']){
-                if($usuarioLogado['gestor']) {
-                    return redirect()->route('cadastrar_professor');
+            if($usuarioLogado['professor']==1){
+
+                if($usuarioLogado['gestor']==1) {
+                    return redirect()->route('listar_alunos');
+
+                }else if($usuarioLogado['orientador']==1){
+
+                    dd("eu sou o orientador, minha pagina esta em construcao.");
+
+                }else if($usuarioLogado['professorDisciplina']==1){
+                    return redirect()->route('perfil_professor');
                 }
+            }else if($usuarioLogado['professor']==0){
+                 // dd("Tela em construção");
+                return redirect()->route('cadastrar_aluno');
             }
         }
-        else {
-            $req->session()->flash('alert-danger', 'Usuário ou senha incorretos!');
-            return redirect()->back();
-        }
-
 
     }
 
