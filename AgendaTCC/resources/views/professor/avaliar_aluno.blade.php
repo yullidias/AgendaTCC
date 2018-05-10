@@ -19,9 +19,8 @@
 		{{ csrf_field() }}
 	<div class="col-xs-8">
 		<label>Aluno</label>
-		<input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
+		<!--<input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>-->
 		<input type='text' class='form-control' name='usuario_aluno' value="{{$aluno->usuario_aluno}}" readonly><br>
-
 
 	<h5>1. Atitude e Desenvolvimento (30 pontos)</h5>
 	<h5>2. Avaliação do trabalho escrito quanto à forma (30 pontos)</h5>
@@ -38,26 +37,29 @@
 						<th>Nota Orientador (NO)</th>
 					</tr>
 					</thead>
+
 					<tr>
 						<td><label>Atitude e Competência</label></td>
-						<td><input type='text' class='form-control' name='atitudeCompetencia' required></td>
+						<td><input type='text' class='form-control' name='atitudeCompetencia2' required></td>
 						<td>nota orientador</td>
 					</tr>
 					<tr>
 						<td><label>Forma</label></td>
-						<td><input type='text' class='form-control' name='forma' required></td>
-						<td>nota orientador</td>
+						<td><input type='text' class='form-control' name='forma2' required></td>
+                        <td>nota orientador</td>
 					</tr>
 					<tr>
 						<td><label>Conteúdo</label></td>
-						<td><input type='text' class='form-control' name='conteudo' required></td>
-						<td>nota orientador</td>
+						<td><input type='text' class='form-control' name='conteudo2' required></td>
+                        <td>nota orientador</td>
 					</tr>
 					<tr>
 						<td><label>Comentários</label></td>
-						<td><input type='text' class='form-control' name='comentario' required></td>
+						<td><input style="height: 80px" type='text' class='form-control' name='comentario2' required></td>
 					</tr>
+
 				</table>
+
 			</div>
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Avaliacao;
 use App\TccDados;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
@@ -344,7 +345,7 @@ class ProfessorController extends Controller
         return view('professor.visualizar_lista_aluno', compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
     }
 
-    public function professor_visualiza_aluno($id){
+    public function professor_visualiza_aluno($id){ //professor
 
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
@@ -360,7 +361,7 @@ class ProfessorController extends Controller
           return view('professor.visualizar_aluno', compact('aluno'));
 
     }
-    public function avaliar_aluno($id){
+    public function avaliar_aluno($id){  //professor
 
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
@@ -372,22 +373,26 @@ class ProfessorController extends Controller
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
                 ->where('users.id', '=',  $id)->get()->first();
         }
-        return view('professor.avaliar_aluno', compact('aluno'));
+        $avaliacaos = Avaliacao::where('tccDados','=',$id)->first();
+        return view('professor.avaliar_aluno', compact('aluno','avaliacaos'));
     }
 
-    public function salvar_avaliacao(Request $request){
+    public function salvar_avaliacao(Request $request){ //professor
         $dados = $request->all();
-
+        $mytime = Carbon::now();
         $avaliacao = [
-            'atitudeCompetencia' => $dados['atitudeCompetencia'],
-            'forma' => $dados['forma'],
-            'conteudo' => $dados['conteudo'],
-            'comentario' => $dados['comentario'],
-            'tccDados' => $dados['usuario_aluno']
+            'atitudeCompetencia' => $dados['atitudeCompetencia2'],
+            'forma' => $dados['forma2'],
+            'conteudo' => $dados['conteudo2'],
+            'data' => $mytime,
+            'comentario' => $dados['comentario2'],
+            'tccDados' => $dados['usuario_aluno'],
+            'ehOrientador' => 0,
         ];
-        Avaliacao::create($avaliacao);
 
-        return redirect()->route('visualizar_aluno');
+        Avaliacao::create($avaliacao);
+        $request->session()->flash('alert-success', 'Avaliação feita com sucesso!');
+        return redirect()->back();
     }
 
 }

@@ -29,7 +29,7 @@
 		<label>Email</label>
 		<input type='text' class='form-control' name='email' value="{{$prof->email}}" >
 		<label>Senha</label>
-		<input type='password' class='form-control' name='password' value="{{$prof->password}}" >
+		<input type='password' class='form-control' name='password'  >
 		@endforeach
 	</div>
 	</div>

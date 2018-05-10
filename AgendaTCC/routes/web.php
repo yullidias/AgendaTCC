@@ -42,6 +42,14 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as' => 'aluno_visualizar_cronograma',
         'uses' => 'CronogramaController@aluno_visualizar_cronograma'
     ]);
+    Route::get('/submeter_tcc',[
+        'as' => 'submeter_tcc',
+        'uses'=> 'AlunoController@submeter_tcc'
+    ]);
+    Route::post('/salvar_submeter_tcc',[
+        'as' => 'salvar_submeter_tcc',
+        'uses'=> 'AlunoController@salvar_submeter_tcc'
+    ]);
 
 });
 

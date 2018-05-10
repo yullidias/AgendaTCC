@@ -14,16 +14,18 @@ class CreateAvaliacaosTable extends Migration
     public function up()
     {
         Schema::create('avaliacaos', function (Blueprint $table) {
+            $table->increments('idAvaliacao');
             $table->float('atitudeCompetencia');
             $table->float('forma');
             $table->float('conteudo');
             $table->date('data');
             $table->string('comentario',200);
-            $table->increments('tccDados');
+            $table->string('tccDados',12);
+            $table->boolean('ehOrientador');
         });
 
         Schema::table('avaliacaos', function (Blueprint $table) {
-            $table->foreign('tccDados')->references('idDados')->on('tcc_dados');
+            $table->foreign('tccDados')->references('id')->on('users');
 
         });
     }

@@ -75,7 +75,75 @@ class AlunoController extends Controller
                return redirect()->back();
            }
 
+    }
+    public function submeter_tcc(Request $request){
+        $dados = $request->all();
 
+        $semestres = Semestre::all();
 
+        if(isset($_POST['materia'])){
+
+            $semestre=explode('-', $dados['semestre']);
+
+            $materia_selecionada=$dados['materia'];
+            $semestre_selecionado=$dados['semestre'];
+            $semestre_ano=$semestre[1];
+            $semestre_numero=$semestre[0];
+
+        }else{ //primeira vez
+
+            $semestre = Semestre::orderBy('ano', 'desc')
+                ->orderBy('numero', 'desc')
+                ->get()->first();
+
+            $materia_selecionada=1;
+            $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
+            $semestre_ano=$semestre['ano'];
+            $semestre_numero=$semestre['numero'];
+        }
+
+        $alunos = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')->where([
+            ['aluno_semestres.materia', '=', $materia_selecionada],
+            ['aluno_semestres.semestre_ano', '=', $semestre_ano],
+            ['aluno_semestres.semestre_numero', '=', $semestre_numero],
+            ['users.professor', '=',  false],
+            ['users.excluido', '=',  false],
+        ])->get();
+
+        return view('aluno.submeter_tcc', compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
+    }
+
+    public function salvar_submeter_tcc(Request $request){
+        // Define o valor default para a variável que contém o nome da imagem
+        $nameFile = null;
+
+        // Verifica se informou o arquivo e se é válido
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+
+            // Define um aleatório para o arquivo baseado no timestamps atual
+            $name = "{$request->usuario_aluno}_{$request->tipo}";
+
+            // Recupera a extensão do arquivo
+            $extension = $request->file->extension();
+
+            // Define finalmente o nome
+            $nameFile = "{$name}.{$extension}";
+
+            // Faz o upload:
+            $upload = $request->file->storeAs('tcc', $nameFile);
+            // Se tiver funcionado o arquivo foi armazenado em storage/app/public/tcc/nomedinamicoarquivo.extensao
+
+            // Verifica se NÃO deu certo o upload (Redireciona de volta)
+            if ( !$upload )
+                return redirect()
+                    ->back()
+                    ->with('error', 'Falha ao fazer upload')
+                    ->withInput();
+
+            $request->session()->flash('alert-success', 'Upload do arquivo feito com sucesso!');
+            return redirect()->route('perfil_aluno');
+        }
+        $request->session()->flash('alert-danger', 'Nenhum arquivo selecionado!');
+        return redirect()->back();
     }
 }

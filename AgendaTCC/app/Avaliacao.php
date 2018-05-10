@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Avaliacao extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
-        'atitudeCompetencia', 'forma', 'conteudo', 'data', 'comentario'
+        'idAvaliacao','atitudeCompetencia', 'forma', 'conteudo', 'data', 'comentario', 'tccDados','ehOrientador'
     ];
 }
