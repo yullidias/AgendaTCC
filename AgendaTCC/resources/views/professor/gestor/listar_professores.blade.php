@@ -14,6 +14,7 @@
                 <th>SIAPE</th>
                 <th>Nome</th>
                 <th>Visualizar perfil</th>
+                <th>Alterar permissões</th>
                 <th>Excluir SIAPE</th>
             </tr>   
         </thead>
@@ -24,7 +25,8 @@
                 <td>{{$professor->id}}</td>
                 <td>{{$professor->nome}}</td>
                 <td><a class="btn btn-default" href="{{ route('listar_professores.visualizar_professor',['id' => $professor->id]) }}" role="button">Visualizar</a></td>
-                <td><a class="btn btn-default" href="{{ route('listar_professores.excluir_professor',['id' => $professor->id]) }}" role="button" onclick="return confirm('Tem certeza que quer deletar?');">Excluir</a></td><!--verificar se nao esta se excluindo-->
+                <td><a class="btn btn-default" href="{{ route('listar_professores.alterar_professor',['id' => $professor->id]) }}" role="button">Alterar</a></td>
+                <td><a class="btn btn-default" href="{{ route('listar_professores.excluir_professor',['id' => $professor->id]) }}" role="button" onclick="return confirm('Tem certeza que quer deletar?');">Excluir</a></td>
             </tr>
             @endforeach
 

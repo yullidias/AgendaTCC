@@ -58,7 +58,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
     //Tela professor cadastro professor
-        Route::get('/cadastrar_professor',[
+       Route::get('/cadastrar_professor',[
             'as' => 'cadastrar_professor',
             'uses'=> 'ProfessorController@cadastro_professor'
         ]);
@@ -173,6 +173,17 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         Route::get('/listar_professores/visualizar_professor/{id}',[
             'as'=>'listar_professores.visualizar_professor',
             'uses'=>'ProfessorController@visualizar_professor'
+        ]);
+     //------------------------------------------------------------------------------------
+    //Tela gestor tela23 alteracaocadastroaluno
+        Route::get('/listar_professores/alterar_professor/{id}',[
+            'as'=>'listar_professores.alterar_professor',
+            'uses'=>'ProfessorController@alterar_professor'
+        ]);
+
+        Route::post('/listar_professores/alterar_professor/salvar_alterar_professor',[
+            'as'=>'listar_professores.alterar_professor.salvar_alterar_professor',
+            'uses'=>'ProfessorController@salvar_alterar_professor'
         ]);
        //------------------------------------------------------------------------------------
     //Tela gestor  excluir professor

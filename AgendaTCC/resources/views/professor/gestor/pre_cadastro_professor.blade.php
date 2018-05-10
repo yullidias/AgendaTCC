@@ -16,12 +16,12 @@
 	<form action="{{ route('listar_professores.pre_cadastro_professor.salvar_pre_cadastro_professor') }}" method="post">
 		{{ csrf_field() }}
 		<div class="form-group {{ $errors->has('id') ? 'has-error' : '' }}">
-			<label>SIAPE</label>
+			<label>SIAPE*</label>
 			<input type='text' class='form-control' name='id' required nclick="bloqueio()" id="siape" onkeydown="bloqueio()" onclick="bloqueio()" >
 			<span class="text-danger">{{ $errors->has('id') ? 'SIAPE já cadastrado! Tente novamente' : ''}}</span>
 		</div>
 
-		<br><label>Permissão</label>
+		<br><label>Permissão**</label>
 		<div class="checkbox">
 		  <label>
 		    <input type="checkbox" name="permissao_orientador" value="1" onclick="bloqueio()" id="per1" > Orientador
@@ -35,9 +35,11 @@
 		    <input type="checkbox" name="permissao_gestor" value="1" onclick="bloqueio()" id="per3"> Gestor
 		  </label>
 		</div>
-	
+	   
 			
 		<br><input type='submit' class='btn btn-default' value='Cadastrar' id="botao" style="display:none;">
+      <br><div>*Campo Obrigatório</div>
+        <br><div>**Pelo menos uma opção deve ser selecionada</div>
          <script language="javascript" type="text/javascript">
            function bloqueio(){
                 var siape=document.getElementById("siape");

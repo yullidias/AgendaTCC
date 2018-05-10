@@ -212,6 +212,40 @@ class ProfessorController extends Controller
     }
 
     //------------------------------------------------------------------------------------
+    //Tela gestor Alterar dadosCadastrais Professor
+    public function alterar_professor($id)
+    {
+        $professor = User::where('id', '=',  $id)->get()->first();
+        return view('professor.gestor.alterar_professor',compact('professor'));
+    }
+
+    public function salvar_alterar_professor(Request $req)
+    {
+        $dados = $req->all();
+        //echo($dados);
+
+      //  if(isset($dados['orientador'])){
+            User::where('id','=',$dados['id'])
+            ->update([
+                'orientador' => $dados['orientador']
+            ]);
+      //  }
+      //  if(isset($dados['professorDisciplina'])){
+            User::where('id','=',$dados['id'])
+            ->update([
+                'professorDisciplina' => $dados['professorDisciplina']
+            ]);
+      //  }
+        //if(isset($dados['gestor'])){
+            User::where('id','=',$dados['id'])
+            ->update([
+                'gestor' => $dados['gestor']
+            ]);
+       // } 
+
+      return redirect()->route('listar_professores');
+    }
+//------------------------------------------------------------------------------------
     //Tela gestor  excluir professor
       public function excluir_professor($id)
     {
