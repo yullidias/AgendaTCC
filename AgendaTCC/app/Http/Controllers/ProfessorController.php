@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\View;
 
 use App\Avaliacao;
 use App\TccDados;
@@ -64,10 +65,9 @@ class ProfessorController extends Controller
     }
     //------------------------------------------------------------------------------------
     //Tela gestor tela21 listadealunos
-    public function listar_alunos(Request $req)
+     public function listar_alunos(Request $req)
     {
         $dados = $req->all();
-
         $semestres = Semestre::all();
 
          if(isset($_POST['materia'])){
@@ -101,93 +101,188 @@ class ProfessorController extends Controller
 
         return view('professor.gestor.listar_alunos',compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
     }
+
+    public function operacoes_aluno(Request $req){
+        $dados = $req->all();
+        switch ($dados['operacao']) {
+            case 'Visualizar':
+                $view = self::visualizar_aluno($dados);
+                break;
+
+            case 'Alterar':
+                $view = self::alterar_aluno($dados);
+                break;
+
+            case 'Excluir':
+                $view = self::excluir_aluno($dados);
+                break;
+        }
+        return $view;
+    }
     //------------------------------------------------------------------------------------
     //Tela gestor tela23 alteracaocadastroaluno
-    public function alterar_aluno($id)
+    public function alterar_aluno($dados)
     {
-        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-            ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
-            ->where('users.id', '=',  $id)->get()->first();
-        }else { //esta so pre cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
-            ->where('users.id', '=',  $id)->get()->first();
+        $semestre=explode('-', $dados['semestre_selecionado']);
+
+        $aluno_semestre = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+        ->where([
+            ['users.id', '=',  $dados['id']],
+            ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+            ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+        ])->get()->first();
+
+        if(is_null($aluno_semestre['nome'])){ //so esta pre cadastrado
+            $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> null,
+                'coorientador'=> null,
+                'tema'=> null,
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
+            $coorientador=null;
+
+        }else{ //esta cadastrado
+
+            $aluno_tcc = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->where([
+                ['users.id', '=',  $dados['id']]
+            ])->get()->first();
+
+            $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> $aluno_tcc['orientador'],
+                'coorientador'=> $aluno_tcc['coorientador'],
+                'tema'=> $aluno_tcc['tema'],
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
         }
 
-        $professores = User::where('professor','=',true)
+        $orientadores = User::where('professor','=',true)
         ->whereNotNull('nome')->get();
 
-        return view('professor.gestor.alterar_aluno',compact('aluno','professores'));
+        
+        return view('professor.gestor.alterar_aluno',compact('aluno','orientadores'));
     }
 
     public function salvar_alterar_aluno(Request $req)
     {
         $dados = $req->all();
 
-        if(isset($dados['nome']) && isset($dados['email'])){
+        if(!is_null ($dados['nome'])){
             User::where('id','=',$dados['id'])
             ->update([
-                    'nome' => $dados['nome'],
+                    'nome' => $dados['nome']
+            ]);
+        }
+
+        if(!is_null ($dados['email'])){
+            User::where('id','=',$dados['id'])
+            ->update([
                     'email' => $dados['email']
             ]);
         }
-        if(isset($dados['materia'])){
+
+        if(!is_null($dados['materia'])){
             AlunoSemestre::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'materia' => $dados['materia']
             ]);
         }
-         if(isset($dados['tema'])){
+         if(!is_null($dados['tema'])){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'tema' => $dados['tema']
             ]);
         }
 
-        if(isset($dados['orientador'])){
+        if(!is_null($dados['orientador'])){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'orientador' => $dados['orientador']
             ]);
         }
 
-        if(isset($dados['coorientador'])){
+        if(!is_null($dados['coorientador'])){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'coorientador' => $dados['coorientador']
             ]);
         }
 
+
+
       return redirect()->route('listar_alunos');
     }
 
     //------------------------------------------------------------------------------------
     //Tela gestor tela24 dadoscadastraisaluno
-     public function visualizar_aluno($id)
+     public function visualizar_aluno($dados)
     {
+        $semestre=explode('-', $dados['semestre_selecionado']);
 
-        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-            ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
-            ->where('users.id', '=',  $id)->get()->first();
-        }else { //esta so pre cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-            ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
-            ->where('users.id', '=',  $id)->get()->first();
+        $aluno_semestre = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+        ->where([
+            ['users.id', '=',  $dados['id']],
+            ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+            ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+        ])->get()->first();
+
+
+        if(is_null($aluno_semestre['nome'])){ //so esta pre cadastrado
+            $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> null,
+                'coorientador'=> null,
+                'tema'=> null,
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
+            $orientador=null;
+        }else{ //esta cadastrado
+
+            $aluno_tcc = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->where([
+                ['users.id', '=',  $dados['id']]
+            ])->get()->first();
+
+            $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> $aluno_tcc['orientador'],
+                'coorientador'=> $aluno_tcc['coorientador'],
+                'tema'=> $aluno_tcc['tema'],
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
+
+            $orientador = User::where('professor','=',true)
+            ->where('id','=',$aluno_tcc['orientador'])->get()->first();
+
         }
 
-        return view('professor.gestor.visualizar_aluno',compact('aluno'));
+        return view('professor.gestor.visualizar_aluno',compact('aluno','orientador'));
     }
 
     //------------------------------------------------------------------------------------
     //Tela gestor excluiraluno
-     public function excluir_aluno($id)
+     public function excluir_aluno($dados)
     {
 
-         User::where('id','=',$id)
+         User::where('id','=',$dados['id'])
         ->update([
             'excluido' => true,
         ]);

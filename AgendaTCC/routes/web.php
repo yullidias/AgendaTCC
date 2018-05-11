@@ -123,28 +123,18 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
             'as'=>'listar_alunos',
             'uses'=>'ProfessorController@listar_alunos'
         ]);
+
     //------------------------------------------------------------------------------------
     //Tela gestor tela23 alteracaocadastroaluno
-        Route::get('/listar_alunos/alterar_aluno/{id}',[
-            'as'=>'listar_alunos.alterar_aluno',
-            'uses'=>'ProfessorController@alterar_aluno'
+     //Tela gestor tela24 dadoscadastraisaluno
+        Route::post('/listar_alunos.operacoes_aluno',[
+            'as'=>'listar_alunos.operacoes_aluno',
+            'uses'=>'ProfessorController@operacoes_aluno'
         ]);
 
-        Route::post('/listar_alunos/alterar_aluno/salvar_alterar_aluno',[
+       Route::post('/listar_alunos/alterar_aluno/salvar_alterar_aluno',[
             'as'=>'listar_alunos.alterar_aluno.salvar_alterar_aluno',
             'uses'=>'ProfessorController@salvar_alterar_aluno'
-        ]);
-    //------------------------------------------------------------------------------------
-    //Tela gestor tela24 dadoscadastraisaluno
-        Route::get('/listar_alunos/visualizar_aluno/{id}',[
-            'as'=>'listar_alunos.visualizar_aluno',
-            'uses'=>'ProfessorController@visualizar_aluno'
-        ]);
-    //------------------------------------------------------------------------------------
-    //Tela gestor  excluir aluno
-        Route::get('/listar_alunos/excluir_aluno/{id}',[
-            'as'=>'listar_alunos.excluir_aluno',
-            'uses'=>'ProfessorController@excluir_aluno'
         ]);
 
     //------------------------------------------------------------------------------------

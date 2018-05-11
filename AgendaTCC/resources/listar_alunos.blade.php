@@ -64,4 +64,7 @@
     </table>
 </div>
 
+<script>
+
+</script>
 @endsection

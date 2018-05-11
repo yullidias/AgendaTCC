@@ -33,9 +33,9 @@
                     <input type="radio" name="materia" value="2" {{ ($aluno['materia']==2) ? "checked": "disabled" }}  > TCC2
                 </label>
             </div><br>
-
+            
             <label>Orientador</label>
-            <input type='text' class='form-control' name='orientador' value="{{$orientador['nome']}}" readonly><br>
+            <input type='text' class='form-control' name='orientador' value="{{$aluno['orientador']}} " readonly><br>
 
             <label>Coorientador</label>
             <input type='text' class='form-control' name='coorientador' value="{{$aluno['coorientador']}}" readonly><br>
