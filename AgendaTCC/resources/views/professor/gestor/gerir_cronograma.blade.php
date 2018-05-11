@@ -30,7 +30,11 @@
 		</div>
 
 		<label>Semestre: </label>
-		<h10>{{$semestre->ano.'-'.$semestre->numero}}</h10>
+		@if($semestre != null)
+			<h10>{{$semestre->ano.'-'.$semestre->numero}}</h10>
+		@else
+			<h10> - </h10>
+		@endif
 
 		<label>Turma</label>
 		<select id="listbox_turma", name="turma">

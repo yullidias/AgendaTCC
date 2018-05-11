@@ -14,8 +14,11 @@ class CronogramaController extends Controller
     public function salvar_atividade_cronograma(Request $request){
         $campos = $request->all();
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
-
-        if($campos['data_inicio'] > $campos['data_fim']){
+        if($semestre == null){
+            $request->session()->flash('alert-danger', 'Não há semestre cadastrado');
+            return redirect()->back();
+        }
+        else if($campos['data_inicio'] > $campos['data_fim']){
             $request->session()->flash('alert-danger', 'Data de Início é superior a Data de Fim');
             return redirect()->back();
         }

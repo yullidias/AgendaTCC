@@ -12,6 +12,8 @@ class UsuarioSeeder extends Seeder
      */
     public function run()
     {
+        echo "Se der erro, apague os dados do banco\n";
+
         //cria professor com permissão de gestor e professor da Disciplina
         User::create([
             'id'=>'1234567',
@@ -58,11 +60,6 @@ class UsuarioSeeder extends Seeder
             'professorDisciplina'=>false,
             'gestor'=>false,
         ]);
-
-
-
-
-        echo "Se der erro, apague os dados do banco\n";
 
     }
 }
