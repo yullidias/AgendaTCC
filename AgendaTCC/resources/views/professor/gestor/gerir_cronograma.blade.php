@@ -57,7 +57,7 @@
 	</style>
 
 	<br><br>
-	<form action="{{ route('cadastrar_cronograma.deletar_atividade_cronograma')}}" method="post" }}">
+	<form action="{{ route('cadastrar_cronograma.deletar_atividade_cronograma')}}" method="post">
 	{{ csrf_field() }}
 	<table style="width:100%" class="table table-hover">
 		<tr>

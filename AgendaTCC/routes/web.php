@@ -225,4 +225,20 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
             'as' => 'excluir_semestre',
             'uses' => 'SemestreController@excluir_semestre'
         ]);
+
+        //Tela gestor tela26 gestaoSalas
+        Route::get('/gerirSalas',[
+            'as' => 'listar_salas',
+            'uses' => 'SalaController@listar_salas'
+        ]);
+
+        Route::post('/salvarSala',[
+            'as' => 'salvar_sala',
+            'uses' => 'SalaController@salvar_sala'
+        ]);
+
+        Route::post('/excluirSala',[
+            'as' => 'excluir_sala',
+            'uses' => 'SalaController@excluir_sala'
+        ]);
 });
