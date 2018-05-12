@@ -8,7 +8,7 @@ use App\Sala;
 class SalaController extends Controller
 {
     public function listar_salas(){
-        $salas = Sala::all();
+        $salas = Sala::orderBy('predio', 'sala')->get();
         return view('professor.gestor.gerir_sala', compact('salas'));
     }
 
