@@ -19,17 +19,16 @@ class SalaController extends Controller
     }
 
     public function salvar_sala(Request $req){
-//        dd(Sala::where('sala'));
         if(Sala::where('sala', $req['sala'])->where('predio', $req['predio'])->count()){
             $req->session()->flash('alert-danger', 'Sala e Prédio já existem!');
             return redirect()->back();
         }
         else{
-
             Sala::create([
                 "sala" => $req['sala'],
                 "predio" => $req['predio'],
             ]);
+            $req->session()->flash('alert-success', 'Cadastrado com sucesso!');
             return redirect()->route('listar_salas');
         }
     }

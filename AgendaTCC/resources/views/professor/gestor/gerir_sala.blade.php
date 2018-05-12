@@ -16,14 +16,13 @@
 
     <form action="{{ route('salvar_sala') }}" method="post">
         {{ csrf_field() }}
-        <div class='form-group' >
+        <div class='form-inline' >
             <label>Sala</label>
-            <input type='text' class='form-control' name='sala' required>
+            <input type='text' class='form-control' name='sala' size="10" required>
             <label>Prédio</label>
-            <input type='text' class='form-control' name='predio' required>
+            <input type='text' class='form-control' name='predio' size="10"  required>
+            <input type='submit' class='btn btn-default' value='Cadastrar'>
         </div>
-        <br>
-        <input type='submit' class='btn btn-default' value='Cadastrar'>
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>

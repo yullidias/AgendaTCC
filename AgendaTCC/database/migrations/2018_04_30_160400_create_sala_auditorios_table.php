@@ -14,8 +14,8 @@ class CreateSalaAuditoriosTable extends Migration
     public function up()
     {
         Schema::create('sala_auditorios', function (Blueprint $table) {
-            $table->string('sala', 45);
-            $table->string('predio', 45);
+            $table->string('sala', 10);
+            $table->string('predio', 10);
             $table->primary(['sala','predio']);
         });
 
