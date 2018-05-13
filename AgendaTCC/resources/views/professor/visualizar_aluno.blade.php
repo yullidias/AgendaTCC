@@ -52,10 +52,14 @@
 				<label>Orientador</label>
 				<input type='text' class='form-control' name='orientador' value="{{$aluno->orientador}} " readonly><br>
 			@endif
-
 		</div>
 	</form>
+		<h3><strong>Histórico de Submissões</strong></h3>
+		<a class="btn btn-default" href="{{ url('/download/201522222222.txt')  }}" target="_blank">
+			Baixar
+		</a>
 	</div>
+
 
 
 @endsection

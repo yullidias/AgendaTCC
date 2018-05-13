@@ -479,8 +479,9 @@ class ProfessorController extends Controller
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador','users.nome','users.id','users.email')
                 ->where('users.id', '=',  $id)->get()->first();
+
 
         }else { //esta so pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')

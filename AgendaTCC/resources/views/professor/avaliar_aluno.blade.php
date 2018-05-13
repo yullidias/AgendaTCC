@@ -61,10 +61,9 @@
 				</table>
 
 			</div>
-
-
-
 			<br><input style="float: right" type='submit' class='btn btn-default' value='Salvar'>
+
+			<h3><strong>Histórico de Avaliações</strong></h3>
 		</div>
 	</form>
 

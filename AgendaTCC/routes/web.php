@@ -50,6 +50,10 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as' => 'salvar_submeter_tcc',
         'uses'=> 'AlunoController@salvar_submeter_tcc'
     ]);
+    Route::get( '/download/{filename}', [
+        'as'=>'download',
+        'uses'=>'AlunoController@download'
+    ]);
 
 });
 
@@ -58,7 +62,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
     //Tela professor cadastro professor
-       Route::get('/cadastrar_professor',[
+        Route::get('/cadastrar_professor',[
             'as' => 'cadastrar_professor',
             'uses'=> 'ProfessorController@cadastro_professor'
         ]);

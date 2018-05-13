@@ -146,4 +146,21 @@ class AlunoController extends Controller
         $request->session()->flash('alert-danger', 'Nenhum arquivo selecionado!');
         return redirect()->back();
     }
+
+    public function download( $filename = '' )
+    {
+        // Check if file exists in app/storage/file folder
+        $file_path = storage_path() . "/app/tcc/" . $filename;
+        $headers = array(
+            'Content-Type: txt',
+            'Content-Disposition: attachment; filename='.$filename,
+        );
+        if ( file_exists( $file_path ) ) {
+            // Send Download
+            return \Response::download( $file_path, $filename, $headers );
+        } else {
+            // Error
+            exit( 'Requested file does not exist on our server!' );
+        }
+    }
 }
