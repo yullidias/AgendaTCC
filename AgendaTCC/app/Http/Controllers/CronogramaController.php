@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Semestre;
+use App\Cronograma;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Object_;
 
-use App\Cronograma;
-use App\PassoCronograma;
 
-class CronogramaController extends Controller
-{
+class CronogramaController extends Controller{
+
     public function salvar_atividade_cronograma(Request $request){
         $campos = $request->all();
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();

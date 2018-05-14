@@ -112,7 +112,16 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
 
 //Grupo de acesso do orientador
 Route::group(['middleware'=>['auth','check.orientador']], function(){
-    //INCLUIR AS ROTAS PARA OS ORIENTADORES E COORIENTADORES
+    //Tela orientador tela 18 agendamento
+    Route::post('/salvarAgendamento/',[
+        'as' => 'salvar_agendamento',
+        'uses' => 'AgendamentoController@salvar_agendamento'
+    ]);
+
+    Route::post('/listarAgendamento/', [
+        'as' => 'listar_agendamento_logs',
+        'uses' => 'AgendamentoController@listar_agendamento_logs'
+    ]);
 });
 
 //------------------------------------------------------------------------------------

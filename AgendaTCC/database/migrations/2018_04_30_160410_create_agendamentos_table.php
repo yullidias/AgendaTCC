@@ -23,7 +23,7 @@ class CreateAgendamentosTable extends Migration {
         });
 
         Schema::table('agendamentos', function (Blueprint $table) {
-            $table->foreign(['sala','predio'])->references(['sala', 'predio' ])->on('sala_auditorios');
+            $table->foreign(['sala','predio'])->references(['sala', 'predio'])->on('sala_auditorios');
             $table->foreign('id_matricula')->references('id')->on('aluno_semestres');
         });
     }
