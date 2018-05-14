@@ -49,7 +49,7 @@
 			<br>
 
 		<label>Arquivo</label>
-		<input type="file" class='form-control' name="file"><br>
+		<input type="file" class='form-control' name="file" required><br>
 		<label>Comentário</label>
 		<input style="height: 100px" type='text' class='form-control' name='comentario' >
 		<br/><br>

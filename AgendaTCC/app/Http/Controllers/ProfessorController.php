@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Arquivo;
 use Illuminate\Support\Facades\View;
 
 use App\Avaliacao;
@@ -476,13 +477,18 @@ class ProfessorController extends Controller
 
     public function professor_visualiza_aluno($id){ //professor
 
-        if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
+
+        if(Arquivo::where('TCC','=',$id)->count() > 0){ //tem um arquivo
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador','users.nome','users.id','users.email')
-                ->where('users.id', '=',  $id)->get()->first();
-
-
+                ->join('arquivos', 'users.id', '=', 'arquivos.TCC')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia', 'tcc_dados.tema', 'tcc_dados.orientador', 'tcc_dados.coorientador', 'users.nome', 'users.id', 'users.email', 'arquivos.nomeArquivo')
+                ->where('users.id', '=', $id)->get()->first();
+        }elseif (TccDados::where('usuario_aluno','=',$id)->count() > 0) { //esta cadastrado
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia', 'tcc_dados.tema', 'tcc_dados.orientador', 'tcc_dados.coorientador', 'users.nome', 'users.id', 'users.email')
+                ->where('users.id', '=', $id)->get()->first();
         }else { //esta so pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
@@ -503,8 +509,15 @@ class ProfessorController extends Controller
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
                 ->where('users.id', '=',  $id)->get()->first();
         }
-        $avaliacaos = Avaliacao::where('tccDados','=',$id)->first();
-        return view('professor.avaliar_aluno', compact('aluno','avaliacaos'));
+        $avaliacaosProf = Avaliacao::where([
+            ['tccDados','=',$id],
+            ['ehOrientador', '=', 0]
+        ])->first();
+        $avaliacaosOrient = Avaliacao::where([
+            ['tccDados','=',$id],
+            ['ehOrientador', '=', 1]
+        ])->first();
+        return view('professor.avaliar_aluno', compact('aluno','avaliacaosOrient','avaliacaosProf'));
     }
 
     public function salvar_avaliacao(Request $request){ //professor
@@ -519,8 +532,27 @@ class ProfessorController extends Controller
             'tccDados' => $dados['usuario_aluno'],
             'ehOrientador' => 0,
         ];
+        $avaliacaosProf = Avaliacao::where([
+            ['tccDados','=',$dados['usuario_aluno']],
+            ['ehOrientador', '=', 0]
+        ])->first();
 
-        Avaliacao::create($avaliacao);
+        if(!$avaliacaosProf){
+            Avaliacao::create($avaliacao);
+        }
+        else{
+            Avaliacao::where([
+                ['tccDados','=',$dados['usuario_aluno']],
+                ['ehOrientador', '=', 0]
+            ])
+                ->update([
+                    'atitudeCompetencia' => $dados['atitudeCompetencia2'],
+                    'forma' => $dados['forma2'],
+                    'conteudo' => $dados['conteudo2'],
+                    'data' => $mytime,
+                    'comentario' => $dados['comentario2'],
+                ]);
+        }
         $request->session()->flash('alert-success', 'Avaliação feita com sucesso!');
         return redirect()->back();
     }

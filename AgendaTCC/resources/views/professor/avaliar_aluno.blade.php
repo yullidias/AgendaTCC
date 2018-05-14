@@ -40,22 +40,22 @@
 
 					<tr>
 						<td><label>Atitude e Competência</label></td>
-						<td><input type='text' class='form-control' name='atitudeCompetencia2' required></td>
-						<td>nota orientador</td>
+						<td><input type='text' class='form-control' name='atitudeCompetencia2' value="{{$avaliacaosProf->atitudeCompetencia}}" required></td>
+						<td><input type='text' class='form-control' name='atitudeCompetencia' value="{{$avaliacaosOrient->atitudeCompetencia}}" readonly></td>
 					</tr>
 					<tr>
 						<td><label>Forma</label></td>
-						<td><input type='text' class='form-control' name='forma2' required></td>
-                        <td>nota orientador</td>
+						<td><input type='text' class='form-control' name='forma2' value="{{$avaliacaosProf->forma}}" required></td>
+                        <td><input type='text' class='form-control' name='forma' value="{{$avaliacaosOrient->forma}}" readonly></td>
 					</tr>
 					<tr>
 						<td><label>Conteúdo</label></td>
-						<td><input type='text' class='form-control' name='conteudo2' required></td>
-                        <td>nota orientador</td>
+						<td><input type='text' class='form-control' name='conteudo2' value="{{$avaliacaosProf->conteudo}}" required></td>
+                        <td><input type='text' class='form-control' name='conteudo' value="{{$avaliacaosOrient->conteudo}}" readonly></td>
 					</tr>
 					<tr>
 						<td><label>Comentários</label></td>
-						<td><input style="height: 80px" type='text' class='form-control' name='comentario2' required></td>
+						<td><input style="height: 80px" type='text' class='form-control' name='comentario2' value="{{$avaliacaosProf->comentario}}" required></td>
 					</tr>
 
 				</table>
@@ -63,7 +63,7 @@
 			</div>
 			<br><input style="float: right" type='submit' class='btn btn-default' value='Salvar'>
 
-			<h3><strong>Histórico de Avaliações</strong></h3>
+			<!--<h3><strong>Histórico de Avaliações</strong></h3>-->
 		</div>
 	</form>
 

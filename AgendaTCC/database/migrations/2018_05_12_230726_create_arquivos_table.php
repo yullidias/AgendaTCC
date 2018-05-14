@@ -14,19 +14,17 @@ class CreateArquivosTable extends Migration
     public function up()
     {
         Schema::create('arquivos', function (Blueprint $table) {
-            $table->string('nome',60);
+            $table->string('nomeArquivo',60);
             $table->dateTime('dataSubmissao');
             $table->string('caminho',100);
-            $table->integer('TCC')->unsigned();
+            $table->string('TCC',12);
             $table->string('comentario',45);
-            $table->integer('passoCronograma')->unsigned();
             $table->tinyInteger('versao');
             $table->primary(['dataSubmissao','TCC']);
         });
 
         Schema::table('arquivos', function (Blueprint $table) {
-            $table->foreign('TCC')->references('idDados')->on('tcc_dados');
-            $table->foreign(['passoCronograma'])->references('id')->on('cronogramas');
+            $table->foreign('TCC')->references('usuario_aluno')->on('tcc_dados');
         });
 
     }

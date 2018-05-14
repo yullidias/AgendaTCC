@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Aluno;
 use App\AlunoSemestre;
+use App\Arquivo;
 use App\Professor;
 use App\Semestre;
 use App\TccDados;
 use App\User;
 use App\Repositories\AlunoRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -116,7 +118,8 @@ class AlunoController extends Controller
     public function salvar_submeter_tcc(Request $request){
         // Define o valor default para a variável que contém o nome da imagem
         $nameFile = null;
-
+        $dados = $request->all();
+        $mytime = Carbon::now();
         // Verifica se informou o arquivo e se é válido
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
 
@@ -141,6 +144,32 @@ class AlunoController extends Controller
                     ->withInput();
 
             $request->session()->flash('alert-success', 'Upload do arquivo feito com sucesso!');
+            $arquivo = [
+                'nomeArquivo' => $dados['tipo'],
+                'dataSubmissao' => $mytime,
+                'caminho' => "storage/app/public/tcc/".$nameFile,
+                'TCC' => $dados['usuario_aluno'],
+                'comentario' => $dados['comentario'],
+                'versao' => 1,
+            ];
+            $arquivoBD = Arquivo::where([
+                ['TCC','=',$dados['usuario_aluno']],
+                ['nomeArquivo', '=', $dados['tipo']]
+            ])->first();
+
+            if(!$arquivoBD){
+                Arquivo::create($arquivo);
+            }
+            else{
+                Arquivo::where([
+                    ['TCC','=',$dados['usuario_aluno']],
+                    ['nomeArquivo', '=', $dados['tipo']]
+                ])
+                    ->update([
+                        'versao' =>  2,
+                        'comentario' => $dados['comentario'],
+                    ]);
+            }
             return redirect()->route('perfil_aluno');
         }
         $request->session()->flash('alert-danger', 'Nenhum arquivo selecionado!');

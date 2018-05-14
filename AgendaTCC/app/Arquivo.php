@@ -8,6 +8,6 @@ class Arquivo extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'nome','dataSubmissao', 'caminho', 'TCC', 'comentario', 'passoCronograma', 'versao'
+        'nomeArquivo','dataSubmissao', 'caminho', 'TCC', 'comentario', 'passoCronograma', 'versao'
     ];
 }
