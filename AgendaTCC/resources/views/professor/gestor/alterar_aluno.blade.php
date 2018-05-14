@@ -14,6 +14,7 @@
     <form action="{{ route('listar_alunos.alterar_aluno.salvar_alterar_aluno') }}" method="post">
         {{ csrf_field() }}
         <div class="form-group">
+            <input type="hidden" name="semestre_selecionado" value="{{$semestre_selecionado}}">
 
             <label>Nome</label>
             <input type='text' class='form-control' name='nome' value="{{$aluno['nome']}}" {{is_null ($aluno['nome'])? 'readonly':''}} ><br>

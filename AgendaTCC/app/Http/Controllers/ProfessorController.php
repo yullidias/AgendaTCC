@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Semestre;
 use App\AlunoSemestre;
+use App\Agendamento;
 use Illuminate\Support\Facades\Input;
 
 class ProfessorController extends Controller
@@ -125,6 +126,7 @@ class ProfessorController extends Controller
     public function alterar_aluno($dados)
     {
         $semestre=explode('-', $dados['semestre_selecionado']);
+        $semestre_selecionado=$dados['semestre_selecionado'];
 
         $aluno_semestre = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
         ->where([
@@ -133,7 +135,56 @@ class ProfessorController extends Controller
             ['aluno_semestres.semestre_ano', '=', $semestre[1]]
         ])->get()->first();
 
-        if(is_null($aluno_semestre['nome'])){ //so esta pre cadastrado
+        if(TccDados::where('usuario_aluno', '=', $dados['id'])->count() > 0){ 
+
+             $aluno_tcc = TccDados::where('usuario_aluno', '=', $dados['id'])->get()->first();
+
+
+            if(Agendamento::join('aluno_semestres', 'agendamentos.id_matricula', '=', 'aluno_semestres.id')
+                ->where([
+                    ['aluno_semestres.usuario_aluno', '=',  $dados['id']],
+                    ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+                    ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+                ])->count() > 0){
+
+
+                $aluno_agendamento = Agendamento::join('aluno_semestres', 'agendamentos.id_matricula', '=', 'aluno_semestres.id')
+                ->where([
+                    ['aluno_semestres.usuario_aluno', '=',  $dados['id']],
+                    ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+                    ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+                ])->get()->first();
+
+                 $aluno = [
+                    'id' => $aluno_semestre['usuario_aluno'],
+                    'nome'=> $aluno_semestre['nome'],
+                    'email'=> $aluno_semestre['email'],
+                    'materia'=> $aluno_semestre['materia'],
+                    'orientador'=> $aluno_tcc['orientador'],
+                    'coorientador'=> $aluno_tcc['coorientador'],
+                    'tema'=> $aluno_tcc['tema'],
+                    'membro_banca_1' => $aluno_agendamento['membro1banca'],
+                    'membro_banca_2' => $aluno_agendamento['membro2banca']
+                ];
+
+            }else{
+
+                 $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> $aluno_tcc['orientador'],
+                'coorientador'=> $aluno_tcc['coorientador'],
+                'tema'=> $aluno_tcc['tema'],
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
+
+            }
+
+        }else{
+
             $aluno = [
                 'id' => $aluno_semestre['usuario_aluno'],
                 'nome'=> $aluno_semestre['nome'],
@@ -145,38 +196,28 @@ class ProfessorController extends Controller
                 'membro_banca_1' => null,
                 'membro_banca_2' => null
             ];
-            $coorientador=null;
-
-        }else{ //esta cadastrado
-
-            $aluno_tcc = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-            ->where([
-                ['users.id', '=',  $dados['id']]
-            ])->get()->first();
-
-            $aluno = [
-                'id' => $aluno_semestre['usuario_aluno'],
-                'nome'=> $aluno_semestre['nome'],
-                'email'=> $aluno_semestre['email'],
-                'materia'=> $aluno_semestre['materia'],
-                'orientador'=> $aluno_tcc['orientador'],
-                'coorientador'=> $aluno_tcc['coorientador'],
-                'tema'=> $aluno_tcc['tema'],
-                'membro_banca_1' => null,
-                'membro_banca_2' => null
-            ];
         }
 
-        $orientadores = User::where('professor','=',true)
-        ->whereNotNull('nome')->get();
+        $orientadores = User::where([
+            ['professor','=',true],
+            ['orientador','=',true]
+        ])->whereNotNull('nome')->get();
 
         
-        return view('professor.gestor.alterar_aluno',compact('aluno','orientadores'));
+        return view('professor.gestor.alterar_aluno',compact('aluno','orientadores','semestre_selecionado'));
     }
 
     public function salvar_alterar_aluno(Request $req)
     {
         $dados = $req->all();
+
+        $semestre=explode('-', $dados['semestre_selecionado']);
+        $aluno_semestre = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+        ->where([
+            ['users.id', '=',  $dados['id']],
+            ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+            ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+        ])->get()->first();
 
         if(!is_null ($dados['nome'])){
             User::where('id','=',$dados['id'])
@@ -219,6 +260,20 @@ class ProfessorController extends Controller
             ]);
         }
 
+        if(!is_null($dados['membro_banca_1'])){
+            Agendamento::where('id_matricula', '=', $aluno_semestre['id'])
+            ->update([
+                'membro1banca' => $dados['membro_banca_1']
+            ]);
+        }
+
+        if(!is_null($dados['membro_banca_2'])){
+            Agendamento::where('id_matricula', '=', $aluno_semestre['id'])
+            ->update([
+                'membro2banca' => $dados['membro_banca_2']
+            ]);
+        }
+
 
 
       return redirect()->route('listar_alunos');
@@ -237,28 +292,50 @@ class ProfessorController extends Controller
             ['aluno_semestres.semestre_ano', '=', $semestre[1]]
         ])->get()->first();
 
+        $aluno_semestre = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+        ->where([
+            ['users.id', '=',  $dados['id']],
+            ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+            ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+        ])->get()->first();
 
-        if(is_null($aluno_semestre['nome'])){ //so esta pre cadastrado
-            $aluno = [
-                'id' => $aluno_semestre['usuario_aluno'],
-                'nome'=> $aluno_semestre['nome'],
-                'email'=> $aluno_semestre['email'],
-                'materia'=> $aluno_semestre['materia'],
-                'orientador'=> null,
-                'coorientador'=> null,
-                'tema'=> null,
-                'membro_banca_1' => null,
-                'membro_banca_2' => null
-            ];
-            $orientador=null;
-        }else{ //esta cadastrado
+        if(TccDados::where('usuario_aluno', '=', $dados['id'])->count() > 0){ 
 
-            $aluno_tcc = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-            ->where([
-                ['users.id', '=',  $dados['id']]
-            ])->get()->first();
+             $aluno_tcc = TccDados::where('usuario_aluno', '=', $dados['id'])->get()->first();
+             $orientador = User::where('professor','=',true)
+                ->where('id','=',$aluno_tcc['orientador'])->get()->first();
 
-            $aluno = [
+
+            if(Agendamento::join('aluno_semestres', 'agendamentos.id_matricula', '=', 'aluno_semestres.id')
+                ->where([
+                    ['aluno_semestres.usuario_aluno', '=',  $dados['id']],
+                    ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+                    ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+                ])->count() > 0){
+
+
+                $aluno_agendamento = Agendamento::join('aluno_semestres', 'agendamentos.id_matricula', '=', 'aluno_semestres.id')
+                ->where([
+                    ['aluno_semestres.usuario_aluno', '=',  $dados['id']],
+                    ['aluno_semestres.semestre_numero', '=', $semestre[0]],
+                    ['aluno_semestres.semestre_ano', '=', $semestre[1]]
+                ])->get()->first();
+
+                 $aluno = [
+                    'id' => $aluno_semestre['usuario_aluno'],
+                    'nome'=> $aluno_semestre['nome'],
+                    'email'=> $aluno_semestre['email'],
+                    'materia'=> $aluno_semestre['materia'],
+                    'orientador'=> $aluno_tcc['orientador'],
+                    'coorientador'=> $aluno_tcc['coorientador'],
+                    'tema'=> $aluno_tcc['tema'],
+                    'membro_banca_1' => $aluno_agendamento['membro1banca'],
+                    'membro_banca_2' => $aluno_agendamento['membro2banca']
+                ];
+
+            }else{
+
+                 $aluno = [
                 'id' => $aluno_semestre['usuario_aluno'],
                 'nome'=> $aluno_semestre['nome'],
                 'email'=> $aluno_semestre['email'],
@@ -270,9 +347,21 @@ class ProfessorController extends Controller
                 'membro_banca_2' => null
             ];
 
-            $orientador = User::where('professor','=',true)
-            ->where('id','=',$aluno_tcc['orientador'])->get()->first();
+            }
 
+        }else{
+
+            $aluno = [
+                'id' => $aluno_semestre['usuario_aluno'],
+                'nome'=> $aluno_semestre['nome'],
+                'email'=> $aluno_semestre['email'],
+                'materia'=> $aluno_semestre['materia'],
+                'orientador'=> null,
+                'coorientador'=> null,
+                'tema'=> null,
+                'membro_banca_1' => null,
+                'membro_banca_2' => null
+            ];
         }
 
         return view('professor.gestor.visualizar_aluno',compact('aluno','orientador'));

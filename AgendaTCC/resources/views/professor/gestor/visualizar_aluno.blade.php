@@ -35,7 +35,7 @@
             </div><br>
 
             <label>Orientador</label>
-            <input type='text' class='form-control' name='orientador' value="{{$orientador['nome']}}" readonly><br>
+            <input type='text' class='form-control' name='orientador' value="{{isset($orientador['nome'])? $orientador['nome']:''}}" readonly><br>
 
             <label>Coorientador</label>
             <input type='text' class='form-control' name='coorientador' value="{{$aluno['coorientador']}}" readonly><br>
