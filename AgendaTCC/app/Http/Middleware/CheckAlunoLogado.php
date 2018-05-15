@@ -16,7 +16,12 @@ class CheckAlunoLogado
     public function handle($request, Closure $next)
     {
         if(auth()->check()){
-            return $next($request);
+            if(auth()->user()["professor"] == 0){
+                return $next($request);
+            }
+            else{
+                return redirect('/');
+            }
         }
         return redirect('/');
     }

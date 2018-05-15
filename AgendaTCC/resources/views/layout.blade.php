@@ -25,7 +25,7 @@
 				<ul class='nav navbar-nav navbar-right'>
 					@if(auth()->check()){{-- se ele estiver logado --}}
 						<li><a href="#">{{auth()->user()->nome}}</a></li> {{-- mostro o nome de quem está logado --}}
-						<li><a href="{{route('site.login.sair')}}">Sair</a></li> {{-- sai do login --}}
+						<li><a href="{{route('site.login.sair')}}"><strong>Sair</strong></a></li> {{-- sai do login --}}
 						@endif
 				</ul>
 			</div>

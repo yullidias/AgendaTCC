@@ -16,7 +16,10 @@ class CheckOrientadorLogado
     public function handle($request, Closure $next)
     {
         if(auth()->check()){
-
+            if(auth()->user()["professor"] == 1 and auth()->user()["orientador"]==1)
+                return $next($request);
+            else
+                return redirect('/');
             return $next($request);
         }
         return redirect('/');

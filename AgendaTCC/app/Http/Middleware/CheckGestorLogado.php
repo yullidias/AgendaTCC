@@ -18,8 +18,10 @@ class CheckGestorLogado
     public function handle($request, Closure $next)
     {
         if(auth()->check()){
-          return $next($request);
-
+            if(auth()->user()["professor"] == 1 and auth()->user()["gestor"]==1)
+                return $next($request);
+            else
+                return redirect('/');
         }
         return redirect('/');
     }

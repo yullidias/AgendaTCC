@@ -26,26 +26,29 @@ class LoginController extends Controller
     {
 
         $dados = $req->all();
-        // dd($dados);
+        $this->validate($req, [
+           'login' => 'required|numeric|exists:users,id',
+            'password'=> 'required',
+        ],[
+            'login.required' => 'O campo login é obrigatório!',
+            'login.numeric' => 'Digite a Matrícula ou SIAPE!',
+            'login.exists' => 'Usuário não cadastrado!',
+            'password.required' => 'O campo senha é obrigatório!',
+        ]);
+
         if(Auth::attempt(['id'=>$dados['login'],'password'=>$dados['password']])){
             $usuarioLogado = auth()->user();
 //            dd($usuarioLogado);
             if($usuarioLogado['professor']==1){
-
-                if($usuarioLogado['gestor']==1) {
-                    return redirect()->route('listar_alunos');
-
-                }else if($usuarioLogado['orientador']==1){
-
-                    dd("eu sou o orientador, minha pagina esta em construcao.");
-
-                }else if($usuarioLogado['professorDisciplina']==1){
-                    return redirect()->route('perfil_professor');
-                }
+                return redirect()->route('perfil_professor');
             }else if($usuarioLogado['professor']==0){
                  // dd("Tela em construção");
                 return redirect()->route('cadastrar_aluno');
             }
+        }
+        else{
+            $req->session()->flash('alert-danger', 'Login ou senha incorretos');
+            return redirect()->route('site.login');
         }
 
     }

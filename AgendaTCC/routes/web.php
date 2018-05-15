@@ -10,18 +10,37 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+    //Tela 1 Login
+    Route::get('/',[
+        'as'=>'site.login',
+        'uses'=>'Site\LoginController@index'
+    ]);
+    Route::get('/login/sair',[
+        'as'=>'site.login.sair',
+        'uses'=>'Site\LoginController@sair'
+    ]);
+    Route::post('/login/entrar',[
+        'as'=>'site.login.entrar',
+        'uses'=>'Site\LoginController@entrar'
+    ]);
 
-Route::get('/',['as'=>'site.login','uses'=>'Site\LoginController@index']);
-Route::get('/login/sair',['as'=>'site.login.sair','uses'=>'Site\LoginController@sair']);
-Route::post('/login/entrar',['as'=>'site.login.entrar','uses'=>'Site\LoginController@entrar']);
-
-//Grupo de acesso para o aluno
-Route::group(['middleware'=>['auth','check.aluno']], function(){
-    //Tela aluno tela2 cadastro aluno
+    //Telas de cadastro para usuários não logados
+    //Cadastro aluno
     Route::get('/cadastrar_aluno',[
         'as' => 'cadastrar_aluno',
         'uses'=> 'AlunoController@cadastro_aluno'
     ]);
+
+    //Cadastro Professor
+    Route::get('/cadastrar_professor',[
+        'as' => 'cadastrar_professor',
+        'uses'=> 'ProfessorController@cadastro_professor'
+    ]);
+
+
+//Grupo de acesso para o aluno
+Route::group(['middleware'=>['auth','check.aluno']], function(){
+
     Route::post('/salvar_cadastro_aluno', [
         'as' => 'salvar_cadastro_aluno',
         'uses' => 'AlunoController@salvar_cadastro_aluno'
@@ -47,11 +66,6 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
 //Grupo de acesso do professor
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
-    //Tela professor cadastro professor
-        Route::get('/cadastrar_professor',[
-            'as' => 'cadastrar_professor',
-            'uses'=> 'ProfessorController@cadastro_professor'
-        ]);
         Route::post('/salvar_cadastro_professor', [
             'as' => 'salvar_cadastro_professor',
             'uses' => 'ProfessorController@salvar_cadastro_professor'
