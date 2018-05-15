@@ -59,6 +59,18 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as' => 'aluno_visualizar_cronograma',
         'uses' => 'CronogramaController@aluno_visualizar_cronograma'
     ]);
+    Route::get('/submeter_tcc',[
+        'as' => 'submeter_tcc',
+        'uses'=> 'AlunoController@submeter_tcc'
+    ]);
+    Route::post('/salvar_submeter_tcc',[
+        'as' => 'salvar_submeter_tcc',
+        'uses'=> 'AlunoController@salvar_submeter_tcc'
+    ]);
+    Route::get( '/download/{filename}', [
+        'as'=>'download',
+        'uses'=>'AlunoController@download'
+    ]);
 
 });
 
@@ -84,11 +96,21 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'as' => 'visualizar_lista_alunos',
             'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
-        Route::post('/perfilProfessor/listaAlunos/visualiza_avalia_aluno', [
-            'as' => 'visualiza_ou_avalia_aluno',
-            'uses' => 'ProfessorController@visualiza_ou_avalia_aluno'
+        Route::post('/perfilProfessor/listaAlunos',[
+            'as' => 'visualizar_lista_alunos',
+            'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
-        Route::post('/salvar_avaliacao', [
+        Route::get('/perfilProfessor/listaAlunos/visualizar_aluno/{id}',[
+            'as'=>'visualizar_aluno',
+            'uses'=>'ProfessorController@professor_visualiza_aluno'
+        ]);
+
+        Route::get('/perfilProfessor/listaAlunos/avaliar_aluno/{id}',[
+            'as'=>'avaliar_aluno',
+            'uses'=>'ProfessorController@avaliar_aluno'
+        ]);
+
+        Route::post('/perfilProfessor/listaAlunos/avaliar_aluno/salvar_avaliacao', [
             'as' => 'salvar_avaliacao',
             'uses' => 'ProfessorController@salvar_avaliacao'
         ]);
@@ -102,7 +124,16 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
 
 //Grupo de acesso do orientador
 Route::group(['middleware'=>['auth','check.orientador']], function(){
-    //INCLUIR AS ROTAS PARA OS ORIENTADORES E COORIENTADORES
+    //Tela orientador tela 18 agendamento
+    Route::post('/salvarAgendamento/',[
+        'as' => 'salvar_agendamento',
+        'uses' => 'AgendamentoController@salvar_agendamento'
+    ]);
+
+    Route::post('/listarAgendamento/', [
+        'as' => 'listar_agendamento_logs',
+        'uses' => 'AgendamentoController@listar_agendamento_logs'
+    ]);
 });
 
 //------------------------------------------------------------------------------------
@@ -117,28 +148,18 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
             'as'=>'listar_alunos',
             'uses'=>'ProfessorController@listar_alunos'
         ]);
+
     //------------------------------------------------------------------------------------
     //Tela gestor tela23 alteracaocadastroaluno
-        Route::get('/listar_alunos/alterar_aluno/{id}',[
-            'as'=>'listar_alunos.alterar_aluno',
-            'uses'=>'ProfessorController@alterar_aluno'
+     //Tela gestor tela24 dadoscadastraisaluno
+        Route::post('/listar_alunos.operacoes_aluno',[
+            'as'=>'listar_alunos.operacoes_aluno',
+            'uses'=>'ProfessorController@operacoes_aluno'
         ]);
 
-        Route::post('/listar_alunos/alterar_aluno/salvar_alterar_aluno',[
+       Route::post('/listar_alunos/alterar_aluno/salvar_alterar_aluno',[
             'as'=>'listar_alunos.alterar_aluno.salvar_alterar_aluno',
             'uses'=>'ProfessorController@salvar_alterar_aluno'
-        ]);
-    //------------------------------------------------------------------------------------
-    //Tela gestor tela24 dadoscadastraisaluno
-        Route::get('/listar_alunos/visualizar_aluno/{id}',[
-            'as'=>'listar_alunos.visualizar_aluno',
-            'uses'=>'ProfessorController@visualizar_aluno'
-        ]);
-    //------------------------------------------------------------------------------------
-    //Tela gestor  excluir aluno
-        Route::get('/listar_alunos/excluir_aluno/{id}',[
-            'as'=>'listar_alunos.excluir_aluno',
-            'uses'=>'ProfessorController@excluir_aluno'
         ]);
 
     //------------------------------------------------------------------------------------
@@ -167,6 +188,17 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         Route::get('/listar_professores/visualizar_professor/{id}',[
             'as'=>'listar_professores.visualizar_professor',
             'uses'=>'ProfessorController@visualizar_professor'
+        ]);
+     //------------------------------------------------------------------------------------
+    //Tela gestor tela23 alteracaocadastroaluno
+        Route::get('/listar_professores/alterar_professor/{id}',[
+            'as'=>'listar_professores.alterar_professor',
+            'uses'=>'ProfessorController@alterar_professor'
+        ]);
+
+        Route::post('/listar_professores/alterar_professor/salvar_alterar_professor',[
+            'as'=>'listar_professores.alterar_professor.salvar_alterar_professor',
+            'uses'=>'ProfessorController@salvar_alterar_professor'
         ]);
        //------------------------------------------------------------------------------------
     //Tela gestor  excluir professor
@@ -217,5 +249,21 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         Route::post('/excluirSemestre/', [
             'as' => 'excluir_semestre',
             'uses' => 'SemestreController@excluir_semestre'
+        ]);
+
+        //Tela gestor tela26 gestaoSalas
+        Route::get('/gerirSalas',[
+            'as' => 'listar_salas',
+            'uses' => 'SalaController@listar_salas'
+        ]);
+
+        Route::post('/salvarSala',[
+            'as' => 'salvar_sala',
+            'uses' => 'SalaController@salvar_sala'
+        ]);
+
+        Route::post('/excluirSala',[
+            'as' => 'excluir_sala',
+            'uses' => 'SalaController@excluir_sala'
         ]);
 });

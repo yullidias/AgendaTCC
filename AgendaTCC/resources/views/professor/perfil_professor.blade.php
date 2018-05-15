@@ -23,13 +23,13 @@
 	<div class='form-group'>
 		@foreach ($professor as $prof)
 		<label>SIAPE</label>
-		<input type='text' class='form-control' name='id' value="{{$prof->id}}" >
+		<input type='text' class='form-control' name='id' value="{{$prof->id}}" readonly>
 		<label>Nome</label>
 		<input type='text' class='form-control' name='nome' value="{{$prof->nome}}" >
 		<label>Email</label>
 		<input type='text' class='form-control' name='email' value="{{$prof->email}}" >
 		<label>Senha</label>
-		<input type='password' class='form-control' name='password' value="{{$prof->password}}" >
+		<input type='password' class='form-control' name='password'  >
 		@endforeach
 	</div>
 	</div>

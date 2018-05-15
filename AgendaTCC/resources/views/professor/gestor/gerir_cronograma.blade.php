@@ -30,7 +30,11 @@
 		</div>
 
 		<label>Semestre: </label>
-		<h10>{{$semestre->ano.'-'.$semestre->numero}}</h10>
+		@if($semestre != null)
+			<h10>{{$semestre->ano.'-'.$semestre->numero}}</h10>
+		@else
+			<h10> - </h10>
+		@endif
 
 		<label>Turma</label>
 		<select id="listbox_turma", name="turma">
@@ -53,7 +57,7 @@
 	</style>
 
 	<br><br>
-	<form action="{{ route('cadastrar_cronograma.deletar_atividade_cronograma')}}" method="post" }}">
+	<form action="{{ route('cadastrar_cronograma.deletar_atividade_cronograma')}}" method="post">
 	{{ csrf_field() }}
 	<table style="width:100%" class="table table-hover">
 		<tr>

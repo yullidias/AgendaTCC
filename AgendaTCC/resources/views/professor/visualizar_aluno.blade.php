@@ -16,43 +16,49 @@
 		@endforeach
 	</div> <!-- end .flash-message -->
 	<br>
-	<form action="{{ route('solicitar_alteracao_aluno') }}" method="post">
+	<div class='col-md-6 col-md-offset-1'>
+	<form>
 		{{ csrf_field() }}
 
 		<div class='form-group'>
-			@foreach ($aluno as $alun)
-				<label class="col-xs-11">Nome</label>
-				<table class="col-xs-6">
-					<tr>
-						<td><input type='text' class='form-control' name='nome' size="20" value="{{$alun->nome}}" readonly></td>
-					</tr>
-				</table>
-				<label class="col-xs-11">Email</label>
-				<table class="col-xs-6">
-					<tr>
-						<td><input type='text' class='form-control' name='email' size="20" value="{{$alun->email}}" readonly></td>
-					</tr>
-				</table>
+			@if(isset($aluno->nome))
+				<label>Aluno</label>
+				<input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
+			@endif
 
-			@endforeach
-		</div>
+				@if(isset($aluno->tema))
+					<label>Tema</label>
+					<input type='text' class='form-control' name='tema' value="{{$aluno->tema}}" readonly><br>
+				@endif
 
-		<div class='form-group'>
-			@foreach ($tccDados as $tcc)
-				<label class="col-xs-11">Tema</label>
-				<table class="col-xs-6">
-					<tr>
-						<td><input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly></td>
-					</tr>
-				</table>
-				<label class="col-xs-11" >Orientador</label>
-				<table class="col-xs-6">
-					<tr>
-						<td><input type='text' class='form-control' name='orientador'  size="20" value="{{$tcc->orientador}}" readonly></td>
-					</tr>
-				</table>
-			@endforeach
+
+			@if(isset($aluno->email))
+				<label>E-mail</label>
+				<input type='text' class='form-control' name='email' value="{{$aluno->email}}" readonly><br>
+			@endif
+
+			<label>Disciplina</label>
+			<div class="radio">
+				<label>
+					<input type="radio" name="materia" value="1" {{ ($aluno->materia==1) ? "checked": "disabled" }}  > TCC1
+				</label>
+				&ensp;
+				<label>
+					<input type="radio" name="materia" value="2" {{ ($aluno->materia==2) ? "checked": "disabled" }}  > TCC2
+				</label>
+			</div><br>
+
+			@if(isset($aluno->orientador))
+				<label>Orientador</label>
+				<input type='text' class='form-control' name='orientador' value="{{$aluno->orientador}} " readonly><br>
+			@endif
 		</div>
+	</form>
+		<h3><strong>Histórico de Submissões</strong></h3>
+		<a class="btn btn-default" href="{{ url('/download/201522040471_Pré-Projeto.txt')  }}" target="_blank">
+			Baixar
+		</a>
+	</div>
 
 
 

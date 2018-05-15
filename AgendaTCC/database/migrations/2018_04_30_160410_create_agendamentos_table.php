@@ -14,15 +14,16 @@ class CreateAgendamentosTable extends Migration {
     {
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->dateTime('data');
-            $table->integer('id_sala')->unsigned();
+            $table->string('sala',10);
+            $table->string('predio',10);
             $table->integer('id_matricula')->unsigned();
             $table->string('membro1banca');
             $table->string('membro2banca');
-            $table->primary(['data', 'id_sala', 'id_matricula']);
+            $table->primary(['data', 'sala', 'predio', 'id_matricula']);
         });
 
         Schema::table('agendamentos', function (Blueprint $table) {
-            $table->foreign('id_sala')->references('id')->on('sala_auditorios');
+            $table->foreign(['sala','predio'])->references(['sala', 'predio'])->on('sala_auditorios');
             $table->foreign('id_matricula')->references('id')->on('aluno_semestres');
         });
     }

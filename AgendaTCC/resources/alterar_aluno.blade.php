@@ -14,13 +14,11 @@
     <form action="{{ route('listar_alunos.alterar_aluno.salvar_alterar_aluno') }}" method="post">
         {{ csrf_field() }}
         <div class="form-group">
-            <input type="hidden" name="semestre_selecionado" value="{{$semestre_selecionado}}">
-
             <label>Nome</label>
-            <input type='text' class='form-control' name='nome' value="{{$aluno['nome']}}" {{is_null ($aluno['nome'])? 'readonly':''}} ><br>
+            <input type='text' class='form-control' name='nome' value="{{$aluno['nome']}}" {{is_null ($aluno['id'])? 'readonly':''}} ><br>
 
             <label>Matricula</label>
-            <input type='text' class='form-control' name='id' value="{{$aluno['id']}}" readonly ><br>
+            <input type='text' class='form-control' name='id' value="{{$aluno['id']}}" {{is_null ($aluno['nome'])? 'readonly':''}} ><br>
  
             <label>E-mail</label>
             <input type='text' class='form-control' name='email' value="{{$aluno['email']}}" {{is_null ($aluno['email'])? 'readonly':''}}><br>
@@ -37,11 +35,11 @@
             </div><br>
             
             <label>Orientador</label>
-            <select class="form-control" name="orientador" {{is_null ($aluno['coorientador'])? 'readonly':''}}>
-                @foreach ($orientadores as $orientador)
-                <option value="{{$orientador->id}}" >{{$orientador->nome}}</option>
-                @endforeach
-            </select><br>
+                <select class="form-control" name="orientador">
+                    @foreach ($professores as $professor)
+                    <option value="{{$professor->id}}" >{{$professor->nome}}</option>
+                    @endforeach
+                </select><br>
 
             <label>Coorientador</label>
             <input type='text' class='form-control' name='coorientador' value="{{$aluno['coorientador']}} " {{is_null ($aluno['coorientador'])? 'readonly':''}}><br>
@@ -56,7 +54,7 @@
             <input type='text' class='form-control' name='membro_banca_2' value="{{$aluno['membro_banca_2']}}" {{is_null ($aluno['membro_banca_2'])? 'readonly':''}}><br>
         </div>
 
-        <br><input type='submit' class='btn btn-default' value='Alterar'>
+        <br><input type='submit' class='btn btn-default' value='Cadastrar'>
 
     </form>
 </div>
