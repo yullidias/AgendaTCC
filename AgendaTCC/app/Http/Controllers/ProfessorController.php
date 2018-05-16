@@ -593,20 +593,52 @@ class ProfessorController extends Controller
                 ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
                 ->where('users.id', '=',  $id)->get()->first();
+
         }else { //esta so pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
                 ->where('users.id', '=',  $id)->get()->first();
         }
-        $avaliacaosProf = Avaliacao::where([
+        if(Avaliacao::where('tccDados','=',$id)->count() == 2){
+            $avaliacaosProf = Avaliacao::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 0]
+            ])->first();
+            $avaliacaosOrient = Avaliacao::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 1]
+            ])->first();
+
+            return view('professor.avaliar_aluno', compact('aluno','avaliacaosOrient','avaliacaosProf'));
+        }
+        elseif(Avaliacao::where([
             ['tccDados','=',$id],
             ['ehOrientador', '=', 0]
-        ])->first();
-        $avaliacaosOrient = Avaliacao::where([
+        ])->count() > 0){
+            $avaliacaosProf = Avaliacao::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 0]
+            ])->first();
+
+            return view('professor.avaliar_aluno', compact('aluno','avaliacaosProf'));
+        }
+        elseif (Avaliacao::where([
             ['tccDados','=',$id],
             ['ehOrientador', '=', 1]
-        ])->first();
-        return view('professor.avaliar_aluno', compact('aluno','avaliacaosOrient','avaliacaosProf'));
+        ])->count() > 0){
+            $avaliacaosOrient = Avaliacao::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 1]
+            ])->first();
+
+            return view('professor.avaliar_aluno', compact('aluno','avaliacaosOrient'));
+        }
+        else{
+
+            return view('professor.avaliar_aluno', compact('aluno'));
+        }
+
+
     }
 
     public function salvar_avaliacao(Request $request){ //professor
