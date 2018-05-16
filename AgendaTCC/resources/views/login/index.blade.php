@@ -1,10 +1,10 @@
 @extends('layout')
 @section('conteudo')
     <div class="col-sm-20 col-xs-offset-10">
-        <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_aluno') }}" role="button">Cadastrar aluno</a></p>
+        <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_aluno') }}" role="button" style="width: 150px">Cadastrar aluno    </a></p>
         <br>
         <br>
-        <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_professor') }}" role="button">Cadastrar professor</a></p>
+        <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_professor') }}" role="button" style="width: 150px">Cadastrar professor</a></p>
 
     </div>
     <br>
