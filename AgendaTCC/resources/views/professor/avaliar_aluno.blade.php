@@ -40,22 +40,51 @@
 
 					<tr>
 						<td><label>Atitude e Competência</label></td>
+						@if(isset($avaliacaosProf->atitudeCompetencia))
 						<td><input type='text' class='form-control' name='atitudeCompetencia2' value="{{$avaliacaosProf->atitudeCompetencia}}" required></td>
+						@else
+							<td><input type='text' class='form-control' name='atitudeCompetencia2'  required></td>
+						@endif
+
+						@if(isset($avaliacaosOrient->atitudeCompetencia))
 						<td><input type='text' class='form-control' name='atitudeCompetencia' value="{{$avaliacaosOrient->atitudeCompetencia}}" readonly></td>
+						@else
+							<td><input type='text' class='form-control' name='atitudeCompetencia'  readonly></td>
+						@endif
 					</tr>
 					<tr>
 						<td><label>Forma</label></td>
+						@if(isset($avaliacaosProf->forma))
 						<td><input type='text' class='form-control' name='forma2' value="{{$avaliacaosProf->forma}}" required></td>
+						@else
+							<td><input type='text' class='form-control' name='forma2' required></td>
+						@endif
+						@if(isset($avaliacaosOrient->forma))
                         <td><input type='text' class='form-control' name='forma' value="{{$avaliacaosOrient->forma}}" readonly></td>
+						@else
+							<td><input type='text' class='form-control' name='forma' readonly></td>
+						@endif
 					</tr>
 					<tr>
 						<td><label>Conteúdo</label></td>
-						<td><input type='text' class='form-control' name='conteudo2' value="{{$avaliacaosProf->conteudo}}" required></td>
-                        <td><input type='text' class='form-control' name='conteudo' value="{{$avaliacaosOrient->conteudo}}" readonly></td>
+						@if(isset($avaliacaosProf->conteudo))
+							<td><input type='text' class='form-control' name='conteudo2' value="{{$avaliacaosProf->conteudo}}" required></td>
+						@else
+							<td><input type='text' class='form-control' name='conteudo2' required></td>
+						@endif
+						@if(isset($avaliacaosOrient->conteudo))
+							<td><input type='text' class='form-control' name='conteudo' value="{{$avaliacaosOrient->conteudo}}" readonly></td>
+						@else
+							<td><input type='text' class='form-control' name='conteudo' readonly></td>
+						@endif
 					</tr>
 					<tr>
 						<td><label>Comentários</label></td>
+						@if(isset($avaliacaosProf->comentario))
 						<td><input style="height: 80px" type='text' class='form-control' name='comentario2' value="{{$avaliacaosProf->comentario}}" required></td>
+						@else
+							<td><input style="height: 80px" type='text' class='form-control' name='comentario2' required></td>
+						@endif
 					</tr>
 
 				</table>

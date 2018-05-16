@@ -189,7 +189,7 @@ class AlunoController extends Controller
             return \Response::download( $file_path, $filename, $headers );
         } else {
             // Error
-            exit( 'Requested file does not exist on our server!' );
+            exit( 'Arquivo ainda não foi enviado pelo aluno!' );
         }
     }
 }

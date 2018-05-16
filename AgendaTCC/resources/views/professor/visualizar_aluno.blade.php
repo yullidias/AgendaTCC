@@ -37,27 +37,38 @@
 				<input type='text' class='form-control' name='email' value="{{$aluno->email}}" readonly><br>
 			@endif
 
-			<label>Disciplina</label>
-			<div class="radio">
-				<label>
-					<input type="radio" name="materia" value="1" {{ ($aluno->materia==1) ? "checked": "disabled" }}  > TCC1
-				</label>
-				&ensp;
-				<label>
-					<input type="radio" name="materia" value="2" {{ ($aluno->materia==2) ? "checked": "disabled" }}  > TCC2
-				</label>
-			</div><br>
-
 			@if(isset($aluno->orientador))
 				<label>Orientador</label>
 				<input type='text' class='form-control' name='orientador' value="{{$aluno->orientador}} " readonly><br>
 			@endif
+				<label>Disciplina</label>
+				<div class="radio">
+					<label>
+						<input type="radio" name="materia" value="1" {{ ($aluno->materia==1) ? "checked": "disabled" }}  > TCC1
+					</label>
+					&ensp;
+					<label>
+						<input type="radio" name="materia" value="2" {{ ($aluno->materia==2) ? "checked": "disabled" }}  > TCC2
+					</label>
+				</div>
 		</div>
 	</form>
 		<h3><strong>Histórico de Submissões</strong></h3>
-		<a class="btn btn-default" href="{{ url('/download/201522040471_Pré-Projeto.txt')  }}" target="_blank">
+		<table style="width:100%; background-color: #E6E6FA;" class="table table-hover">
+		<tr>
+		<td><label>Pré-Projeto</label></td>
+		<td><a class="btn btn-default" href="{{ url('/download/201522040471_Pré-Projeto.txt')  }}" target="_blank">
 			Baixar
-		</a>
+		</a></td>
+		</tr>
+			<br><br>
+		<tr>
+			<td><label>TCC</label></td>
+		<td><a class="btn btn-default" href="{{ url('/download/201522040471_TCC.txt')  }}" target="_blank">
+			Baixar
+		</a></td>
+		</tr>
+		<table>
 	</div>
 
 
