@@ -39,7 +39,7 @@ class ProfessorController extends Controller
         $aluno = [
             'id' => $dados['id'],
             'nome' => NULL,
-            'password' => bcrypt($dados['id']),
+            'password' => NULL,
             'email' => NULL,
             'excluido' => false,
             'professor' => false,
@@ -460,27 +460,32 @@ class ProfessorController extends Controller
 
     public function salvar_alterar_professor(Request $req)
     {
-        $dados = $req->all();
+       $dados = $req->all();
         //echo($dados);
+        //dd($dados);
 
-      //  if(isset($dados['orientador'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'orientador' => $dados['orientador']
-            ]);
-      //  }
-      //  if(isset($dados['professorDisciplina'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'professorDisciplina' => $dados['professorDisciplina']
-            ]);
-      //  }
-        //if(isset($dados['gestor'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'gestor' => $dados['gestor']
-            ]);
-       // } 
+       if(isset($dados['permissao_orientador'])){
+           $permissao['orientador']= $dados['permissao_orientador'];
+       }else{
+           $permissao['orientador']= false ;
+       }
+       if(isset($dados['permissao_professorDisciplina'])){
+           $permissao['professorDisciplina']= $dados['permissao_professorDisciplina'];
+       }else{
+           $permissao['professorDisciplina']= false ;
+       }
+       if(isset($dados['permissao_gestor'])){
+           $permissao['gestor']= $dados['permissao_gestor'];
+       }else{
+           $permissao['gestor']= false ;
+       }
+      
+       User::where('id','=',$dados['id'])
+        ->update([
+            'orientador' => $permissao['orientador'],
+            'professorDisciplina' => $permissao['professorDisciplina'],
+            'gestor' => $permissao['gestor']
+        ]);
 
       return redirect()->route('listar_professores');
     }
@@ -530,7 +535,7 @@ class ProfessorController extends Controller
         $professor = [
             'id' => $dados['id'],
             'nome' => NULL,
-            'password' => bcrypt($dados['id']),
+            'password' => NULL,
             'email' => NULL,
             'excluido' => false,
             'professor' => true,
