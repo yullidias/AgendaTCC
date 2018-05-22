@@ -39,7 +39,7 @@ class ProfessorController extends Controller
         $aluno = [
             'id' => $dados['id'],
             'nome' => NULL,
-            'password' => bcrypt($dados['id']),
+            'password' => NULL,
             'email' => NULL,
             'excluido' => false,
             'professor' => false,
@@ -101,6 +101,40 @@ class ProfessorController extends Controller
                 ['users.excluido', '=',  false],
             ])->get();
 
+        foreach ($alunos as $aluno) {
+            $aluno['pode_rematricular'] = false;
+
+            if($aluno['materia']==2){
+                $avaliacao_orientador = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->join('avaliacaos', 'tcc_dados.idDados', '=', 'avaliacaos.tccDados')
+                ->where([
+                    ['avaliacaos.ehOrientador', '=', true],
+                    ['users.id','=', $aluno['id']]
+                ])->get()->first();
+
+                $avaliacao_professor = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->join('avaliacaos', 'tcc_dados.idDados', '=', 'avaliacaos.tccDados')
+                ->where([
+                    ['avaliacaos.ehOrientador', '=', false],
+                    ['users.id','=', $aluno['id']]
+                ])->get()->first();
+
+
+                if( $avaliacao_orientador!=null && $avaliacao_professor!=null ){  
+                    $nota_orientador=$avaliacao_orientador['atitudeCompetencia']+$avaliacao_orientador['forma']+$avaliacao_orientador['conteudo'];
+                    $nota_professor=$avaliacao_professor['atitudeCompetencia']+$avaliacao_professor['forma']+$avaliacao_professor['conteudo'];
+
+                    $media=0.6*$nota_orientador+0.4*$nota_professor;
+
+                    if($media >= 60){
+                         $aluno['pode_rematricular'] = true;
+                     }
+                }
+            }
+            
+           
+        }
+
         return view('professor.gestor.listar_alunos',compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
     }
 
@@ -117,6 +151,10 @@ class ProfessorController extends Controller
 
             case 'Excluir':
                 $view = self::excluir_aluno($dados);
+                break;
+
+            case 'Rematricular':
+                $view = self::rematricular_aluno($dados);
                 break;
         }
         return $view;
@@ -368,13 +406,29 @@ class ProfessorController extends Controller
     }
 
     //------------------------------------------------------------------------------------
-    //Tela gestor excluiraluno
+    //Tela gestor excluir aluno
      public function excluir_aluno($dados)
     {
 
          User::where('id','=',$dados['id'])
         ->update([
             'excluido' => true,
+        ]);
+
+         return redirect()->route('listar_alunos');
+    }
+    //------------------------------------------------------------------------------------
+    //Tela gestor rematricular aluno
+     public function rematricular_aluno($dados)
+    {
+        $semestre=explode('-', $dados['semestre_selecionado']);
+
+        AlunoSemestre::where([
+            ['usuario_aluno', '=',  $dados['id']],
+            ['semestre_numero', '=', $semestre[0]],
+            ['semestre_ano', '=', $semestre[1]]
+        ])->update([
+            'materia' => 2
         ]);
 
          return redirect()->route('listar_alunos');
@@ -406,27 +460,32 @@ class ProfessorController extends Controller
 
     public function salvar_alterar_professor(Request $req)
     {
-        $dados = $req->all();
+       $dados = $req->all();
         //echo($dados);
+        //dd($dados);
 
-      //  if(isset($dados['orientador'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'orientador' => $dados['orientador']
-            ]);
-      //  }
-      //  if(isset($dados['professorDisciplina'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'professorDisciplina' => $dados['professorDisciplina']
-            ]);
-      //  }
-        //if(isset($dados['gestor'])){
-            User::where('id','=',$dados['id'])
-            ->update([
-                'gestor' => $dados['gestor']
-            ]);
-       // } 
+       if(isset($dados['permissao_orientador'])){
+           $permissao['orientador']= $dados['permissao_orientador'];
+       }else{
+           $permissao['orientador']= false ;
+       }
+       if(isset($dados['permissao_professorDisciplina'])){
+           $permissao['professorDisciplina']= $dados['permissao_professorDisciplina'];
+       }else{
+           $permissao['professorDisciplina']= false ;
+       }
+       if(isset($dados['permissao_gestor'])){
+           $permissao['gestor']= $dados['permissao_gestor'];
+       }else{
+           $permissao['gestor']= false ;
+       }
+      
+       User::where('id','=',$dados['id'])
+        ->update([
+            'orientador' => $permissao['orientador'],
+            'professorDisciplina' => $permissao['professorDisciplina'],
+            'gestor' => $permissao['gestor']
+        ]);
 
       return redirect()->route('listar_professores');
     }
@@ -476,7 +535,7 @@ class ProfessorController extends Controller
         $professor = [
             'id' => $dados['id'],
             'nome' => NULL,
-            'password' => bcrypt($dados['id']),
+            'password' => NULL,
             'email' => NULL,
             'excluido' => false,
             'professor' => true,

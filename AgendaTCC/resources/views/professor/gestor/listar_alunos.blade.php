@@ -56,6 +56,11 @@
                   <td><input type='submit' name='operacao' class='btn btn-default' value='Visualizar'></td>
                   <td><input type='submit' name='operacao' class='btn btn-default' value='Alterar'></td>
                   <td><input type='submit' name='operacao' class='btn btn-default' value='Excluir'onclick="return confirm('Tem certeza que quer deletar?');"></td>
+
+                  @if($aluno['pode_rematricular'] == true)
+                  <td><input type='submit' name='operacao' class='btn btn-default' value='Rematricular'onclick="return confirm('Tem certeza que quer rematricular?');"></td>
+                  @endif
+
                 </form>
 
             </tr>
