@@ -64,7 +64,7 @@
 			<br><br>
 		<tr>
 			<td><label>TCC</label></td>
-		<td><a class="btn btn-default" href="{{ url('/download/201522040471_TCC.txt')  }}" target="_blank">
+		<td><a class="btn btn-default" href="{{ url('/download/201522040471_TCC.odt')  }}" target="_blank">
 			Baixar
 		</a></td>
 		</tr>

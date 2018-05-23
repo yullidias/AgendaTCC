@@ -18,9 +18,9 @@
         {{ csrf_field() }}
         <div class='form-inline' >
             <label>Sala</label>
-            <input type='text' class='form-control' name='sala' size="10" required>
+            <input type='text' class='form-control' name='sala' size="10" maxlength="10" required>
             <label>Prédio</label>
-            <input type='text' class='form-control' name='predio' size="10"  required>
+            <input type='text' class='form-control' name='predio' size="10"  maxlength="10"  required>
             <input type='submit' class='btn btn-default' value='Cadastrar'>
         </div>
     </form>
