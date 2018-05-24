@@ -71,7 +71,7 @@
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('listar_alunos')}}"><strong>Listar Alunos</strong></a></li>
 									<li><a href="{{route('listar_professores')}}"><strong>Listar Professores</strong></a></li>
-									<li><a href="{{route('listar_atividades_cronograma')}}"><strong>Gerir Cronograma</strong></a></li>
+									<li><a href="{{route('cronograma.listar_atividades_cronograma')}}"><strong>Gerir Cronograma</strong></a></li>
 									<li><a href="{{route('listar_salas')}}"><strong>Gerir Salas</strong></a></li>
 									<li><a href="{{route('gerir_semestres')}}"><strong>Gerir Semestres</strong></a></li>
 									{{--<li><a href="{{route('incluir a rota do relatorio')}}"><strong>Gerir Relatório</strong></a></li>--}}

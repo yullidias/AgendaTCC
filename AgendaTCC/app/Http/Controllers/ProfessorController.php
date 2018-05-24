@@ -104,22 +104,20 @@ class ProfessorController extends Controller
         foreach ($alunos as $aluno) {
             $aluno['pode_rematricular'] = false;
 
-            if($aluno['materia']==2){
-                $avaliacao_orientador = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-                ->join('avaliacaos', 'tcc_dados.idDados', '=', 'avaliacaos.tccDados')
+            if($aluno['materia']==1){
+
+                $avaliacao_orientador = User::join('avaliacaos', 'users.id', '=', 'avaliacaos.tccDados')
                 ->where([
                     ['avaliacaos.ehOrientador', '=', true],
-                    ['users.id','=', $aluno['id']]
+                    ['users.id','=', $aluno['usuario_aluno']]
                 ])->get()->first();
 
-                $avaliacao_professor = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-                ->join('avaliacaos', 'tcc_dados.idDados', '=', 'avaliacaos.tccDados')
+                $avaliacao_professor = User::join('avaliacaos', 'users.id', '=', 'avaliacaos.tccDados')
                 ->where([
                     ['avaliacaos.ehOrientador', '=', false],
-                    ['users.id','=', $aluno['id']]
+                    ['users.id','=', $aluno['usuario_aluno']]
                 ])->get()->first();
-
-
+                
                 if( $avaliacao_orientador!=null && $avaliacao_professor!=null ){  
                     $nota_orientador=$avaliacao_orientador['atitudeCompetencia']+$avaliacao_orientador['forma']+$avaliacao_orientador['conteudo'];
                     $nota_professor=$avaliacao_professor['atitudeCompetencia']+$avaliacao_professor['forma']+$avaliacao_professor['conteudo'];
@@ -131,8 +129,6 @@ class ProfessorController extends Controller
                      }
                 }
             }
-            
-           
         }
 
         return view('professor.gestor.listar_alunos',compact('alunos','semestres','materia_selecionada','semestre_selecionado'));

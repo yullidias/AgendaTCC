@@ -4,7 +4,7 @@
 
 @section('titulo','Listar Alunos')
 
-<a class="btn btn-default pull-right" href="{{ route('listar_alunos.pre_cadastro_alunos') }}" role="button">Pré-cadastro aluno</a>
+<a class="btn btn-success pull-right" href="{{ route('listar_alunos.pre_cadastro_alunos') }}" role="button">Pré-cadastro aluno</a>
 <div class='col-md-offset-1'>
     <br><br>
     <label>Matéria</label>
@@ -53,12 +53,12 @@
                   <input type='hidden' name='id' value="{{$aluno->usuario_aluno}}" />
                   <input type='hidden' name='semestre_selecionado' value="{{$semestre_selecionado}}" />
                   <input type='hidden' name='materia_selecionada' value="{{$materia_selecionada}}" />
-                  <td><input type='submit' name='operacao' class='btn btn-default' value='Visualizar'></td>
-                  <td><input type='submit' name='operacao' class='btn btn-default' value='Alterar'></td>
-                  <td><input type='submit' name='operacao' class='btn btn-default' value='Excluir'onclick="return confirm('Tem certeza que quer deletar?');"></td>
+                  <td><input type='submit' name='operacao' class='btn btn-info' value='Visualizar'></td>
+                  <td><input type='submit' name='operacao' class='btn btn-primary' value='Alterar'></td>
+                  <td><input type='submit' name='operacao' class='btn btn-danger' value='Excluir'onclick="return confirm('Tem certeza que quer deletar?');"></td>
 
                   @if($aluno['pode_rematricular'] == true)
-                  <td><input type='submit' name='operacao' class='btn btn-default' value='Rematricular'onclick="return confirm('Tem certeza que quer rematricular?');"></td>
+                  <td><input type='submit' name='operacao' class='btn btn-warning' value='Rematricular'onclick="return confirm('Tem certeza que quer rematricular?');"></td>
                   @endif
 
                 </form>
