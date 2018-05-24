@@ -86,7 +86,7 @@
 				<td>{{$c->semestre_ano}}-{{$c->semestre_numero}}</td>
 				<td>TCC {{$c->turma}}</td>
 				{{--acrescentar campos semestre_ano, semestre_numero e turma de cronograma--}}
-				<td><button type='submit' class='btn btn-default' name="Excluir" value = '{{$c->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $c->id)}}">Excluir</td>
+				<td><button type='submit' class='btn btn-default'  onclick="return confirm('Tem certeza que quer deletar?');" name="Excluir" value = '{{$c->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $c->id)}}">Excluir</td>
 			</tr>
 		@endforeach
 	</table>

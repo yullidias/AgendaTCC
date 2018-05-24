@@ -44,7 +44,7 @@
     </style>
 
     <br><br>
-    <form action="{{ route('excluir_semestre')}}" method="post" }}">
+
     {{ csrf_field() }}
     <table style="width:100%" class="table table-hover">
         <tr>
@@ -52,32 +52,26 @@
             <th>Numero</th>
             <th>Data Início</th>
             <th>Data Fim</th>
-            <th>Excluir Atividade</th>
+            <th>Salvar</th>
+            <th>Excluir</th>
         </tr>
         @foreach($semestres as $s)
             <tr>
                 <td>{{$s->ano}}</td>
                 <td>{{$s->numero}}</td>
-                @php
-                    $data = $s->data_inicio;
-                    $data = explode('-', $data);
-                    $ano = $data[0]; $mes = $data[1]; $dia = $data[2];
-                @endphp
-                <td>{{$dia}}/{{$mes}}/{{$ano}}</td>
-                @php
-                    $data = $s->data_fim;
-                    $data = explode('-', $data);
-                    $ano = $data[0]; $mes = $data[1]; $dia = $data[2];
-                @endphp
-                <td>{{$dia}}/{{$mes}}/{{$ano}}</td>
-                @php
-                    $value = $s->ano."-".$s->numero;
-                @endphp
-                <td><button type='submit' class='btn btn-default' name="Excluir" value = '{{$value}}' > Excluir </td>
+                @php $id= $s->ano."-".$s->numero; @endphp
 
+                <form action="{{ route('atualizar_semestre')}}" method="post" }}">
+                    <td><input type='date' class='form-control' name='data_inicio' value="{{$s->data_inicio}}" width="10" required></td>
+                    <td><input type='date' class='form-control' name='data_fim' value="{{$s->data_fim}}" width="10" required></td>
+                    <td><button type='submit' class='btn btn-default' onclick="return confirm('Salvar alterações?');" name="id" value = '{{$id}}' > Salvar </td>
+                </form>
+
+                <form action="{{ route('excluir_semestre')}}" method="post" }}">
+                    <td><button type='submit' class='btn btn-default' onclick="return confirm('Tem certeza que deseja excluir?');" name="id" value = '{{$id}}' > Excluir </td>
+                </form>
             </tr>
         @endforeach
     </table>
-    </form>
     {{---------------------Fim Tabela------------------------}}
-    @endsection
+@endsection

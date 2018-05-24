@@ -38,18 +38,21 @@
         'uses'=> 'ProfessorController@cadastro_professor'
     ]);
 
+Route::post('/salvar_cadastro_aluno', [
+    'as' => 'salvar_cadastro_aluno',
+    'uses' => 'AlunoController@salvar_cadastro_aluno'
+]);
+Route::get('/perfil_aluno',[
+    'as' => 'perfil_aluno',
+    'uses' => 'AlunoController@perfil_aluno'
+
+]);
 
 //Grupo de acesso para o aluno
 Route::group(['middleware'=>['auth','check.aluno']], function(){
 
-    Route::post('/salvar_cadastro_aluno', [
-        'as' => 'salvar_cadastro_aluno',
-        'uses' => 'AlunoController@salvar_cadastro_aluno'
-    ]);
-    Route::get('/perfil_aluno',[
-        'as' => 'perfil_aluno',
-        'uses' => 'AlunoController@perfil_aluno'
-    ]);
+
+
     Route::post('/solicitar_alteracao_aluno',[
         'as' => 'solicitar_alteracao_aluno',
         'uses' => 'AlunoController@solicitar_alteracao'
@@ -75,18 +78,19 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
 
 });
 
+Route::post('/salvar_cadastro_professor', [
+    'as' => 'salvar_cadastro_professor',
+    'uses' => 'ProfessorController@salvar_cadastro_professor'
+]);
+Route::get('/perfil_professor',[
+    'as' => 'perfil_professor',
+    'uses' => 'ProfessorController@perfil_professor'
+]);
+
 //--------------------------------------------------------------------------------------------
 //Grupo de acesso do professor
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
-        Route::post('/salvar_cadastro_professor', [
-            'as' => 'salvar_cadastro_professor',
-            'uses' => 'ProfessorController@salvar_cadastro_professor'
-        ]);
-        Route::get('/perfil_professor',[
-            'as' => 'perfil_professor',
-            'uses' => 'ProfessorController@perfil_professor'
-        ]);
         Route::post('/solicitar_alteracao_professor',[
             'as' => 'solicitar_alteracao_professor',
             'uses' => 'ProfessorController@solicitar_alteracao'
@@ -137,6 +141,7 @@ Route::group(['middleware'=>['auth','check.orientador']], function(){
     ]);
 });
 
+//Acesso do Gestor
 //------------------------------------------------------------------------------------
 Route::group(['middleware'=>['auth','check.gestor']], function (){
     //Tela gestor tela21 listadealunos
@@ -237,17 +242,22 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         ]);
         //------------------------------------------------------------------------
         //Tela gestor Gerir Semestres
-        Route::post('/salvarSemestre/',[
-            'as' => 'salvar_semestre',
-            'uses' => 'SemestreController@salvar_semestre'
-        ]);
-
         Route::get('/gerirSemestres/', [
             'as' => 'gerir_semestres',
             'uses' => 'SemestreController@listar_semestres'
         ]);
 
-        Route::post('/excluirSemestre/', [
+        Route::post('/gerirSemestres/salvo',[
+            'as' => 'salvar_semestre',
+            'uses' => 'SemestreController@salvar_semestre'
+        ]);
+
+        Route::post('/gerirSemestres/atualizado', [
+            'as' => 'atualizar_semestre',
+            'uses' => 'SemestreController@atualizar_semestre'
+        ]);
+
+        Route::post('/excluirSemestres/excluido', [
             'as' => 'excluir_semestre',
             'uses' => 'SemestreController@excluir_semestre'
         ]);
