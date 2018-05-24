@@ -41,6 +41,12 @@ class CronogramaController extends Controller{
         }
     }
 
+    public function atualizar_atividades_cronograma(){
+        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
+        $cronogramas = Cronograma::all();
+        return view('professor.gestor.gerir_cronograma', compact('cronogramas'), compact('semestre'));
+    }
+
     public function listar_atividades_cronograma(){
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
         $cronogramas = Cronograma::all();

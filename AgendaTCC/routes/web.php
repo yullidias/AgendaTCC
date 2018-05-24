@@ -244,18 +244,23 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         ]);*/
     //------------------------------------------------------------------------------------
     //Tela gestor tela25 definicaodocronograma
-        Route::post('/salvarCronograma/',[
-            'as' => 'salvar_atividade_cronograma',
+        Route::post('/gerirCronograma/salvo',[
+            'as' => 'cronograma.salvar_atividade_cronograma',
             'uses' => 'CronogramaController@salvar_atividade_cronograma'
         ]);
 
+        Route::post('/gerirCronograma/atualizado',[
+            'as' => 'cronograma.atualizar_atividade_cronograma',
+            'uses' => 'CronogramaController@atualizar_atividade_cronograma'
+        ]);
+
         Route::get('/gerirCronograma/', [
-            'as' => 'listar_atividades_cronograma',
+            'as' => 'cronograma.listar_atividades_cronograma',
             'uses' => 'CronogramaController@listar_atividades_cronograma'
         ]);
 
-        Route::post('/excluirCronograma/', [
-            'as' => 'cadastrar_cronograma.deletar_atividade_cronograma',
+        Route::post('/gerirCronograma/excluido', [
+            'as' => 'cronograma.deletar_atividade_cronograma',
             'uses' => 'CronogramaController@deletar_atividade_cronograma'
         ]);
         //------------------------------------------------------------------------
