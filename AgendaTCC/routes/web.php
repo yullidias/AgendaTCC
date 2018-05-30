@@ -93,6 +93,13 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as'=>'download',
         'uses'=>'AlunoController@download'
     ]);
+     Route::get( '/perfilAluno/visualizarNotas', [
+        'as'=>'visualizarNotas',
+        'uses'=>'AlunoController@visualizarNotas'
+    ]);
+    
+    
+    
 
 });
 

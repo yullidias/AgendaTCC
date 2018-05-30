@@ -192,4 +192,32 @@ class AlunoController extends Controller
             exit( 'Arquivo ainda não foi enviado pelo aluno!' );
         }
     }
+    public function visualizarNotas(){
+        $id="456";//usuario logado;
+            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+                ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia', 'tcc_dados.tema', 'tcc_dados.orientador', 'tcc_dados.coorientador', 'users.nome', 'users.id', 'users.email')
+                ->where('users.id', '=', $id)->get()->first();
+
+       
+            $avaliacaosProf = avaliacaos::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 0]
+            ])->get()->first();
+        echo($avaliacaosProf);
+            $avaliacaosOrient = avaliacaos::where([
+                ['tccDados','=',$id],
+                ['ehOrientador', '=', 1]
+            ])->get()->first();
+            echo($avaliacaosOrient);
+        
+        
+            return view('aluno.visualizarNotas', compact('aluno','avaliacaosOrient','avaliacaosProf'));
+        
+
+         
+    }
+    
+    
+    
 }
