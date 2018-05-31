@@ -21,10 +21,10 @@ class AlunoController extends Controller
         $professor = User::where([['professor','=',true]])->get();
         return view('aluno.cadastro_aluno',compact('professor'));
     }
-    public function perfil_aluno(){
-        $aluno = User::where([['professor','=',false]])->get();
-        $tccDados = TccDados::get();
-        $alunoSemestre = AlunoSemestre::get();
+    public function perfil_aluno($id){
+        $aluno = User::where([['id','=',$id]])->get();
+        $tccDados = TccDados::where([['usuario_aluno','=',$id]])->get();
+        $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get();
 
         return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre'));
     }
@@ -56,7 +56,6 @@ class AlunoController extends Controller
             'usuario_aluno' => $dados['id'],
             'semestre_ano' => $semestre['ano'],
             'semestre_numero' => $semestre['numero'],
-            'materia' => intval($dados['materia'])
         ];
 
 
@@ -66,10 +65,6 @@ class AlunoController extends Controller
                 'email' => $aluno['email']
             ])) {
                TccDados::create($tccDados);
-               AlunoSemestre::where( [['usuario_aluno','=',$aluno['id']]])->update([
-                   'materia' => intval($dados['materia'])
-
-               ]);
                $request->session()->flash('alert-success', 'Aluno cadastrado com sucesso!');
                return redirect()->route('perfil_aluno');
            }else{

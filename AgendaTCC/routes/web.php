@@ -42,35 +42,22 @@ Route::post('/salvar_cadastro_aluno', [
     'as' => 'salvar_cadastro_aluno',
     'uses' => 'AlunoController@salvar_cadastro_aluno'
 ]);
-Route::get('/perfil_aluno',[
-    'as' => 'perfil_aluno',
-    'uses' => 'AlunoController@perfil_aluno'
-
-]);
-Route::get('/listar_alunos/pre_cadastro_aluno', [
-    'as'=>'listar_alunos.pre_cadastro_alunos',
-    'uses'=>'ProfessorController@pre_cadastro_aluno'
+Route::post('/salvar_cadastro_professor', [
+    'as' => 'salvar_cadastro_professor',
+    'uses' => 'ProfessorController@salvar_cadastro_professor'
 ]);
 
-Route::post('/listar_alunos/pre_cadastro_aluno/salvar_pre_cadastro_aluno', [
-    'as'=>'listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno',
-    'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
-]);
-Route::get('/listar_professores/pre_cadastro_professor', [
-    'as'=>'listar_professores.pre_cadastro_professor',
-    'uses'=>'ProfessorController@pre_cadastro_professor'
-]);
 
-Route::post('/listar_professores/pre_cadastro_professor/salvar_pre_cadastro_professor', [
-    'as'=>'listar_professores.pre_cadastro_professor.salvar_pre_cadastro_professor',
-    'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
-]);
 //--------------------------------------------------------------------------------------
 //Grupo de acesso para o aluno
 Route::group(['middleware'=>['auth','check.aluno']], function(){
 
 
+    Route::get('/perfil_aluno/{id}',[
+        'as' => 'perfil_aluno',
+        'uses' => 'AlunoController@perfil_aluno'
 
+    ]);
     Route::post('/solicitar_alteracao_aluno',[
         'as' => 'solicitar_alteracao_aluno',
         'uses' => 'AlunoController@solicitar_alteracao'
@@ -97,25 +84,30 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as'=>'visualizarNotas',
         'uses'=>'AlunoController@visualizarNotas'
     ]);
-    
+    Route::get('/listar_alunos/pre_cadastro_aluno', [
+        'as'=>'listar_alunos.pre_cadastro_alunos',
+        'uses'=>'ProfessorController@pre_cadastro_aluno'
+    ]);
+
+    Route::post('/listar_alunos/pre_cadastro_aluno/salvar_pre_cadastro_aluno', [
+        'as'=>'listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno',
+        'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
+    ]);
     
     
 
 });
 
-Route::post('/salvar_cadastro_professor', [
-    'as' => 'salvar_cadastro_professor',
-    'uses' => 'ProfessorController@salvar_cadastro_professor'
-]);
-Route::get('/perfil_professor',[
-    'as' => 'perfil_professor',
-    'uses' => 'ProfessorController@perfil_professor'
-]);
+
 
 //--------------------------------------------------------------------------------------------
 //Grupo de acesso do professor
 Route::group(['middleware'=>['auth','check.professor']], function (){
     //------------------------------------------------------------------------------------
+        Route::get('/perfil_professor/{id}',[
+            'as' => 'perfil_professor',
+            'uses' => 'ProfessorController@perfil_professor'
+        ]);
         Route::post('/solicitar_alteracao_professor',[
             'as' => 'solicitar_alteracao_professor',
             'uses' => 'ProfessorController@solicitar_alteracao'
@@ -149,6 +141,15 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
         Route::get('/perfilProfessor/visualizarCronograma', [
             'as' => 'professor_visualizar_cronograma',
             'uses' => 'CronogramaController@professor_visualizar_cronograma'
+        ]);
+        Route::get('/listar_professores/pre_cadastro_professor', [
+            'as'=>'listar_professores.pre_cadastro_professor',
+            'uses'=>'ProfessorController@pre_cadastro_professor'
+        ]);
+
+        Route::post('/listar_professores/pre_cadastro_professor/salvar_pre_cadastro_professor', [
+            'as'=>'listar_professores.pre_cadastro_professor.salvar_pre_cadastro_professor',
+            'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
         ]);
 });
 

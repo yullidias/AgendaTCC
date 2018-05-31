@@ -549,8 +549,8 @@ class ProfessorController extends Controller
 	public function cadastro_professor(){
         return view('professor.cadastro_professor');
     }
-    public function perfil_professor(){
-        $professor = User::where([['professor','=',true]])->get();
+    public function perfil_professor($id){
+        $professor = User::where([['id','=',$id]])->get();
 
         return view('professor.perfil_professor', compact('professor'));
     }
@@ -633,7 +633,7 @@ class ProfessorController extends Controller
                 ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia', 'tcc_dados.tema', 'tcc_dados.orientador', 'tcc_dados.coorientador', 'users.nome', 'users.id', 'users.email')
                 ->where('users.id', '=', $id)->get()->first();
-        }else { //esta so pre cadastrado
+        }else { //esta só pre cadastrado
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
                 ->where('users.id', '=',  $id)->get()->first();

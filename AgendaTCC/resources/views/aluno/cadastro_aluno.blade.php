@@ -47,19 +47,6 @@
 			@endforeach
 		</select>
 	</div>
-
-	<br><label>Matéria</label>
-
-	<div class="radio">
-		<label>
-			<input type="radio" name="materia" value="1" checked> TCC1
-		</label>
-	</div>
-	<div class="radio">
-		<label>
-			<input type="radio" name="materia" value="2"> TCC2
-		</label>
-	</div>
 		
 	<br><input style="float: right" type='submit' class='btn btn-default' value='Cadastrar'>
 	</div>

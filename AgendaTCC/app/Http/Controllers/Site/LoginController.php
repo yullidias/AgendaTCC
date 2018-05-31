@@ -40,13 +40,15 @@ class LoginController extends Controller
             $usuarioLogado = auth()->user();
 //            dd($usuarioLogado);
             if($usuarioLogado['professor']==1){
-                return redirect()->route('perfil_professor');
+                return redirect()->route('perfil_professor',['id' => $dados['login']]);
             }else if($usuarioLogado['professor']==0){
                  // dd("Tela em construção");
-                return redirect()->route('cadastrar_aluno');
+                //se for aluno
+                return redirect()->route('perfil_aluno',['id' => $dados['login']]);
             }
         }
         else{
+
             $req->session()->flash('alert-danger', 'Login ou senha incorretos');
             return redirect()->route('site.login');
         }
