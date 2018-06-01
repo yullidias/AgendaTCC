@@ -583,8 +583,10 @@ class ProfessorController extends Controller
 
     }
 
-    public function visualizar_lista_alunos(Request $request){
+    public function visualizar_lista_alunos(Request $request,$id){ //professor
         $dados = $request->all();
+
+        $professor = User::where([['id','=',$id]])->get()->first();
 
         $semestres = Semestre::all();
 
@@ -592,7 +594,7 @@ class ProfessorController extends Controller
 
             $semestre=explode('-', $dados['semestre']);
 
-            $materia_selecionada=$dados['materia'];
+            $materia_selecionada=$professor['professorDisciplina'];
             $semestre_selecionado=$dados['semestre'];
             $semestre_ano=$semestre[1];
             $semestre_numero=$semestre[0];
@@ -603,7 +605,7 @@ class ProfessorController extends Controller
                 ->orderBy('numero', 'desc')
                 ->get()->first();
 
-            $materia_selecionada=1;
+            $materia_selecionada=$professor['professorDisciplina'];
             $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
             $semestre_ano=$semestre['ano'];
             $semestre_numero=$semestre['numero'];
@@ -616,7 +618,7 @@ class ProfessorController extends Controller
             ['users.professor', '=',  false],
             ['users.excluido', '=',  false],
         ])->get();
-        return view('professor.visualizar_lista_aluno', compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
+        return view('professor.visualizar_lista_aluno', compact('alunos','semestres','materia_selecionada','semestre_selecionado','professor'));
     }
 
     public function professor_visualiza_aluno($id){ //professor
@@ -732,5 +734,47 @@ class ProfessorController extends Controller
         $request->session()->flash('alert-success', 'Avaliação feita com sucesso!');
         return redirect()->back();
     }
+
+    public function visualizar_lista_alunos_orientador(Request $request,$id){ //orientador
+        $dados = $request->all();
+
+        $orientador = User::where([['id','=',$id]])->get()->first();
+
+        $semestres = Semestre::all();
+
+        if(isset($_POST['materia'])){
+
+            $semestre=explode('-', $dados['semestre']);
+
+            $materia_selecionada=$dados['materia'];
+            $semestre_selecionado=$dados['semestre'];
+            $semestre_ano=$semestre[1];
+            $semestre_numero=$semestre[0];
+
+        }else{ //primeira vez
+
+            $semestre = Semestre::orderBy('ano', 'desc')
+                ->orderBy('numero', 'desc')
+                ->get()->first();
+
+            $materia_selecionada=$orientador['orientador'];
+            $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
+            $semestre_ano=$semestre['ano'];
+            $semestre_numero=$semestre['numero'];
+        }
+
+        $alunos = User::join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
+            ->join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
+            ->where([
+            ['tcc_dados.orientador', '=', $orientador['id']],
+                ['aluno_semestres.materia', '=', $materia_selecionada],
+                ['aluno_semestres.semestre_ano', '=', $semestre_ano],
+                ['aluno_semestres.semestre_numero', '=', $semestre_numero],
+                ['users.professor', '=',  false],
+                ['users.excluido', '=',  false],
+        ])->get();
+        return view('professor.visualizar_lista_aluno_orientador', compact('alunos','semestres','materia_selecionada','semestre_selecionado','orientador'));
+    }
+
 
 }

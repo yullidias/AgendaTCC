@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('excluido')->nullable();
             $table->boolean('professor');
             $table->boolean('orientador')->nullable();
-            $table->boolean('professorDisciplina')->nullable();
+            $table->tinyInteger('professorDisciplina')->nullable();
             $table->boolean('gestor')->nullable();
             $table->rememberToken();
             $table->timestamps();

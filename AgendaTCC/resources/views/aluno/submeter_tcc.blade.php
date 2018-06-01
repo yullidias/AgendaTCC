@@ -42,9 +42,9 @@
 				</td>
 			</tr>
 		</table>
-		@foreach($alunos as $aluno)
+		@foreach($aluno as $alun)
 			<label>Aluno</label><br>
-			<input type="text" class='form-control' name="usuario_aluno" value="{{$aluno->usuario_aluno}}" readonly>
+			<input type="text" class='form-control' name="usuario_aluno" value="{{$alun->id}}" readonly>
 		@endforeach
 			<br>
 

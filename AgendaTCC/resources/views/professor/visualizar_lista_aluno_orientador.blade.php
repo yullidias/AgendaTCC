@@ -16,7 +16,7 @@
 		@endforeach
 	</div> <!-- end .flash-message -->
 
-<form action="{{ route('visualizar_lista_alunos', ['id' => $professor->id]) }}" method="post">
+<form action="{{ route('visualizar_lista_alunos_orientador', ['id' => $orientador->id]) }}" method="post">
 	{{ csrf_field() }}
 
 	<h5><strong> Campos: </strong></h5>
@@ -26,7 +26,7 @@
 		</label>
 		&ensp;
 		<label>
-			<input type="radio" name="materia" onchange="this.form.submit()" value="2" {{ ($materia_selecionada==2) ? "checked": " " }}> TCC2
+			<input type="radio" name="materia" onchange="this.form.submit()" value="0" {{ ($materia_selecionada==0) ? "checked": " " }}> TCC2
 		</label>
 	</div>
 	<br>

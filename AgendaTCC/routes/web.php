@@ -68,7 +68,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as' => 'aluno_visualizar_cronograma',
         'uses' => 'CronogramaController@aluno_visualizar_cronograma'
     ]);
-    Route::get('/submeter_tcc',[
+    Route::get('/submeter_tcc/{id}',[
         'as' => 'submeter_tcc',
         'uses'=> 'AlunoController@submeter_tcc'
     ]);
@@ -114,11 +114,11 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
         ]);
     //------------------------------------------------------------------------------------
     //Tela professor tela 11 lista de alunos
-        Route::get('/perfilProfessor/listaAlunos',[
+        Route::get('/perfilProfessor/listaAlunos/{id}',[
             'as' => 'visualizar_lista_alunos',
             'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
-        Route::post('/perfilProfessor/listaAlunos',[
+        Route::post('/perfilProfessor/listaAlunos/{id}',[
             'as' => 'visualizar_lista_alunos',
             'uses' => 'ProfessorController@visualizar_lista_alunos'
         ]);
@@ -154,6 +154,7 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
 });
 
 //Grupo de acesso do orientador
+//------------------------------------------------------------------------------------
 Route::group(['middleware'=>['auth','check.orientador']], function(){
     //Tela orientador tela 18 agendamento
     Route::post('/salvarAgendamento/',[
@@ -164,6 +165,14 @@ Route::group(['middleware'=>['auth','check.orientador']], function(){
     Route::post('/listarAgendamento/', [
         'as' => 'listar_agendamento_logs',
         'uses' => 'AgendamentoController@listar_agendamento_logs'
+    ]);
+    Route::get('/perfilOrientador/listaAlunos/{id}',[
+        'as' => 'visualizar_lista_alunos_orientador',
+        'uses' => 'ProfessorController@visualizar_lista_alunos_orientador'
+    ]);
+    Route::post('/perfilOrientador/listaAlunos/{id}',[
+        'as' => 'visualizar_lista_alunos_orientador',
+        'uses' => 'ProfessorController@visualizar_lista_alunos_orientador'
     ]);
 });
 

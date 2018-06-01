@@ -36,13 +36,13 @@
 									<li><a href="{{route('cadastrar_aluno')}}"><strong>Cadastrar</strong></a></li>
 									{{--<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>--}}
 									{{--<li><a href="{{route('inclui a rota Notas')}}"><strong>Notas</strong></a></li>--}}
-									<li><a href="{{route('submeter_tcc')}}"><strong>TCC</strong></a></li>
+									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>TCC</strong></a></li>
 								</div>
 								<p> </p>
 							</div>
 
 						@endif
-						@if(auth()->user()["professor"] == 1)
+						@if(auth()->user()["professor"] == 1 and auth()->user()["orientador"]==0)
 							<div class="btn-group pull-left ">
 								<p> </p>
 								<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
@@ -53,12 +53,26 @@
 									<li><a href="{{route('professor_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>
 									{{--<li><a href="{{route('incluir rota orientandos')}}"><strong>Orientandos</strong></a></li>--}}
 									{{--<li><a href="{{route('incluir rota relatorio')}}"><strong>Relatório</strong></a></li>--}}
-									<li><a href="{{route('visualizar_lista_alunos')}}"><strong>Turma</strong></a></li>
+									<li><a href="{{route('visualizar_lista_alunos',['id' => auth()->user()["id"]])}}"><strong>Turma</strong></a></li>
 								</div>
 
 							</div>
 						@endif
 						@if(auth()->user()["professor"] == 1 and auth()->user()["orientador"]==1)
+						<div class="btn-group pull-left ">
+							<p> </p>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
+								Gestão do Professor
+							</button>
+							<div class="dropdown-menu dropdown-menu-right">
+								<li><a href="{{route('cadastrar_professor')}}"><strong>Cadastrar</strong></a></li>
+								<li><a href="{{route('professor_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>
+								{{--<li><a href="{{route('incluir rota orientandos')}}"><strong>Orientandos</strong></a></li>--}}
+								{{--<li><a href="{{route('incluir rota relatorio')}}"><strong>Relatório</strong></a></li>--}}
+								<li><a href="{{route('visualizar_lista_alunos_orientador',['id' => auth()->user()["id"]])}}"><strong>Turma</strong></a></li>
+							</div>
+
+						</div>
 							<li><a href="{{route('salvar_agendamento')}}"><strong>Agendamento</strong></a></li>
 						@endif
 						@if(auth()->user()["professor"] == 1 and auth()->user()["gestor"]==1)

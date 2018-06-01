@@ -73,7 +73,7 @@ class AlunoController extends Controller
            }
 
     }
-    public function submeter_tcc(Request $request){
+    public function submeter_tcc(Request $request,$id){
         $dados = $request->all();
 
         $semestres = Semestre::all();
@@ -99,15 +99,10 @@ class AlunoController extends Controller
             $semestre_numero=$semestre['numero'];
         }
 
-        $alunos = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')->where([
-            ['aluno_semestres.materia', '=', $materia_selecionada],
-            ['aluno_semestres.semestre_ano', '=', $semestre_ano],
-            ['aluno_semestres.semestre_numero', '=', $semestre_numero],
-            ['users.professor', '=',  false],
-            ['users.excluido', '=',  false],
-        ])->get();
+        $aluno = User::where([['id','=',$id]])->get();
 
-        return view('aluno.submeter_tcc', compact('alunos','semestres','materia_selecionada','semestre_selecionado'));
+
+        return view('aluno.submeter_tcc', compact('aluno','semestres','materia_selecionada','semestre_selecionado'));
     }
 
     public function salvar_submeter_tcc(Request $request){
