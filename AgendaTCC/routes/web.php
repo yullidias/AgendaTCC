@@ -53,7 +53,7 @@ Route::post('/salvar_cadastro_professor', [
 Route::group(['middleware'=>['auth','check.aluno']], function(){
 
 
-    Route::get('/perfil_aluno/{id}',[
+    Route::get('/perfil_aluno/',[
         'as' => 'perfil_aluno',
         'uses' => 'AlunoController@perfil_aluno'
 
@@ -62,6 +62,12 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as' => 'solicitar_alteracao_aluno',
         'uses' => 'AlunoController@solicitar_alteracao'
     ]);
+
+    Route::post('/salvarSolicitacao', [
+        'as' => 'salvar_solicitacao_alteracao',
+        'uses' => 'AlunoController@salvar_solicitacao_alteracao'
+    ]);
+
 
     //Tela aluno tela 6 cronograma
     Route::get( '/perfilAluno/visualizarCronograma', [

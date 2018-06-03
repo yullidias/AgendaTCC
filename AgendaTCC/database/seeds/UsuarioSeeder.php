@@ -6,6 +6,8 @@ use App\Semestre;
 use App\AlunoSemestre;
 use App\TccDados;
 use App\Avaliacao;
+use App\Agendamento;
+use App\Sala;
 
 class UsuarioSeeder extends Seeder
 {
@@ -169,7 +171,7 @@ class UsuarioSeeder extends Seeder
             'usuario_aluno' => 789,
             'semestre_ano' => 2018,
             'semestre_numero' => 1,
-            'materia' => 1
+            'materia' => 2
         ]);
 
         TccDados::create([
@@ -178,6 +180,20 @@ class UsuarioSeeder extends Seeder
             'orientador' => 987,
             'usuario_aluno' => 789,
             'coorientador' => 'nenhum'
+        ]);
+
+        Sala::create([
+            'sala' => 'Auditorio 101',
+            'predio' => '20'
+        ]);
+
+        Agendamento::create([
+            'data' => '02-02-02',
+            'sala' => 'Auditorio 101',
+            'predio' => 20,
+            'id_matricula' => 2,
+            'membro1banca' => 'membro 1',
+            'membro2banca' => 'membro 2'
         ]);
 
         //aluno - cadastrado - avaliado

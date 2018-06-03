@@ -42,9 +42,8 @@ class LoginController extends Controller
             if($usuarioLogado['professor']==1){
                 return redirect()->route('perfil_professor',['id' => $dados['login']]);
             }else if($usuarioLogado['professor']==0){
-                 // dd("Tela em construção");
                 //se for aluno
-                return redirect()->route('perfil_aluno',['id' => $dados['login']]);
+                return redirect()->route('perfil_aluno');
             }
         }
         else{

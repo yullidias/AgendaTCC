@@ -38,27 +38,49 @@
 
 		<table style="width:100%" class="table table-hover">
 			<tr>
-				<td><label>Tema</label></td>
+				<td><label>Matéria</label></td>
 			</tr>
 			<tr>
-				<td><input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}' href="{{ route('solicitar_alteracao_aluno', $tcc->tema)}}">Solicitar Alteração</button></td>
-
+				<td><input type="radio" name="materia" value="1" @if($alunoSemestre[0]['materia'] == 1) checked @endif readonly> TCC1
+					<input type="radio" name="materia" value="2" @if($alunoSemestre[0]['materia'] == 2) checked @endif readonly> TCC2</td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Turma TCC-{{$alunoSemestre[0]['materia']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 			<tr>
 				<td><label>Orientador</label></td>
 			</tr>
 			<tr>
 				<td><input type='text' class='form-control' name='orientador' value="{{$tcc->orientador}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}' href="{{ route('solicitar_alteracao_aluno', $tcc->orientador)}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Orientador-{{$tcc->orientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 			<tr>
 				<td><label>Coorientador</label></td>
 			</tr>
 			<tr>
 				<td><input type='text' class='form-control' name='coorientador' value="{{$tcc->coorientador}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}' href="{{ route('solicitar_alteracao_aluno', $tcc->coorientador)}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Coorientador-{{$tcc->coorientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
+			<tr>
+				<td><label>Tema</label></td>
+			</tr>
+			<tr>
+				<td><input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Tema-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+			</tr>
+
+			@if($alunoSemestre[0]['materia'] == 2)
+				<tr>
+					<td><label>Membros da Banca</label></td>
+				</tr>
+				<tr>
+					<td><input type='text' class='form-control' name='membro1' value="{{$agendamento[0]->membro1banca}}" readonly></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+
+					<tr></tr>
+
+					<td><input type='text' class='form-control' name='membro2' value="{{$agendamento[0]->membro2banca}}" readonly></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				</tr>
+			@endif
 		</table>
 		@endforeach
 	<!--	@foreach($alunoSemestre as $semestre)
