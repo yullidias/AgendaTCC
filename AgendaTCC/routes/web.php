@@ -68,6 +68,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'uses' => 'AlunoController@salvar_solicitacao_alteracao'
     ]);
 
+
     //Tela aluno tela 6 cronograma
     Route::get( '/perfilAluno/visualizarCronograma', [
         'as' => 'aluno_visualizar_cronograma',

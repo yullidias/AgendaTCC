@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td><input type='text' class='form-control' name='tema' value="{{$tcc->tema}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}-Tema-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Tema-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 
 			</tr>
 			<tr>
@@ -50,14 +50,14 @@
 			</tr>
 			<tr>
 				<td><input type='text' class='form-control' name='orientador' value="{{$tcc->orientador}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}-Orientador-{{$tcc->orientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Orientador-{{$tcc->orientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 			<tr>
 				<td><label>Coorientador</label></td>
 			</tr>
 			<tr>
 				<td><input type='text' class='form-control' name='coorientador' value="{{$tcc->coorientador}}" readonly></td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = '{{$tcc->usuario_aluno}}-Coorientador-{{$tcc->coorientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Coorientador-{{$tcc->coorientador}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 		</table>
 		@endforeach

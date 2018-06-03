@@ -18,7 +18,7 @@ class EmailGestor extends Mailable
      */
     public function __construct()
     {
-        //
+//
     }
 
     /**
@@ -28,6 +28,6 @@ class EmailGestor extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+//        return $this->view('view.name');
     }
 }

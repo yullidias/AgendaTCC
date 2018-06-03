@@ -14,10 +14,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\EmailGestor;
+use Mail;
 
 class AlunoController extends Controller
 {
-
     public function cadastro_aluno(){
         $professor = User::where([['professor','=',true]])->get();
         return view('aluno.cadastro_aluno',compact('professor'));
@@ -32,17 +32,35 @@ class AlunoController extends Controller
     }
     public function solicitar_alteracao(Request $request){
         $solicitacao = explode('-', $request['solicitar']);
-        $idUsuario = $solicitacao[0];
-        $tipoSolicitacao = $solicitacao[1];
-        $valorAtual = $solicitacao[2];
+        $tipoSolicitacao = $solicitacao[0];
+        $valorAtual = $solicitacao[1];
         return view('aluno.solicitar_alteracao_aluno', compact('tipoSolicitacao', 'valorAtual'));
     }
 
     public function salvar_solicitacao_alteracao(Request $request){
-//        Mail::to('from@example.com')->send(new EmailGestor());
-//        dd($request);
-        echo "salvar solicitacao";
+        $atual = explode('-', $request['atual']);
+        $tipoSolicitacao = $atual[0];
+        $valorAtual = $atual[1];
+        $valorAlterado = $request['novo'];
+        $justificativa = $request['justificativa'];
+
+        Mail::send([], [], function ($message) use ($justificativa, $valorAlterado, $valorAtual, $tipoSolicitacao) {
+            $message->to('from@example.com')
+                ->subject('Alteracao'. $tipoSolicitacao .' - ' . auth()->user()['nome'])
+                ->replyTo(auth()->user()['email'], auth()->user()['nome'])
+                ->setBody("<div class='form-group' >
+                            <label>$tipoSolicitacao Atual</label>
+                            <textarea class='form-control' style= 'height: 50px; width: 700px' readonly>$valorAtual</textarea><br>
+                            <label>$tipoSolicitacao Novo</label>
+                            <textarea class='form-control' style= 'height: 50px; width: 700px' readonly>$valorAlterado</textarea>
+                            <label><p>Justificativa</p></label>
+                            <textarea class='form-control' style= 'height: 200px; width: 900px readonly>$justificativa</textarea>
+                           </div>"
+                    ,'text/html');
+        });
+        return redirect()->route('perfil_aluno');
     }
+
     public function salvar_cadastro_aluno(Request $request){
         $dados = $request->all();
         $aluno = [
