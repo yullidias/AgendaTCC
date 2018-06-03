@@ -33,7 +33,7 @@
 									Gestão do Aluno
 								</button>
 								<div class="dropdown-menu dropdown-menu-right">
-									<li><a href="{{route('cadastrar_aluno')}}"><strong>Cadastrar</strong></a></li>
+									<li><a href="{{route('perfil_aluno')}}"><strong>Meu Perfil</strong></a></li>
 									{{--<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>--}}
 									{{--<li><a href="{{route('inclui a rota Notas')}}"><strong>Notas</strong></a></li>--}}
 									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>TCC</strong></a></li>
