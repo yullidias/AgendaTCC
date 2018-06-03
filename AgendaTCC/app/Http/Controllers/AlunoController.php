@@ -9,6 +9,7 @@ use App\Professor;
 use App\Semestre;
 use App\TccDados;
 use App\User;
+use App\Agendamento;
 use App\Repositories\AlunoRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class AlunoController extends Controller
         $aluno = User::where([['id','=',$id]])->get();
         $tccDados = TccDados::where([['usuario_aluno','=',$id]])->get();
         $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get();
-        return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre'));
+        $agendamento = Agendamento::where([['id_matricula', '=', $alunoSemestre[0]['id']]])->orderby('data', 'desc')->get();
+        return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre', 'agendamento'));
     }
     public function solicitar_alteracao(Request $request){
         $solicitacao = explode('-', $request['solicitar']);
