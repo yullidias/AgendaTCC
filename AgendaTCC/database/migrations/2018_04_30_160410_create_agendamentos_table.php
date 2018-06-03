@@ -14,8 +14,8 @@ class CreateAgendamentosTable extends Migration {
     {
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->dateTime('data');
-            $table->string('sala',10);
-            $table->string('predio',10);
+            $table->string('sala',15);
+            $table->string('predio',15);
             $table->integer('id_matricula')->unsigned();
             $table->string('membro1banca');
             $table->string('membro2banca');
