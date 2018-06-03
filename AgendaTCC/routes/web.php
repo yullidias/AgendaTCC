@@ -90,7 +90,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'as'=>'visualizarNotas',
         'uses'=>'AlunoController@visualizarNotas'
     ]);
-    Route::get('/listar_alunos/pre_cadastro_aluno', [
+   /* Route::get('/listar_alunos/pre_cadastro_aluno', [
         'as'=>'listar_alunos.pre_cadastro_alunos',
         'uses'=>'ProfessorController@pre_cadastro_aluno'
     ]);
@@ -98,7 +98,7 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
     Route::post('/listar_alunos/pre_cadastro_aluno/salvar_pre_cadastro_aluno', [
         'as'=>'listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno',
         'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
-    ]);
+    ]);*/
     
     
 
@@ -211,7 +211,7 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
 
     //------------------------------------------------------------------------------------
     //Tela gestor tela22 precadastro aluno
-        /*Route::get('/listar_alunos/pre_cadastro_aluno', [
+        Route::get('/listar_alunos/pre_cadastro_aluno', [
             'as'=>'listar_alunos.pre_cadastro_alunos',
             'uses'=>'ProfessorController@pre_cadastro_aluno'
         ]);
@@ -219,7 +219,7 @@ Route::group(['middleware'=>['auth','check.gestor']], function (){
         Route::post('/listar_alunos/pre_cadastro_aluno/salvar_pre_cadastro_aluno', [
             'as'=>'listar_alunos.pre_cadastro_alunos.salvar_pre_cadastro_aluno',
             'uses'=>'ProfessorController@salvar_pre_cadastro_aluno'
-        ]);*/
+        ]);
     //------------------------------------------------------------------------------------
     //Tela gestor tela19 listaprofessorescadastrados
         Route::get('/listar_professores',[

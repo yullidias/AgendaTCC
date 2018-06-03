@@ -103,8 +103,11 @@ class ProfessorController extends Controller
 
         foreach ($alunos as $aluno) {
             $aluno['pode_rematricular'] = false;
+            $semestre_atual = Semestre::orderBy('ano', 'desc')
+                    ->orderBy('numero', 'desc')
+                    ->get()->first();
 
-            if($aluno['materia']==1){
+            if($aluno['materia']==1 && ($semestre_atual['ano']==$semestre_ano && $semestre_atual['numero']==$semestre_numero)){
 
                 $avaliacao_orientador = User::join('avaliacaos', 'users.id', '=', 'avaliacaos.tccDados')
                 ->where([
@@ -253,55 +256,55 @@ class ProfessorController extends Controller
             ['aluno_semestres.semestre_ano', '=', $semestre[1]]
         ])->get()->first();
 
-        if(!is_null ($dados['nome'])){
+        if($dados['nome']!=""){
             User::where('id','=',$dados['id'])
             ->update([
                     'nome' => $dados['nome']
             ]);
         }
 
-        if(!is_null ($dados['email'])){
+        if($dados['email']!=""){
             User::where('id','=',$dados['id'])
             ->update([
                     'email' => $dados['email']
             ]);
         }
 
-        if(!is_null($dados['materia'])){
+        if($dados['materia']!=""){
             AlunoSemestre::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'materia' => $dados['materia']
             ]);
         }
-         if(!is_null($dados['tema'])){
+         if($dados['tema']!=""){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'tema' => $dados['tema']
             ]);
         }
 
-        if(!is_null($dados['orientador'])){
+        if($dados['orientador']!=""){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'orientador' => $dados['orientador']
             ]);
         }
 
-        if(!is_null($dados['coorientador'])){
+        if($dados['coorientador']!=""){
             TccDados::where('usuario_aluno','=',$dados['id'])
             ->update([
                 'coorientador' => $dados['coorientador']
             ]);
         }
 
-        if(!is_null($dados['membro_banca_1'])){
+        if($dados['membro_banca_1']!=""){
             Agendamento::where('id_matricula', '=', $aluno_semestre['id'])
             ->update([
                 'membro1banca' => $dados['membro_banca_1']
             ]);
         }
 
-        if(!is_null($dados['membro_banca_2'])){
+        if($dados['membro_banca_2']!=""){
             Agendamento::where('id_matricula', '=', $aluno_semestre['id'])
             ->update([
                 'membro2banca' => $dados['membro_banca_2']

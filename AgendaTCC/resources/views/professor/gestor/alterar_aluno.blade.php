@@ -38,19 +38,23 @@
             
             <label>Orientador</label>
             <select class="form-control" name="orientador" {{is_null ($aluno['coorientador'])? 'readonly':''}}>
-                @foreach ($orientadores as $orientador)
-                <option value="{{$orientador->id}}" >{{$orientador->nome}}</option>
-                @endforeach
+                @if(!is_null ($aluno['coorientador']))
+                    @foreach ($orientadores as $orientador)
+                    <option value="{{$orientador->id}}" >{{$orientador->nome}}</option>
+                    @endforeach
+                @else
+                    <option value=" " > </option>
+                @endif
             </select><br>
 
             <label>Coorientador</label>
-            <input type='text' class='form-control' name='coorientador' value="{{$aluno['coorientador']}} " {{is_null ($aluno['coorientador'])? 'readonly':''}}><br>
+            <input type='text' class='form-control' name='coorientador' value="{{$aluno['coorientador']}}" {{is_null ($aluno['coorientador'])? 'readonly':''}}><br>
 
             <label>Tema</label>
             <input type='text' class='form-control' name='tema' value="{{$aluno['tema']}}" {{is_null ($aluno['tema'])? 'readonly':''}}><br>
 
             <label>Membro da Banca 1</label>
-            <input type='text' class='form-control' name='membro_banca_1' value="{{$aluno['membro_banca_1']}} " {{is_null ($aluno['membro_banca_1'])? 'readonly':''}}><br>
+            <input type='text' class='form-control' name='membro_banca_1' value="{{$aluno['membro_banca_1']}}" {{is_null ($aluno['membro_banca_1'])? 'readonly':''}}><br>
 
             <label>Membro da Banca 2</label>
             <input type='text' class='form-control' name='membro_banca_2' value="{{$aluno['membro_banca_2']}}" {{is_null ($aluno['membro_banca_2'])? 'readonly':''}}><br>
