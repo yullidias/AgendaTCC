@@ -22,8 +22,8 @@
         {{ csrf_field() }}
         <div class='form-group' >
             <label>{{$tipoSolicitacao}} Atual</label>
-            <input type='text' class='form-control' name='atual' value='{{$tipoSolicitacao}}-{{$valorAtual}}' readonly>
-            <label>{{$tipoSolicitacao}} Novo</label>
+            <input type='text' class='form-control' name='atual' value='{{$valorAtual}}' readonly>
+            <label>{{$tipoSolicitacao}} Novo(a)</label>
             <input type='text' class='form-control' name='novo' required>
             <label>Justificativa</label>
             <textarea class="form-control" name='justificativa' style="height: 200px" required></textarea>
