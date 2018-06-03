@@ -73,12 +73,12 @@
 				</tr>
 				<tr>
 					<td><input type='text' class='form-control' name='membro1' value="{{$agendamento[0]->membro1banca}}" readonly></td>
-					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$agendamento[0]['membro1banca']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 
 					<tr></tr>
 
 					<td><input type='text' class='form-control' name='membro2' value="{{$agendamento[0]->membro2banca}}" readonly></td>
-					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$agendamento[0]['membro2banca']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 				</tr>
 			@endif
 		</table>

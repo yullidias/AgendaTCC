@@ -21,6 +21,7 @@
     <form action="{{ route('salvar_solicitacao_alteracao') }}" method="post">
         {{ csrf_field() }}
         <div class='form-group' >
+            <input type='text' name="solicitacao" value='{{$tipoSolicitacao}}' hidden>
             <label>{{$tipoSolicitacao}} Atual</label>
             <input type='text' class='form-control' name='atual' value='{{$valorAtual}}' readonly>
             <label>{{$tipoSolicitacao}} Novo(a)</label>

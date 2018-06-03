@@ -40,23 +40,24 @@ class AlunoController extends Controller
     }
 
     public function salvar_solicitacao_alteracao(Request $request){
-        $atual = explode('-', $request['atual']);
-        $tipoSolicitacao = $atual[0];
-        $valorAtual = $atual[1];
+        $tipoSolicitacao = $request['solicitacao'];
+        $valorAtual = $request['atual'];
         $valorAlterado = $request['novo'];
         $justificativa = $request['justificativa'];
-
-        Mail::send([], [], function ($message) use ($justificativa, $valorAlterado, $valorAtual, $tipoSolicitacao) {
+        $matricula = auth()->user()['id'];
+        Mail::send([], [], function ($message) use ($justificativa, $valorAlterado, $valorAtual, $tipoSolicitacao, $matricula) {
             $message->to('from@example.com')
-                ->subject('Alteracao'. $tipoSolicitacao .' - ' . auth()->user()['nome'])
+                ->subject('Alteracao '. $tipoSolicitacao .' - ' . auth()->user()['nome'])
                 ->replyTo(auth()->user()['email'], auth()->user()['nome'])
                 ->setBody("<div class='form-group' >
-                            <label>$tipoSolicitacao Atual</label>
+                            <label><p>Matrícula Aluno</p></label>
+                            <input class='form-control' style= 'height: 50px; width: 700px' value=$matricula readonly></input><br>
+                            <label><p>$tipoSolicitacao Atual</p></label>
                             <textarea class='form-control' style= 'height: 50px; width: 700px' readonly>$valorAtual</textarea><br>
-                            <label>$tipoSolicitacao Novo</label>
+                            <label><p>$tipoSolicitacao Novo</p></label>
                             <textarea class='form-control' style= 'height: 50px; width: 700px' readonly>$valorAlterado</textarea>
                             <label><p>Justificativa</p></label>
-                            <textarea class='form-control' style= 'height: 200px; width: 900px readonly>$justificativa</textarea>
+                            <textarea class='form-control' style= 'height: 200px; width: 900px' readonly>$justificativa</textarea>
                            </div>"
                     ,'text/html');
         });
