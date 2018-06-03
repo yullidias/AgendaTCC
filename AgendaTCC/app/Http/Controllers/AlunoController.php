@@ -13,6 +13,7 @@ use App\Repositories\AlunoRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\EmailGestor;
 
 class AlunoController extends Controller
 {
@@ -25,13 +26,21 @@ class AlunoController extends Controller
         $aluno = User::where([['id','=',$id]])->get();
         $tccDados = TccDados::where([['usuario_aluno','=',$id]])->get();
         $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get();
-
         return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre'));
     }
-    public function solicitar_alteracao(){
-        echo "altera dados";
+    public function solicitar_alteracao(Request $request){
+        $solicitacao = explode('-', $request['solicitar']);
+        $idUsuario = $solicitacao[0];
+        $tipoSolicitacao = $solicitacao[1];
+        $valorAtual = $solicitacao[2];
+        return view('aluno.solicitar_alteracao_aluno', compact('tipoSolicitacao', 'valorAtual'));
     }
 
+    public function salvar_solicitacao_alteracao(Request $request){
+//        Mail::to('from@example.com')->send(new EmailGestor());
+//        dd($request);
+        echo "salvar solicitacao";
+    }
     public function salvar_cadastro_aluno(Request $request){
         $dados = $request->all();
         $aluno = [
