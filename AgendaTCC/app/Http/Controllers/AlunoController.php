@@ -22,7 +22,9 @@ class AlunoController extends Controller
         $professor = User::where([['professor','=',true]])->get();
         return view('aluno.cadastro_aluno',compact('professor'));
     }
-    public function perfil_aluno($id){
+    public function perfil_aluno(){
+        $usuarioLogado = auth()->user();
+        $id = $usuarioLogado['id'];
         $aluno = User::where([['id','=',$id]])->get();
         $tccDados = TccDados::where([['usuario_aluno','=',$id]])->get();
         $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get();

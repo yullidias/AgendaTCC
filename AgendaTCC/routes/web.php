@@ -53,7 +53,7 @@ Route::post('/salvar_cadastro_professor', [
 Route::group(['middleware'=>['auth','check.aluno']], function(){
 
 
-    Route::get('/perfil_aluno/{id}',[
+    Route::get('/perfil_aluno/',[
         'as' => 'perfil_aluno',
         'uses' => 'AlunoController@perfil_aluno'
 
