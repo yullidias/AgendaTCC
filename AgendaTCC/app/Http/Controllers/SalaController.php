@@ -14,6 +14,9 @@ class SalaController extends Controller
 
     public function excluir_sala(Request $req){
         $sala_predio = explode('-',$req['Excluir']);
+	if(Agendamento::where('sala', $sala_predio[0])->where('predio', $sala_predio[1])->count() > 0)
+      	    $req->session()->flash('alert-danger', 'Existe um Agendamento para essa Sala e Prédio. Não é possível remover!');
+            return redirect()->back();
         Sala::where('sala', $sala_predio[0])->where('predio', $sala_predio[1])->delete();
         return redirect()->route('listar_salas');
     }
