@@ -6,17 +6,15 @@
 
 @section('conteudo')
 	
-	<div class="col-xs-8">
-		<label>Aluno</label>
-		<!--<input type='text' class='form-control' name='nome' value="{{$aluno->nome}}" readonly><br>
-		<input type='text' class='form-control' name='usuario_aluno' value="{{$aluno->usuario_aluno}}" readonly--><br>
+	<div class="col-xs-11">
+		
 
-	<h5>1. Atitude e Desenvolvimento (30 pontos)</h5>
-	<h5>2. Avaliação do trabalho escrito quanto à forma (30 pontos)</h5>
-	<h5>3. Avaliação do trabalho escrito quanto ao conteúdo (40 pontos)</h5>
+	<h4>1. Atitude e Desenvolvimento (30 pontos)</h4>
+	<h4>2. Avaliação do trabalho escrito quanto à forma (30 pontos)</h4>
+	<h4>3. Avaliação do trabalho escrito quanto ao conteúdo (40 pontos)</h4>
 	</div>
 	<br/><br/>
-		<div class="col-xs-8">
+		<div class="col-xs-11">
 			<div class='form-group'>
 				<table style="width:100%" class="table table-hover">
 					<thead>
@@ -74,15 +72,18 @@
 						@else
 							<td><input style="height: 80px" type='text' class='form-control' name='comentario2' readonly></td>
 						@endif
+                        @if(isset($avaliacaosOrient->comentario))
+						<td><input style="height: 80px" type='text' class='form-control' name='comentario2' value="{{$avaliacaosProf->comentario}}" readonly></td>
+						@else
+							<td><input style="height: 80px" type='text' class='form-control' name='comentario2' readonly></td>
+						@endif
 					</tr>
 
 				</table>
 
 			</div>
-			<br><input style="float: right" type='submit' class='btn btn-default' value='Salvar'>
-
-			<!--<h3><strong>Histórico de Avaliações</strong></h3>-->
+            
+			<h6>Notas referente apenas ao TCC1 e não ao projeto.</h6>
 		</div>
-	</form>
 
 @endsection

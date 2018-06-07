@@ -27,6 +27,7 @@
 				<ul class='nav navbar-nav navbar-right'>
 					@if(auth()->check()){{-- se ele estiver logado --}}
 						@if(auth()->user()["professor"] == 0)
+                            
 							<div class="btn-group pull-left ">
 								<p> </p>
 								<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
@@ -35,11 +36,12 @@
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('perfil_aluno')}}"><strong>Meu Perfil</strong></a></li>
 									{{--<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>--}}
-									{{--<li><a href="{{route('inclui a rota Notas')}}"><strong>Notas</strong></a></li>--}}
+									<li><a href="{{route('visualizarNotas')}}" id="botaoNota"><strong>Notas</strong></a></li>
 									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>TCC</strong></a></li>
 								</div>
 								<p> </p>
 							</div>
+                    
 
 						@endif
 						@if(auth()->user()["professor"] == 1 and auth()->user()["orientador"]==0)
@@ -112,5 +114,9 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootbox.min.js') }}"></script>
 
+    
+    
+    
+    
 </body>
 </html>

@@ -9,6 +9,7 @@ use App\Professor;
 use App\Semestre;
 use App\TccDados;
 use App\User;
+use App\Avaliacao;
 use App\Agendamento;
 use App\Repositories\AlunoRepository;
 use Carbon\Carbon;
@@ -215,20 +216,9 @@ class AlunoController extends Controller
         }
     }
     public function visualizarNotas(){
-        $id="321";//usuario logado;
-            if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-                ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
-                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia','tcc_dados.tema','tcc_dados.orientador','tcc_dados.coorientador')
-                ->where('users.id', '=',  $id)->get()->first();
-
-        }else { //esta so pre cadastrado
-            $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
-                ->select('aluno_semestres.usuario_aluno', 'aluno_semestres.materia')
-                ->where('users.id', '=',  $id)->get()->first();
-        }
-        if(Avaliacao::where('tccDados','=',$id)->count() == 2){
-            $avaliacaosProf = Avaliacao::where([
+        $id=auth()->user()->id;//usuario logado;
+           
+    $avaliacaosProf = Avaliacao::where([
                 ['tccDados','=',$id],
                 ['ehOrientador', '=', 0]
             ])->first();
@@ -236,35 +226,9 @@ class AlunoController extends Controller
                 ['tccDados','=',$id],
                 ['ehOrientador', '=', 1]
             ])->first();
-
-            return view('aluno.visualizarNotas', compact('aluno','avaliacaosOrient','avaliacaosProf'));
-        }
-        elseif(Avaliacao::where([
-            ['tccDados','=',$id],
-            ['ehOrientador', '=', 0]
-        ])->count() > 0){
-            $avaliacaosProf = Avaliacao::where([
-                ['tccDados','=',$id],
-                ['ehOrientador', '=', 0]
-            ])->first();
-
-            return view('aluno.visualizarNotas', compact('aluno','avaliacaosProf'));
-        }
-        elseif (Avaliacao::where([
-            ['tccDados','=',$id],
-            ['ehOrientador', '=', 1]
-        ])->count() > 0){
-            $avaliacaosOrient = Avaliacao::where([
-                ['tccDados','=',$id],
-                ['ehOrientador', '=', 1]
-            ])->first();
-
-            return view('aluno.visualizarNotas', compact('aluno','avaliacaosOrient'));
-        }
-        else{
-
-            return view('aluno.visualizarNotas', compact('aluno'));
-        }
+            
+            return view('aluno.visualizar_notas', compact('avaliacaosOrient','avaliacaosProf'));
+       
 
          
     }
