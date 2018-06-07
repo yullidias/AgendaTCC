@@ -106,8 +106,12 @@ class ProfessorController extends Controller
             $semestre_atual = Semestre::orderBy('ano', 'desc')
                     ->orderBy('numero', 'desc')
                     ->get()->first();
+                    // dd($semestre_atual);
+            $data_inicio = $semestre_atual['data_inicio'];
+            $data_fim = $semestre_atual['data_fim'];
+            $data_agora = date("Y-m-d"); 
 
-            if($aluno['materia']==1 && ($semestre_atual['ano']==$semestre_ano && $semestre_atual['numero']==$semestre_numero)){
+            if($aluno['materia']==1 && strtotime($data_agora) >= strtotime($data_inicio) && strtotime($data_agora) <= strtotime($data_fim) ){
 
                 $avaliacao_orientador = User::join('avaliacaos', 'users.id', '=', 'avaliacaos.tccDados')
                 ->where([
@@ -422,12 +426,21 @@ class ProfessorController extends Controller
     {
         $semestre=explode('-', $dados['semestre_selecionado']);
 
+        $semestre_novo = Semestre::orderBy('ano', 'desc')
+                ->orderBy('numero', 'desc')
+                ->get()->first();
+
+        $semestre_ano=$semestre_novo['ano'];
+        $semestre_numero=$semestre_novo['numero'];
+
         AlunoSemestre::where([
             ['usuario_aluno', '=',  $dados['id']],
             ['semestre_numero', '=', $semestre[0]],
             ['semestre_ano', '=', $semestre[1]]
         ])->update([
-            'materia' => 2
+            'materia' => 2,
+            'semestre_numero' => $semestre_numero,
+            'semestre_ano' => $semestre_ano
         ]);
 
          return redirect()->route('listar_alunos');

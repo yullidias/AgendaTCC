@@ -292,5 +292,53 @@ class UsuarioSeeder extends Seeder
             'ehOrientador' => 1,
         ]);
 
+         //aluno - cadastrado - avaliado
+        User::create([
+            'id'=>968,
+            'nome'=>'nome20',
+            'password'=>bcrypt('968'),
+            'email'=>'nome20@email.com',
+            'excluido'=>false,
+            'professor'=>false,
+            'orientador'=>false,
+            'professorDisciplina'=>false,
+            'gestor'=>false,
+        ]);
+        
+        AlunoSemestre::create([
+            'usuario_aluno' => 968,
+            'semestre_ano' => 2017,
+            'semestre_numero' => 2,
+            'materia' => 1
+        ]);
+
+        TccDados::create([
+            'idDados' => 4,
+            'tema' => 'tema_nome20',
+            'orientador' => 987,
+            'usuario_aluno' => 968,
+            'coorientador' => 'nenhum'
+        ]);
+
+        Avaliacao::create([
+            'atitudeCompetencia' => 30,
+            'forma' => 30,
+            'conteudo' => 40,
+            'data' => '2018-05-01 00:00:00',
+            'comentario' => 'nenhum',
+            'tccDados' => 968,
+            'ehOrientador' => 0,
+        ]);
+
+        Avaliacao::create([
+            'atitudeCompetencia' => 30,
+            'forma' => 30,
+            'conteudo' => 40,
+            'data' => '2018-05-01 00:00:00',
+            'comentario' => 'nenhum',
+            'tccDados' => 968,
+            'ehOrientador' => 1,
+        ]);
+
     }
 }
