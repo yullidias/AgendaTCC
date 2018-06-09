@@ -21,7 +21,7 @@
             <input type='text' class='form-control' name='sala' size="10" maxlength="15" required>
             <label>Prédio</label>
             <input type='text' class='form-control' name='predio' size="10"  maxlength="15"  required>
-            <input type='submit' class='btn btn-primary' value='Cadastrar'>
+            <input type='submit' class='btn btn-success' value='Cadastrar'>
         </div>
     </form>
     {{-------------------Inicio Tabela-----------------------}}

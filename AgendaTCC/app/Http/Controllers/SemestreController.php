@@ -34,7 +34,7 @@ class SemestreController extends Controller{
             else{
                 $request->session()->flash('alert-danger', 'Semestre já existe');
             }
-            return redirect()->route('gerir_semestres');
+            return redirect()->route('listar_semestres');
         }
     }
 
@@ -58,7 +58,7 @@ class SemestreController extends Controller{
         else{
             $request->session()->flash('alert-danger', "Esse semestre possui dependências e não pode ser excluído.");
         }
-        return redirect()->route('gerir_semestres');
+        return redirect()->route('listar_semestres');
     }
 
     public function atualizar_semestre(Request $request){
@@ -74,6 +74,6 @@ class SemestreController extends Controller{
             'data_fim' => $campos['data_fim']
         ]);
         $request->session()->flash('alert-success', 'Alterações salvas!');
-        return redirect()->route('gerir_semestres');
+        return redirect()->route('listar_semestres');
     }
 }

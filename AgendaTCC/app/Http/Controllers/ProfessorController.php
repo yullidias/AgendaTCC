@@ -638,8 +638,6 @@ class ProfessorController extends Controller
     }
 
     public function professor_visualiza_aluno($id){ //professor
-
-
         if(Arquivo::where('TCC','=',$id)->count() > 0){ //tem um arquivo
             $aluno = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')
                 ->join('tcc_dados', 'users.id', '=', 'tcc_dados.usuario_aluno')
@@ -659,6 +657,7 @@ class ProfessorController extends Controller
           return view('professor.visualizar_aluno', compact('aluno'));
 
     }
+
     public function avaliar_aluno($id){  //professor
 
         if(TccDados::where('usuario_aluno','=',$id)->count() > 0){ //esta cadastrado

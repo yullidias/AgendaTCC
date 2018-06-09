@@ -18,7 +18,7 @@
 	</div> <!-- end .flash-message -->
 
 
-	<form action="{{ route('cronograma.salvar_atividade_cronograma') }}" method="post">
+	<form action="{{ route('salvar_atividade_cronograma') }}" method="post">
 		{{ csrf_field() }}
 		<div class='form-group' >
 			<label>Nome</label>
@@ -42,7 +42,7 @@
 			<option value="2">TCC 2</option>
 		</select>
 		<br>
-		<input type='submit' class='btn btn-default' value='Cadastrar'>
+		<input type='submit' class='btn btn-success pull-right' value='Cadastrar'>
 	</form>
 	{{-------------------Inicio Tabela-----------------------}}
 	<style>
@@ -71,22 +71,23 @@
 			<th>Turma</th>
 			<th>Data Início</th>
 			<th>Data Fim</th>
-			<th>Salvar</th>
-			<th>Excluir Atividade</th>
+			<th>Salvar Alterações</th>
+			<th>Excluir </th>
 		</tr>
 		@foreach($cronogramas as $c)
 			<tr>
 				<td>{{$c->nome}}</td>
 				<td>{{$c->semestre_ano}}-{{$c->semestre_numero}}</td>
 				<td>TCC {{$c->turma}}</td>
-				<form action="{{ route('cronograma.atualizar_atividade_cronograma')}}" method="post">
+
+				<form action="{{ route('atualizar_atividade_cronograma')}}" method="post">
 					<td><input type='date' class='form-control' name='data_inicio' value="{{$c->data_inicio}}" width="10" required></td>
 					<td><input type='date' class='form-control' name='data_fim' value="{{$c->data_fim}}" width="10" required></td>
-					<td><button type='submit' class='btn btn-default'  onclick="return confirm('Salvar alterações?');" name="Salvar" value = '{{$c->id}}' href="{{ route('cadastrar_cronograma.atualizar_atividade_cronograma', $c->id)}}">Salvar</td>
+					<td><button type='submit' class='btn btn-primary'  onclick="return confirm('Salvar alterações?');" name="id" value = '{{$c->id}}' href="{{ route('atualizar_atividade_cronograma', $c->id)}}">Salvar</td>
 				</form>
 				{{--acrescentar campos semestre_ano, semestre_numero e turma de cronograma--}}
-				<form action="{{ route('cronograma.deletar_atividade_cronograma')}}" method="post">
-					<td><button type='submit' class='btn btn-default'  onclick="return confirm('Tem certeza que quer deletar?');" name="Excluir" value = '{{$c->id}}' href="{{ route('cadastrar_cronograma.deletar_atividade_cronograma', $c->id)}}">Excluir</td>
+				<form action="{{ route('excluir_atividade_cronograma')}}" method="post">
+					<td><button type='submit' class='btn btn-danger'  onclick="return confirm('Tem certeza que quer deletar?');" name="id" value = '{{$c->id}}' href="{{ route('excluir_atividade_cronograma', $c->id)}}">Excluir</td>
 
 			</tr>
 		@endforeach

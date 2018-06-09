@@ -35,9 +35,9 @@
 								</button>
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('perfil_aluno')}}"><strong>Meu Perfil</strong></a></li>
-									{{--<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>--}}
-									<li><a href="{{route('visualizarNotas')}}" id="botaoNota"><strong>Notas</strong></a></li>
-									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>TCC</strong></a></li>
+									<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma de Atividades</strong></a></li>
+									<li><a href="{{route('visualizarNotas')}}" id="botaoNota"><strong>Minhas Notas</strong></a></li>
+									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>Submissão de TCC</strong></a></li>
 								</div>
 								<p> </p>
 							</div>
@@ -52,10 +52,10 @@
 								</button>
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('cadastrar_professor')}}"><strong>Cadastrar</strong></a></li>
-									<li><a href="{{route('professor_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>
+									<li><a href="{{route('professor_visualizar_cronograma')}}"><strong>Cronograma de Atividades</strong></a></li>
 									{{--<li><a href="{{route('incluir rota orientandos')}}"><strong>Orientandos</strong></a></li>--}}
 									{{--<li><a href="{{route('incluir rota relatorio')}}"><strong>Relatório</strong></a></li>--}}
-									<li><a href="{{route('visualizar_lista_alunos',['id' => auth()->user()["id"]])}}"><strong>Turma</strong></a></li>
+									<li><a href="{{route('visualizar_lista_alunos',['id' => auth()->user()["id"]])}}"><strong>Minha Turma</strong></a></li>
 								</div>
 
 							</div>
@@ -68,10 +68,11 @@
 							</button>
 							<div class="dropdown-menu dropdown-menu-right">
 								<li><a href="{{route('cadastrar_professor')}}"><strong>Cadastrar</strong></a></li>
-								<li><a href="{{route('professor_visualizar_cronograma')}}"><strong>Cronograma</strong></a></li>
+								<li><a href="{{route('orientador_visualizar_cronograma')}}"><strong>Cronograma de Atividades</strong></a></li>
 								{{--<li><a href="{{route('incluir rota orientandos')}}"><strong>Orientandos</strong></a></li>--}}
 								{{--<li><a href="{{route('incluir rota relatorio')}}"><strong>Relatório</strong></a></li>--}}
-								<li><a href="{{route('visualizar_lista_alunos_orientador',['id' => auth()->user()["id"]])}}"><strong>Turma</strong></a></li>
+                                <li><a href="{{route('visualizar_lista_alunos',['id' => auth()->user()["id"]])}}"><strong>Minha Turma</strong></a></li>
+                                <li><a href="{{route('visualizar_lista_alunos_orientador',['id' => auth()->user()["id"]])}}"><strong>Meus Orientandos</strong></a></li>
 							</div>
 
 						</div>
@@ -82,14 +83,14 @@
 							<div class="btn-group pull-left ">
 								<p> </p>
 								<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" >
-									Gerir Sistema
+									Gestão do Sistema
 								</button>
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('listar_alunos')}}"><strong>Listar Alunos</strong></a></li>
 									<li><a href="{{route('listar_professores')}}"><strong>Listar Professores</strong></a></li>
-									<li><a href="{{route('cronograma.listar_atividades_cronograma')}}"><strong>Gerir Cronograma</strong></a></li>
 									<li><a href="{{route('listar_salas')}}"><strong>Gerir Salas</strong></a></li>
-									<li><a href="{{route('gerir_semestres')}}"><strong>Gerir Semestres</strong></a></li>
+                                    <li><a href="{{route('listar_semestres')}}"><strong>Gerir Semestres</strong></a></li>
+									<li><a href="{{route('listar_atividades_cronograma')}}"><strong>Gerir Cronograma</strong></a></li>
 									{{--<li><a href="{{route('incluir a rota do relatorio')}}"><strong>Gerir Relatório</strong></a></li>--}}
 								</div>
 							</div>

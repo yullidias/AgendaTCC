@@ -42,12 +42,6 @@ class CronogramaController extends Controller{
         }
     }
 
-    public function atualizar_atividades_cronograma(){
-        $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
-        $cronogramas = Cronograma::all();
-        return view('professor.gestor.gerir_cronograma', compact('cronogramas'), compact('semestre'));
-    }
-
     public function listar_atividades_cronograma(){
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();
         $cronogramas = Cronograma::all();
@@ -56,9 +50,56 @@ class CronogramaController extends Controller{
 
     public function deletar_atividade_cronograma(Request $request){
         $campos = $request->all();
-        Cronograma::find($campos['Excluir'])->delete();
+        Cronograma::find($campos['id'])->delete();
+        $request->session()->flash('alert-success', 'Excluído!');
         return redirect()->route('listar_atividades_cronograma');
     }
+
+
+    public function atualizar_atividade_cronograma(Request $request){
+        $campos = $request->all();
+        $chave = $campos['id'];
+        if ($campos['data_inicio'] > $campos['data_fim']) {
+            $request->session()->flash('alert-danger', 'Data de Início é superior a Data de Fim');
+            return redirect()->back();
+        }
+        Cronograma::where("id",'=',"$chave")->update([
+            'data_inicio' => $campos['data_inicio'],
+            'data_fim' => $campos['data_fim']
+        ]);
+        $request->session()->flash('alert-success', 'Alterações salvas!');
+        return redirect()->route('listar_atividades_cronograma');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function aluno_visualizar_cronograma(){
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//pega o semestre atual//
