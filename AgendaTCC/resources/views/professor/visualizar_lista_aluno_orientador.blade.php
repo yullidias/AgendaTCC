@@ -60,12 +60,14 @@
 	<table style="width:100%" class="table table-hover">
 		<tr>
 			<th>Matrícula</th>
+			<th>Matéria</th>
 			<th>Vizualizar Perfil</th>
 			<th>Avaliar</th>
 		</tr>
 		@foreach ($alunos as $aluno)
 			<tr>
 				<td>{{$aluno->usuario_aluno}}</td>
+				<td>{{$aluno->materia}}</td>
 				<td><a class="btn btn-info" href="{{ route('visualizar_aluno',['id' => $aluno->usuario_aluno]) }}" role="button">Visualizar</a></td>
 				<td><a class="btn btn-primary" href="{{ route('avaliar_aluno',['id' => $aluno->usuario_aluno]) }}" role="button">Avaliar</a></td>
 			</tr>

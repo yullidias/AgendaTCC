@@ -591,7 +591,7 @@ class ProfessorController extends Controller
                 'email' => $professor['email']
             ])){
                 $request->session()->flash('alert-success', 'Professor cadastrado com sucesso!');
-                return redirect()->route('perfil_professor');
+                return redirect()->route('site.login');
            }else{
                 $request->session()->flash('alert-danger', 'Não foi possível cadastrar o professor!');
                 return redirect()->back();

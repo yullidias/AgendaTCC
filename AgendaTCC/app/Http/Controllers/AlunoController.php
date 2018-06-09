@@ -99,7 +99,7 @@ class AlunoController extends Controller
             ])) {
                TccDados::create($tccDados);
                $request->session()->flash('alert-success', 'Aluno cadastrado com sucesso!');
-               return redirect()->route('perfil_aluno');
+               return redirect()->route('site.login');
            }else{
                $request->session()->flash('alert-danger', 'Não foi possível cadastrar o aluno!');
                return redirect()->back();

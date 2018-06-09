@@ -35,9 +35,9 @@
 								</button>
 								<div class="dropdown-menu dropdown-menu-right">
 									<li><a href="{{route('perfil_aluno')}}"><strong>Meu Perfil</strong></a></li>
-									<li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma de Atividades</strong></a></li>
-									<li><a href="{{route('visualizarNotas')}}" id="botaoNota"><strong>Minhas Notas</strong></a></li>
-									<li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>Submissão de TCC</strong></a></li>
+                                    <li><a href="{{route('visualizarNotas')}}" id="botaoNota"><strong>Minhas Notas</strong></a></li>
+                                    <li><a href="{{route('submeter_tcc',['id' => auth()->user()["id"]])}}"><strong>Submissão de TCC</strong></a></li>
+                                    <li><a href="{{route('aluno_visualizar_cronograma')}}"><strong>Cronograma de Atividades</strong></a></li>
 								</div>
 								<p> </p>
 							</div>
