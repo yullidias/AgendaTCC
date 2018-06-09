@@ -72,7 +72,7 @@ class CronogramaController extends Controller{
         if($matriculaTCC2->count()!=0){ //se tiver cursando o tcc2, o agendamento será mostrado//
             $show = true;
             $agendamento = Agendamento::where('id_matricula', '=', $matriculaTCC2[0]->id)->get();
-            if($agendamento->count()!=0){ $agendamento = agendamento[0]; }
+            if($agendamento->count()!=0){ $agendamento = $agendamento[0]; }
             else { $agendamento = ''; }
         }
         else{

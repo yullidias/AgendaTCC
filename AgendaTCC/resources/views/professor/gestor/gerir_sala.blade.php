@@ -26,6 +26,11 @@
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>
+        table {
+            table-layout: fixed;
+            width: 100px;
+        }
+
         th, td {
             text-align: center;
             padding: 8px;

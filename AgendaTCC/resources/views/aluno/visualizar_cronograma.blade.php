@@ -17,45 +17,69 @@
 
     {{-------------------Inicio Tabela-----------------------}}
     <style>
-        th, td {
+        table#t1 {
+            table-layout: fixed;
+            width: 100px;
+        }
+        table#t1 th, td {
             text-align: left;
             padding: 8px;
         }
-        th {
-            background-color: #404040;
-            color: white;
+        table#t1 th {
+            color: black;
         }
     </style>
 
-    <br><br>
+
     {{ csrf_field() }}
     @if($show)
-        <h3><strong> Agendamento </strong></h3>
-        <table style="width:100%" class="table table-hover">
+        <h3><strong>Defesa Agendada</strong></h3>
+        <table id="t1" style="width:100%" class="table-condensed">
             @php
                 $array = explode(' ', $agendamento->data);
                 $data = $array[0];
                 $hora = $array[1];
             @endphp
-            <th>Data</th>
-            <th>Horário</th>
-            <th>Prédio</th>
-            <th>Sala</th>
             <tr>
-                <td>{{$data}}</td>
-                <td>{{$hora}}</td>
-                <td>{{$agendamento->predio}}</td>
-                <td>{{$agendamento->sala}}</td>
+                <th>Data</th>
+                <th>Horário</th>
             </tr>
-
+            <tr>
+                <td><input type="date" id="data" class='form-control' value="{{$data}}" width="10" disabled="disabled"></td>
+                <td><input type="time" id="hora" class='form-control' value="{{$hora}}" width="10" disabled="disabled"></td>
+            </tr>
         </table>
-
+        <table id="t1" style="width:100%">
+            <tr>
+                <th>Prédio</th>
+                <th>Sala</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="predio" class='form-control' value="{{$agendamento->predio}}" width="10" disabled="disabled"></td>
+                <td><input type="text" id="sala" class='form-control' value="{{$agendamento->sala}}" width="10" disabled="disabled"></td>
+            </tr>
+        </table>
+        <br><br>
     @endif
 
-    <br><br>
+    <style>
+        table#t2 {
+            table-layout: fixed;
+            width: 100px;
+        }
+        table#t2 th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        table#t2 th {
+            background-color: #404040;
+            color: white;
+        }
+    </style>
+
     {{ csrf_field() }}
     <h3><strong> TCC1 </strong></h3>
-    <table style="width:100%" class="table table-hover">
+    <table id="t2" style="width:100%" class="table table-hover">
         <tr>
             <th>Descrição</th>
             <th>Data Início</th>
@@ -81,7 +105,7 @@
     </table>
 
     <h3><strong> TCC2 </strong></h3>
-    <table style="width:100%" class="table table-hover">
+    <table id="t2" style="width:100%" class="table table-hover">
         <tr>
             <th>Descrição</th>
             <th>Data Início</th>
