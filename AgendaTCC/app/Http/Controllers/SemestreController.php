@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\AlunoSemestre;
+use App\Cronograma;
 use App\Semestre;
 use Illuminate\Http\Request;
 
@@ -45,8 +47,17 @@ class SemestreController extends Controller{
         $campos = $request->all();
         $chaves = $campos['id'];
         $chaves = explode('-',$chaves);
-        Semestre::where('ano', '=', "$chaves[0]")->where('numero','=',"$chaves[1]")->delete();
-        $request->session()->flash('alert-success', 'Excluído!');
+
+        $dep1 = Cronograma::where([ ['semestre_ano', "$chaves[0]"], ['semestre_numero', "$chaves[1]"],]);
+        $dep2 = AlunoSemestre::where([ ['semestre_ano', "$chaves[0]"], ['semestre_numero', "$chaves[1]"],]);
+
+        if(($dep1->count() == 0) && ($dep2->count() == 0)){
+            Semestre::where('ano', '=', "$chaves[0]")->where('numero', '=', "$chaves[1]")->delete();
+            $request->session()->flash('alert-success', 'Excluído!');
+        }
+        else{
+            $request->session()->flash('alert-danger', "Esse semestre possui dependências e não pode ser excluído.");
+        }
         return redirect()->route('gerir_semestres');
     }
 

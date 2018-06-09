@@ -29,7 +29,7 @@
             <input type='date' class='form-control' name='data_fim' required>
         </div>
 
-        <input type='submit' class='btn btn-default' value='Cadastrar'>
+        <input type='submit' class="btn btn-success pull-right" value='Cadastrar'>
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>
@@ -52,7 +52,7 @@
             <th>Numero</th>
             <th>Data Início</th>
             <th>Data Fim</th>
-            <th>Salvar</th>
+            <th>Salvar Alterações</th>
             <th>Excluir</th>
         </tr>
         @foreach($semestres as $s)
@@ -64,11 +64,11 @@
                 <form action="{{ route('atualizar_semestre')}}" method="post" }}">
                     <td><input type='date' class='form-control' name='data_inicio' value="{{$s->data_inicio}}" width="10" required></td>
                     <td><input type='date' class='form-control' name='data_fim' value="{{$s->data_fim}}" width="10" required></td>
-                    <td><button type='submit' class='btn btn-default' onclick="return confirm('Salvar alterações?');" name="id" value = '{{$id}}' > Salvar </td>
+                    <td><button type='submit' class='btn btn-primary' onclick="return confirm('Salvar alterações?');" name="id" value = '{{$id}}' > Salvar </td>
                 </form>
 
                 <form action="{{ route('excluir_semestre')}}" method="post" }}">
-                    <td><button type='submit' class='btn btn-default' onclick="return confirm('Tem certeza que deseja excluir?');" name="id" value = '{{$id}}' > Excluir </td>
+                    <td><button type='submit' class='btn btn-danger' onclick="return confirm('Tem certeza que deseja excluir?');" name="id" value = '{{$id}}' > Excluir </td>
                 </form>
             </tr>
         @endforeach

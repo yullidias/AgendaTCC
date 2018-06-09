@@ -29,6 +29,30 @@
 
     <br><br>
     {{ csrf_field() }}
+    @if($show)
+        <h3><strong> Agendamento </strong></h3>
+        <table style="width:100%" class="table table-hover">
+            @php
+                $array = explode('-', $agendamento->data);
+                $data = $array[0];
+                $hora = $array[1];
+            @endphp
+            <th>Data</th>
+            <th>Prédio</th>
+            <td>{{$data}}</td>
+            <td>{{$agendamento->predio}}</td>
+
+        </table>
+        <table style="width:100%" class="table table-hover">
+            <th>Horário</th>
+            <th>Sala</th>
+            <td>{{$hora}}</td>
+            <td>{{$agendamento->sala}}</td>
+        </table>
+    @endif
+
+    <br><br>
+    {{ csrf_field() }}
     <h3><strong> TCC1 </strong></h3>
     <table style="width:100%" class="table table-hover">
         <tr>

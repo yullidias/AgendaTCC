@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Semestre;
 use App\Cronograma;
+use App\Agendamento;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Object_;
 
@@ -63,15 +64,19 @@ class CronogramaController extends Controller{
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//pega o semestre atual//
         $aluno = auth()->user(); //pega o usuario atual//
 
-        $matriculaTCC2 = User::join('aluno_semestres','usuario_aluno','=','id')->where('usuario_aluno','=',"$aluno->id")->
-            where('semestre_ano','=',"$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('materia','=','2')->get();
+        $matriculaTCC2 = User::join('aluno_semestres','users.id','=','aluno_semestres.usuario_aluno')
+            ->where([ ['users.id','=',"$aluno->id"], ['aluno_semestres.semestre_ano','=',"$semestre->ano"],
+            ['aluno_semestres.semestre_numero','=',"$semestre->numero"], ['aluno_semestres.materia','=','2'], ])->get();
 
-        if($matriculaTCC2.count()!=0) {//se tiver cursando o tcc2, o agendamento será mostrado//
+
+        if($matriculaTCC2[0]){ //se tiver cursando o tcc2, o agendamento será mostrado//
             $show = true;
-            $agendamento = Agendamento::join('aluno_semestres','id_matricula','=','id')->where('id_matricula', '=', "$matriculaTCC2->id");
+            $agendamento = Agendamento::where('id_matricula', '=', "$matriculaTCC2[0]->id")->get();
+
         }
         else{
             $show = false;
+            $agendamento = '';
         }
 
         $cronograma1 = (Cronograma::select('nome','data_inicio','data_fim'))
