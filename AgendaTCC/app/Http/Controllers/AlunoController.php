@@ -29,8 +29,8 @@ class AlunoController extends Controller
         $id = $usuarioLogado['id'];
         $aluno = User::where([['id','=',$id]])->get();
         $tccDados = TccDados::where([['usuario_aluno','=',$id]])->get();
-        $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get();
-        $agendamento = Agendamento::where([['id_matricula', '=', $alunoSemestre[0]['id']]])->orderby('data', 'desc')->get();
+        $alunoSemestre = AlunoSemestre::where([['usuario_aluno','=',$id]])->get()->first();
+        $agendamento = Agendamento::where([['id_matricula', '=', $alunoSemestre[0]['id']]])->orderby('data', 'desc')->get()->first();
         return view('aluno.perfil_aluno', compact('tccDados','aluno','alunoSemestre', 'agendamento'));
     }
     public function solicitar_alteracao(Request $request){

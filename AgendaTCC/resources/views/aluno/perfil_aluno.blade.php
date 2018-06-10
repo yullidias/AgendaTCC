@@ -41,9 +41,9 @@
 				<td><label>Matéria</label></td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="materia" value="1" @if($alunoSemestre[0]['materia'] == 1) checked @endif readonly> TCC1
-					<input type="radio" name="materia" value="2" @if($alunoSemestre[0]['materia'] == 2) checked @endif readonly> TCC2</td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Turma TCC-{{$alunoSemestre[0]['materia']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				<td><input type="radio" name="materia" value="1" @if($alunoSemestre->materia == 1) checked @endif readonly> TCC1
+					<input type="radio" name="materia" value="2" @if($alunoSemestre->materia == 2) checked @endif readonly> TCC2</td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Turma TCC-{{$alunoSemestre['materia']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 			<tr>
 				<td><label>Orientador</label></td>
@@ -67,18 +67,28 @@
 				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Tema-{{$tcc->tema}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 
-			@if($alunoSemestre[0]['materia'] == 2)
+			@if($alunoSemestre->materia == 2)
+				@php
+					if($agendamento){
+						$membro1banca = $agendamento->membro1banca;
+						$membro2banca = $agendamento->membro2banca;
+					}
+					else{
+						$membro1banca = "";
+						$membro2banca = "";
+					}
+				@endphp
 				<tr>
 					<td><label>Membros da Banca</label></td>
 				</tr>
 				<tr>
-					<td><input type='text' class='form-control' name='membro1' value="{{$agendamento[0]->membro1banca}}" readonly></td>
-					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$agendamento[0]['membro1banca']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+					<td><input type='text' class='form-control' name='membro1' value="{{$membro1banca}}" readonly></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$membro1banca}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 
 					<tr></tr>
 
-					<td><input type='text' class='form-control' name='membro2' value="{{$agendamento[0]->membro2banca}}" readonly></td>
-					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$agendamento[0]['membro2banca']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+					<td><input type='text' class='form-control' name='membro2' value="{{$membro2banca}}" readonly></td>
+					<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Membro Banca-{{$membro2banca}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 				</tr>
 			@endif
 		</table>

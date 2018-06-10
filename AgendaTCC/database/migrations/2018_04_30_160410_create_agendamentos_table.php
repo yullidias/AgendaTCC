@@ -19,7 +19,7 @@ class CreateAgendamentosTable extends Migration {
             $table->integer('id_matricula')->unsigned();
             $table->string('membro1banca');
             $table->string('membro2banca');
-            $table->primary(['data', 'sala', 'predio', 'id_matricula']);
+            $table->primary('id_matricula');
         });
 
         Schema::table('agendamentos', function (Blueprint $table) {

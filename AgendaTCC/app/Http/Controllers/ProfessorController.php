@@ -606,11 +606,12 @@ class ProfessorController extends Controller
 
         $semestres = Semestre::all();
 
+
         if(isset($_POST['materia'])){
 
             $semestre=explode('-', $dados['semestre']);
 
-            $materia_selecionada=$professor['professorDisciplina'];
+            $materia_selecionada=$dados['materia'];
             $semestre_selecionado=$dados['semestre'];
             $semestre_ano=$semestre[1];
             $semestre_numero=$semestre[0];
@@ -621,10 +622,11 @@ class ProfessorController extends Controller
                 ->orderBy('numero', 'desc')
                 ->get()->first();
 
-            $materia_selecionada=$professor['professorDisciplina'];
+            $materia_selecionada=1;
             $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
             $semestre_ano=$semestre['ano'];
             $semestre_numero=$semestre['numero'];
+
         }
 
         $alunos = User::join('aluno_semestres', 'users.id', '=', 'aluno_semestres.usuario_aluno')->where([
@@ -772,7 +774,7 @@ class ProfessorController extends Controller
                 ->orderBy('numero', 'desc')
                 ->get()->first();
 
-            $materia_selecionada=$orientador['orientador'];
+            $materia_selecionada=1;
             $semestre_selecionado=$semestre['numero'].'-'.$semestre['ano'];
             $semestre_ano=$semestre['ano'];
             $semestre_numero=$semestre['numero'];

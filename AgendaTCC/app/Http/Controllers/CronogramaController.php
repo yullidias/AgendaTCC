@@ -73,34 +73,6 @@ class CronogramaController extends Controller{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function aluno_visualizar_cronograma(){
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//pega o semestre atual//
         $aluno = auth()->user(); //pega o usuario atual//
@@ -112,9 +84,7 @@ class CronogramaController extends Controller{
 
         if($matriculaTCC2->count()!=0){ //se tiver cursando o tcc2, o agendamento será mostrado//
             $show = true;
-            $agendamento = Agendamento::where('id_matricula', '=', $matriculaTCC2[0]->id)->get();
-            if($agendamento->count()!=0){ $agendamento = $agendamento[0]; }
-            else { $agendamento = ''; }
+            $agendamento = Agendamento::where('id_matricula', '=', $matriculaTCC2[0]->id)->get()->first();
         }
         else{
             $show = false;
@@ -129,7 +99,7 @@ class CronogramaController extends Controller{
             ->where('semestre_ano', '=', "$semestre->ano")->where('semestre_numero','=',"$semestre->numero")->where('turma', '=', '2')
             ->orderby('turma','asc','data_inicio','asc')->get();
 
-        return view("aluno.visualizar_cronograma", compact('cronograma1','cronograma2','show','agendamento'));
+        return view("aluno.visualizar_cronograma", compact('cronograma1','cronograma2','show', 'agendamento'));
     }
 
     public function professor_visualizar_cronograma(){

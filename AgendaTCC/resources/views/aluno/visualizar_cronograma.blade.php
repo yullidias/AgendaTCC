@@ -36,9 +36,19 @@
         <h3><strong>Defesa Agendada</strong></h3>
         <table id="t1" style="width:100%" class="table-condensed">
             @php
-                $array = explode(' ', $agendamento->data);
-                $data = $array[0];
-                $hora = $array[1];
+                if($agendamento){
+                    $array = explode(' ', $agendamento->data);
+                    $data = $array[0];
+                    $hora = $array[1];
+                    $predio = $agendamento->predio;
+                    $sala = $agendamento->sala;
+                }
+                else{
+                    $data = "";
+                    $hora = "";
+                    $predio = "";
+                    $sala = "";
+                }
             @endphp
             <tr>
                 <th>Data</th>
@@ -55,10 +65,13 @@
                 <th>Sala</th>
             </tr>
             <tr>
-                <td><input type="text" id="predio" class='form-control' value="{{$agendamento->predio}}" width="10" disabled="disabled"></td>
-                <td><input type="text" id="sala" class='form-control' value="{{$agendamento->sala}}" width="10" disabled="disabled"></td>
+                <td><input type="text" id="predio" class='form-control' value="{{$predio}}" width="10" disabled="disabled"></td>
+                <td><input type="text" id="sala" class='form-control' value="{{$sala}}" width="10" disabled="disabled"></td>
             </tr>
         </table>
+        @if(!$agendamento)
+            <label align="right">*Agendamento ainda não foi realizado.</label>
+        @endif
         <br><br>
     @endif
 

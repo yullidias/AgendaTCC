@@ -26,7 +26,7 @@
 			</label>
 			&ensp;
 			<label>
-				<input type="radio" name="materia" onchange="this.form.submit()" value="0" {{ ($materia_selecionada==0) ? "checked": " " }}> TCC2
+				<input type="radio" name="materia" onchange="this.form.submit()" value="2" {{ ($materia_selecionada==2) ? "checked": " " }}> TCC2
 			</label>
 		</div>
 		<br>
@@ -60,16 +60,20 @@
 	<table style="width:100%" class="table table-hover">
 		<tr>
 			<th>Matrícula</th>
-			<th>Matéria</th>
 			<th>Vizualizar Perfil</th>
-			<th>Avaliar</th>
+			@if($materia_selecionada==2)
+				<th>Agendamento</th>
+			@endif
+			<th>Avaliacao</th>
 		</tr>
 		@foreach ($alunos as $aluno)
 			<tr>
 				<td>{{$aluno->usuario_aluno}}</td>
-				<td>{{$aluno->materia}}</td>
 				<td><a class="btn btn-info" href="{{ route('visualizar_aluno',['id' => $aluno->usuario_aluno]) }}" role="button">Visualizar</a></td>
-				<td><a class="btn btn-primary" href="{{ route('avaliar_aluno',['id' => $aluno->usuario_aluno]) }}" role="button">Avaliar</a></td>
+				@if($materia_selecionada==2)
+					<td><a class="btn btn-primary" href="{{ route('ver_agendamento',['id' => $aluno->usuario_aluno]) }}" role="button">Agendamento</a></td>
+				@endif
+				<td><a class="btn btn-primary" href="{{ route('avaliar_aluno',['id' => $aluno->usuario_aluno]) }}" role="button">Avaliacao</a></td>
 			</tr>
 		@endforeach
 

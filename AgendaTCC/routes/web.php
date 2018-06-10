@@ -168,9 +168,9 @@ Route::group(['middleware'=>['auth','check.orientador']], function(){
         'uses' => 'AgendamentoController@salvar_agendamento'
     ]);
 
-    Route::post('/perfilOrientador/listarAlunos/verAgendamento/', [
-        'as' => 'listar_agendamento_logs',
-        'uses' => 'AgendamentoController@listar_agendamento_logs'
+    Route::get('/perfilOrientador/listarAlunos/verAgendamento/{id}', [
+        'as' => 'ver_agendamento',
+        'uses' => 'AgendamentoController@ver_agendamento'
     ]);
 
     Route::get('/perfilOrientador/listarAlunos/{id}',[

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\AlunoSemestre;
+use App\LogAgendamento;
+use App\Agendamento;
 use App\Semestre;
+use App\Sala;
+use App\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Object_;
 
@@ -35,20 +40,24 @@ class AgendamentoController extends Controller
             Cronograma::create($registro);
             $request->session()->flash('alert-success', 'Salvo!');
             $request->session()->flash('alert-success','Obs: O sistema não se responsabiliza por eventuais indisponibilidades de salas e conflitos nos horários de agendamento, uma vez que os conflitos identificáveis são baseados nos agendamentos realizados no sistema e que não há integração com o sistema de agendamento de salas do CEFET.');
-            return redirect()->route('listar_agendamento_logs');
+            return redirect()->route('ver_agendamento');
         }
     }
 
-
-    public function listar_agendamento_logs(Resquest $request){//passa o agendamento atual e os logs//
-        $orientador = auth()->user(); //pega o usuario atual//
+    public function ver_agendamento($id){//recebe a id do aluno, passa o agendamento atual e os logs//
+        $salas = Sala::orderBy('predio')->get();
+        $professores = User::where('professor', '=', "1")->get();
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//semestre atual//
-        $salas = Sala::all();
 
+        $id_orientador = Auth()->user()->id;
+        $matricula = AlunoSemestre::where([ ['usuario_aluno', '=', $id],
+            ['semestre_ano', '=', $semestre->ano], ['semestre_numero', '=', $semestre->numero], ['materia', '=', "2"], ])->get()->first();
 
-       // $sgendamento =
-        $cronogramas = Cronograma::all();
-        return view('professor.visualizar_agendamento', compact('salas'), compact('semestre'));
+        $agendamento = Agendamento::where('id_matricula', '=', $matricula->id)->get();
+
+        $logs = LogAgendamento::where([ ['id_matricula', '=', $matricula->id], ['id_orientador', '=', $id_orientador], ])->get();
+
+        return view('professor.visualizar_agendamento', compact('salas', 'semestre', 'agendamento','matricula', 'logs', 'professores'));
     }
 
 }
