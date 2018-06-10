@@ -4,19 +4,17 @@
     <div class="col-sm-20 col-xs-offset-10">
         <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_aluno') }}" role="button" style="width: 150px">Cadastrar aluno    </a></p>
         <br>
-        <br>
         <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_professor') }}" role="button" style="width: 150px">Cadastrar professor</a></p>
 
     </div>
-    <br>
-    <br>
+   <br><br>
     <div class="row text-center">
 
 
-        <img src="chapeu.png" alt="Smiley face" width="300" height="200">
+        <img src="chapeu.png" alt="Smiley face" width="300" height="200" align="middle">
         <br>
         <h1 left>Agenda TCC</h1>
-        <br>
+       
 
         <form class="form-group" action="{{route('site.login.entrar')}}" method="post">
             {{csrf_field()}}

@@ -106,7 +106,7 @@
 	<main class='container'>
 
 		<h1><strong>@yield('titulo')</strong></h1>
-		<br><br>
+
 		@yield('conteudo')
 	</main>
 	
