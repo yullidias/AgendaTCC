@@ -1,16 +1,6 @@
 @extends('layout')
 @section('conteudo')
 
-    <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-        @endforeach
-    </div>
-
-
-
     <div class="col-sm-20 col-xs-offset-10">
         <p><a class="btn btn-default pull-right" href="{{ route('cadastrar_aluno') }}" role="button" style="width: 150px">Cadastrar aluno    </a></p>
         <br>
@@ -52,20 +42,16 @@
                 </div>
             @endif
 
-            <div class="text-danger">
-                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                    <ul>
-                        @if(Session::has('alert-' . $msg))
-                            <li class="text-danger-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</li>
-                        @endif
-                    </ul>
-
-                @endforeach
-            </div>
-
-
-            <button class="btn #D3D3D3 center" >Entrar</button>
+         <button class="btn #D3D3D3 center" >Entrar</button>
         </form>
+    </div>
+
+    <div class="flash-message">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+        @endforeach
     </div>
 
 @endsection

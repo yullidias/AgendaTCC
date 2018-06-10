@@ -17,7 +17,7 @@ class CreateLogAgendamento extends Migration
             $table->increments('id');
             $table->integer('id_matricula')->unsigned();
             $table->string('id_orientador',12);
-            $table->string('alteracao',75);
+            $table->string('alteracao',100);
             $table->timestamps();
         });
 

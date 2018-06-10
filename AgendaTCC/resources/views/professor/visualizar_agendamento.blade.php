@@ -34,7 +34,7 @@
         if($agendamento){
             $array = explode(' ', $agendamento->data);
             $data = $array[0];
-            $hora = $array[1];
+            $horario = $array[1];
             $predio = $agendamento->predio;
             $sala = $agendamento->sala;
             $membro1 = $agendamento->membro1;
@@ -59,15 +59,15 @@
                     <th>Horário</th>
                 </tr>
                 <tr>
-                    <td><input type='date' style="width:100%" class='form-control' name='data' required></td>
-                    <td><input type='time' style="width:100%" class='form-control' name='horario' required></td>
+                    <td><input type='date' style="width:100%" value="{{$data}}" class='form-control' name='data' required></td>
+                    <td><input type='time' style="width:100%" value="{{$horario}}" class='form-control' name='horario' required></td>
                 </tr>
             </table>
             <table id="t1" style="width:100%">
                 <tr>
                     <th>Sala</th>
                 </tr>
-                <td><select class="form-control" value="" style="width:100%" name="sala" required>
+                <td><select class="form-control" value="Prédio {{$predio}} - Sala {{$sala}}" style="width:100%" name="sala" required>
                     @foreach($salas as $s)
                         <option>Prédio {{$s->predio}} - Sala {{$s->sala}}</option>
                     @endforeach
@@ -79,14 +79,14 @@
                     <th>Membro 2 da Banca</th>
                 </tr>
                 <tr>
-                    <td> <select class="form-control" style="width:100%" name="membro1" required>
+                    <td> <select class="form-control" style="width:100%" value="{{$membro1}}" name="membro1" required>
                             @foreach($professores as $p)
                                 <option>{{$p->nome}}</option>
                             @endforeach
                         </select>
                     </td>
 
-                    <td> <select class="form-control" style="width:100%" name="membro2" required>
+                    <td> <select class="form-control" style="width:100%" value="{{$membro2}}" name="membro2" required>
                             @foreach($professores as $p)
                                 <option>{{$p->nome}}</option>
                             @endforeach
@@ -96,14 +96,10 @@
             </table>
 
         </div>
-        <input type='submit' class='btn btn-success pull-right' value="Salvar" }>
+        <input type='submit' class='btn btn-success pull-right' onclick="return confirm('Salvar alterações?');" value="Salvar" }>
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>
-        table#t2 {
-            table-layout: fixed;
-            width: 100px;
-        }
         table#t2 th, td {
             text-align: left;
             padding: 8px;
