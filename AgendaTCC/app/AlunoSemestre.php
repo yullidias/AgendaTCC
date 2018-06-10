@@ -12,4 +12,5 @@ class AlunoSemestre extends Model
     protected $fillable = [
 	    'usuario_aluno','semestre_ano','semestre_numero','materia'
 	];
+
 }

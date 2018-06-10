@@ -163,7 +163,7 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
 //------------------------------------------------------------------------------------
 Route::group(['middleware'=>['auth','check.orientador']], function(){
     //Tela orientador tela 18 agendamento
-    Route::post('/perfilOrientador/listarAlunos/salvarAgendamento/',[
+    Route::post('/perfilOrientador/listarAlunos/salvarAgendamento/{id}',[
         'as' => 'salvar_agendamento',
         'uses' => 'AgendamentoController@salvar_agendamento'
     ]);

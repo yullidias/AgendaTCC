@@ -19,6 +19,7 @@ class CreateAgendamentosTable extends Migration {
             $table->integer('id_matricula')->unsigned();
             $table->string('membro1banca');
             $table->string('membro2banca');
+
             $table->primary('id_matricula');
         });
 

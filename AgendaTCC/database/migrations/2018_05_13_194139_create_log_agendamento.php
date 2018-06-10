@@ -14,7 +14,7 @@ class CreateLogAgendamento extends Migration
     public function up()
     {
         Schema::create('log_agendamentos', function (Blueprint $table) {
-            $table->integer('id')->increment();
+            $table->increments('id');
             $table->integer('id_matricula')->unsigned();
             $table->string('id_orientador',12);
             $table->string('alteracao',75);

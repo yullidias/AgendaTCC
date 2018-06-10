@@ -76,7 +76,6 @@
 							</div>
 
 						</div>
-							<li><a href="{{route('salvar_agendamento')}}"><strong>Agendamento</strong></a></li>
 						@endif
 						@if(auth()->user()["professor"] == 1 and auth()->user()["gestor"]==1)
 

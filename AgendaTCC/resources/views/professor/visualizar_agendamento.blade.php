@@ -50,7 +50,7 @@
         }
     @endphp
 
-    <form action="{{ route('salvar_agendamento') }}" method="post">
+    <form action="{{ route('salvar_agendamento',['id' => $id]) }}" method="post">
         <div class='form-group' >
             {{ csrf_field() }}
             <table id="t1" style="width:100%">
@@ -96,7 +96,7 @@
             </table>
 
         </div>
-        <input type='submit' class='btn btn-success pull-right' name="matricula" value="Salvar" }>
+        <input type='submit' class='btn btn-success pull-right' value="Salvar" }>
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>
@@ -116,23 +116,25 @@
     {{ csrf_field() }}
 
     <br></br>
-
     <table id='t2' style="width:100%" class="table table-hover">
         <tr>
-            <th>Alteracoes</th>
+            <th>Log de Alterações</th>
+            <th> </th>
         </tr>
         @php($flag = false)
         @foreach($logs as $l)
             <tr>
-                <td>{{$s->alteracao}}</td>
+                <td>{{$l->alteracao}}</td>
+                <td>{{$l->created_at}}</td>
                 @php($flag = true)
             </tr>
         @endforeach
         @if(!$flag)
-            <td>Nenhuma alteração</td>
+            <td>Nenhuma alteração: Agendamento ainda não foi realizado.</td>
         @endif
     </table>
     <br><br>
-
+    <label>*O sistema não se responsabiliza por eventuais indisponibilidades de salas e conflitos nos horários de agendamento, uma vez que os conflitos identificáveis são baseados nos agendamentos realizados no sistema e que não há integração com o sistema de agendamento de salas do CEFET.</label>
+    <br><br>
     {{---------------------Fim Tabela------------------------}}
 @endsection

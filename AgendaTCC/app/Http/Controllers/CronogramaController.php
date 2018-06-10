@@ -55,7 +55,6 @@ class CronogramaController extends Controller{
         return redirect()->route('listar_atividades_cronograma');
     }
 
-
     public function atualizar_atividade_cronograma(Request $request){
         $campos = $request->all();
         $chave = $campos['id'];
@@ -70,8 +69,6 @@ class CronogramaController extends Controller{
         $request->session()->flash('alert-success', 'Alterações salvas!');
         return redirect()->route('listar_atividades_cronograma');
     }
-
-
 
     public function aluno_visualizar_cronograma(){
         $semestre = Semestre::orderBy('ano', 'desc', 'numero', 'desc')->first();//pega o semestre atual//
