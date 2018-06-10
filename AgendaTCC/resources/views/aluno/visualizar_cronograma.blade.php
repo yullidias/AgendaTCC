@@ -40,14 +40,16 @@
                     $array = explode(' ', $agendamento->data);
                     $data = $array[0];
                     $hora = $array[1];
-                    $predio = $agendamento->predio;
-                    $sala = $agendamento->sala;
+                    $sala = "Prédio ".$agendamento->predio." - Sala ".$agendamento->sala;
+                    $membro1 = $agendamento->membro1;
+                    $membro2 = $agendamento->membro2;
                 }
                 else{
                     $data = "";
                     $hora = "";
-                    $predio = "";
                     $sala = "";
+                    $membro1 = "";
+                    $membro2 = "";
                 }
             @endphp
             <tr>
@@ -61,12 +63,20 @@
         </table>
         <table id="t1" style="width:100%">
             <tr>
-                <th>Prédio</th>
                 <th>Sala</th>
             </tr>
             <tr>
-                <td><input type="text" id="predio" class='form-control' value="{{$predio}}" width="10" disabled="disabled"></td>
-                <td><input type="text" id="sala" class='form-control' value="{{$sala}}" width="10" disabled="disabled"></td>
+                <td><input type="text" id="predio" class='form-control' value="{{$sala}}" width="10" disabled="disabled"></td>
+            </tr>
+        </table>
+        <table id="t1" style="width:100%">
+            <tr>
+                <th>Membro 1 da Banca</th>
+                <th>Membro 2 da Banca</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="membro1" class='form-control' value="{{$membro1}}" width="10" disabled="disabled"></td>
+                <td><input type="text" id="membro2" class='form-control' value="{{$membro2}}" width="10" disabled="disabled"></td>
             </tr>
         </table>
         @if(!$agendamento)

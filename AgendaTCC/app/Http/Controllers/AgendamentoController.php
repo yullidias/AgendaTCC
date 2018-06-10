@@ -53,11 +53,11 @@ class AgendamentoController extends Controller
         $matricula = AlunoSemestre::where([ ['usuario_aluno', '=', $id],
             ['semestre_ano', '=', $semestre->ano], ['semestre_numero', '=', $semestre->numero], ['materia', '=', "2"], ])->get()->first();
 
-        $agendamento = Agendamento::where('id_matricula', '=', $matricula->id)->get();
+        $agendamento = Agendamento::where('id_matricula', '=', $matricula->id)->get()->first();
 
         $logs = LogAgendamento::where([ ['id_matricula', '=', $matricula->id], ['id_orientador', '=', $id_orientador], ])->get();
 
-        return view('professor.visualizar_agendamento', compact('salas', 'semestre', 'agendamento','matricula', 'logs', 'professores'));
+        return view('professor.visualizar_agendamento', compact('matricula', 'salas', 'semestre', 'professores', 'agendamento', 'logs'));
     }
 
 }

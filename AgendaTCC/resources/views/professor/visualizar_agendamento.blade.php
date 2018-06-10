@@ -17,23 +17,43 @@
     </div>
 
     <style>
-        table#t3 {
+        table#t1 {
             table-layout: fixed;
             width: 100px;
         }
-        table#t3 th, td {
+        table#t1 th, td {
             text-align: left;
             padding: 8px;
         }
-        table#t3 th {
-
+        table#t1 th {
+            color: black;
         }
     </style>
+
+    @php
+        if($agendamento){
+            $array = explode(' ', $agendamento->data);
+            $data = $array[0];
+            $hora = $array[1];
+            $predio = $agendamento->predio;
+            $sala = $agendamento->sala;
+            $membro1 = $agendamento->membro1;
+            $membro2 = $agendamento->membro2;
+        }
+        else{
+            $data = "";
+            $horario = "";
+            $predio = "";
+            $sala = "";
+            $membro1 = "";
+            $membro2 = "";
+        }
+    @endphp
 
     <form action="{{ route('salvar_agendamento') }}" method="post">
         <div class='form-group' >
             {{ csrf_field() }}
-            <table id="t3" style="width:100%">
+            <table id="t1" style="width:100%">
                 <tr>
                     <th>Data</th>
                     <th>Horário</th>
@@ -43,17 +63,17 @@
                     <td><input type='time' style="width:100%" class='form-control' name='horario' required></td>
                 </tr>
             </table>
-
-            <label for="sala">Sala</label>
-            <select class="form-control" style="width:100%" name="sala" required>
-                @foreach($salas as $s)
-                    <option>Prédio {{$s->predio}} - Sala {{$s->sala}}</option>
-                @endforeach
-            </select>
-
-            <br></br>
-
-            <table id="t3" style="width:100%">
+            <table id="t1" style="width:100%">
+                <tr>
+                    <th>Sala</th>
+                </tr>
+                <td><select class="form-control" value="" style="width:100%" name="sala" required>
+                    @foreach($salas as $s)
+                        <option>Prédio {{$s->predio}} - Sala {{$s->sala}}</option>
+                    @endforeach
+                </select></td>
+            </table>
+            <table id="t1" style="width:100%">
                 <tr>
                     <th>Membro 1 da Banca</th>
                     <th>Membro 2 da Banca</th>
@@ -80,16 +100,30 @@
     </form>
     {{-------------------Inicio Tabela-----------------------}}
     <style>
-        th, td {
+        table#t2 {
+            table-layout: fixed;
+            width: 100px;
+        }
+        table#t2 th, td {
             text-align: left;
             padding: 8px;
         }
-        th {
+        table#t2 th {
             background-color: #404040;
             color: white;
         }
     </style>
-
+    {{ csrf_field() }}
+    <table id='t2' style="width:100%" class="table table-hover">
+        <tr>
+            <th>Alteracoes</th>
+        </tr>
+        @foreach($logs as $l)
+            <tr>
+                <td>{{$s->alteracao}}</td>
+            </tr>
+        @endforeach
+    </table>
     <br><br>
 
     {{---------------------Fim Tabela------------------------}}

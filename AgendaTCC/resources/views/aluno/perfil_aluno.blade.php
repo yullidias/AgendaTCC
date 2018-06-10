@@ -43,7 +43,7 @@
 			<tr>
 				<td><input type="radio" name="materia" value="1" @if($alunoSemestre->materia == 1) checked @endif readonly> TCC1
 					<input type="radio" name="materia" value="2" @if($alunoSemestre->materia == 2) checked @endif readonly> TCC2</td>
-				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Turma TCC-{{$alunoSemestre['materia']}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
+				<td><button type='submit' class='btn btn-default' name="solicitar" value = 'Turma TCC-{{$alunoSemestre->materia}}' href="{{ route('solicitar_alteracao_aluno')}}">Solicitar Alteração</button></td>
 			</tr>
 			<tr>
 				<td><label>Orientador</label></td>
