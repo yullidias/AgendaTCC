@@ -20,12 +20,7 @@ class AgendamentoController extends Controller
             $request->session()->flash('alert-danger', 'Não há semestre cadastrado');
             return redirect()->back();
         }
-        else if($campos['data_inicio'] > $campos['data_fim']){
-            $request->session()->flash('alert-danger', 'Data de Início é superior a Data de Fim');
-            return redirect()->back();
-        }
-        else if($campos['data_inicio'] > $semestre->data_fim || $campos['data_inicio'] < $semestre->data_inicio ||
-            $campos['data_fim'] > $semestre->data_fim || $campos['data_fim'] < $semestre->data_inicio){
+        else if($campos['data'] > $semestre->data_fim ||  || $campos['data'] < $semestre->data_inicio){
             $request->session()->flash('alert-danger', 'A Data de Início e a Data de Fim devem pertencer semestre atual.');
             return redirect()->back();
         }

@@ -114,15 +114,23 @@
         }
     </style>
     {{ csrf_field() }}
+
+    <br></br>
+
     <table id='t2' style="width:100%" class="table table-hover">
         <tr>
             <th>Alteracoes</th>
         </tr>
+        @php($flag = false)
         @foreach($logs as $l)
             <tr>
                 <td>{{$s->alteracao}}</td>
+                @php($flag = true)
             </tr>
         @endforeach
+        @if(!$flag)
+            <td>Nenhuma alteração</td>
+        @endif
     </table>
     <br><br>
 
