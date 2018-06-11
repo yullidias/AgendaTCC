@@ -57,16 +57,24 @@
 		<table style="width:100%; background-color: #E6E6FA;" class="table table-hover">
 		<tr>
 		<td><label>Pré-Projeto</label></td>
-		<td><a class="btn btn-default" href="{{ url('/download/201522040471_Pré-Projeto.txt')  }}" target="_blank">
+			@if(isset($aluno->nomeArquivo))
+			<td><a class="btn btn-default" href="{{ url('/download/'.$aluno->usuario_aluno.'_Pré-Projeto.pdf')  }}" target="_blank">
 			Baixar
-		</a></td>
+			</a></td>
+			@else
+				<td><h5>Ainda não submetido</h5></td>
+			@endif
 		</tr>
 			<br><br>
 		<tr>
 			<td><label>TCC</label></td>
-		<td><a class="btn btn-default" href="{{ url('/download/201522040471_TCC.odt')  }}" target="_blank">
+			@if(isset($aluno->nomeArquivo))
+			<td><a class="btn btn-default" href="{{ url('/download/'.$aluno->usuario_aluno.'_TCC.pdf')  }}" target="_blank">
 			Baixar
-		</a></td>
+			</a></td>
+			@else
+				<td><h5>Ainda não submetido</h5></td>
+			@endif
 		</tr>
 		<table>
 	</div>

@@ -47,7 +47,11 @@
         'as' => 'salvar_cadastro_professor',
         'uses' => 'ProfessorController@salvar_cadastro_professor'
     ]);
-
+    //download
+    Route::get( '/download/{filename}', [
+        'as'=>'download',
+        'uses'=>'AlunoController@download'
+    ]);
 //--------------------------------------------------------------------------------------
 //Grupo de acesso para o aluno
 Route::group(['middleware'=>['auth','check.aluno']], function(){
@@ -83,10 +87,6 @@ Route::group(['middleware'=>['auth','check.aluno']], function(){
         'uses'=> 'AlunoController@salvar_submeter_tcc'
     ]);
 
-    Route::get( '/download/{filename}', [
-        'as'=>'download',
-        'uses'=>'AlunoController@download'
-    ]);
 
     Route::get( '/perfilAluno/visualizarNotas', [
         'as'=>'visualizarNotas',
@@ -157,6 +157,7 @@ Route::group(['middleware'=>['auth','check.professor']], function (){
             'as'=>'listar_professores.pre_cadastro_professor.salvar_pre_cadastro_professor',
             'uses'=>'ProfessorController@salvar_pre_cadastro_professor'
         ]);
+
 });
 
 //Grupo de acesso do orientador
@@ -187,6 +188,7 @@ Route::group(['middleware'=>['auth','check.orientador']], function(){
         'as' => 'orientador_visualizar_cronograma',
         'uses' => 'CronogramaController@professor_visualizar_cronograma'
     ]);
+
 });
 
 //Acesso do Gestor
