@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sala;
+use App\Agendamento;
 
 class SalaController extends Controller
 {
