@@ -41,8 +41,8 @@
                     $data = $array[0];
                     $hora = $array[1];
                     $sala = "Prédio ".$agendamento->predio." - Sala ".$agendamento->sala;
-                    $membro1 = $agendamento->membro1;
-                    $membro2 = $agendamento->membro2;
+                    $membro1 = $agendamento->membro1banca;
+                    $membro2 = $agendamento->membro2banca;
                 }
                 else{
                     $data = "";

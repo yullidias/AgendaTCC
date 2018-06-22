@@ -14,7 +14,7 @@
         <img src="chapeu.png" alt="Smiley face" width="300" height="200" align="middle">
         <br>
         <h1 left>Agenda TCC</h1>
-       
+
 
         <form class="form-group" action="{{route('site.login.entrar')}}" method="post">
             {{csrf_field()}}
